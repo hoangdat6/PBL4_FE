@@ -1,148 +1,41 @@
 @import "../../styles/scss/mixin";
 
-@mixin scrollbar {
-  &::-webkit-scrollbar {
-    width: 5px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background-color: var(--nav-color-dark);
-    border-radius: 2px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background-color: var(--bg-color-dark);
-    border-radius: 10px;
-  }
-
-  &::-webkit-scrollbar-thumb:hover {
-    background-color: #555;
-  }
-}
-
-@mixin un_active {
-  .un_active {
-    .sidebar__container {
-      width: 80px;
-    }
-
-    .sidebar__header {
-      .sidebar__login {
-        justify-content: center;
-
-        &_link {
-          display: none;
-        }
-      }
-
-      .sidebar__menu_cta {
-        justify-content: center;
-        gap: 0;
-
-        &_item {
-          &:first-child {
-            display: none;
-          }
-
-          &:last-child {
-            margin: 0;
-            //font-size: 15px;
-          }
-
-          i {
-            font-size: 15px;
-            margin: 6px 0;
-          }
-        }
-      }
-    }
-
-    .sidebar__menu {
-      .sidebar__nav {
-        .sidebar__nav_item {
-          justify-content: center;
-
-          .sidebar__nav_link {
-            .sidebar__nav_icon {
-              font-size: 15px;
-            }
-
-            .sidebar__nav_text {
-              display: none;
-            }
-          }
-        }
-      }
-    }
-  }
-}
-
 .sidebar {
+  background-color: var(--nav-color-dark);
+
+  &.is_active {
+    display: block !important;
+  }
+
   @include respond-to(null, $breakpoint-md) {
     position: fixed;
-    height: 100vh;
-
+    top: 0;
+    left: 0;
+    z-index: 1000;
     &__overlay {
-      transition: all .6s cubic-bezier(.22, .61, .24, 1) 0.3s;
-      display: block;
       position: fixed;
-      z-index: 100000;
       top: 0;
-      left: -100%;
-      height: 100%;
+      left: 0;
       width: 100%;
-      background-color: #00000052;
-      opacity: 1;
-      visibility: visible;
-    }
-
-    &.is_open {
-      .sidebar__container {
-        left: 0;
-      }
-
-      .sidebar__overlay {
-        left: 0;
-      }
-    }
-
-    &.is_close {
-      .sidebar__container {
-        left: -100vw;
-      }
-
-      .sidebar__overlay {
-        left: -100%;
-      }
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 999;
     }
   }
 
 
   &__container {
-    background-color: var(--nav-color-dark);
-    height: 100%;
-    //overflow-y: auto;
-    //overflow-x: hidden;
-    padding: 20px 0;
-    width: 280px;
-    transition: all .4s ease;
-    max-width: 280px;
-    @include scrollbar;
-
-    @include respond-to(null, $breakpoint-md) {
-      position: fixed;
-      width: 100%;
-      top: 0;
-      left: -100vw;
-      box-shadow: 0 10px 30px 0 rgba(255, 165, 0, 0);
-      z-index: 999999;
-      transition: left .6s cubic-bezier(.6, .1, .68, .53);
-    }
+    position: relative;
+    padding: 20px;
+    transition: all 0.3s ease;
+    width: 240px;
+    height: 100vh;
+    z-index: 1000;
   }
 
   &__header {
     border-bottom: 1px solid var(--color-line-dark);
-    padding: 0 20px;
+    transition: all 0.3s ease;
 
     .sidebar__login {
       display: flex;
@@ -183,10 +76,6 @@
   &__menu {
     display: flex;
     flex-direction: column;
-    overflow-y: auto;
-    overflow-x: hidden;
-    height: 100%;
-    padding-bottom: 30px;
 
     .sidebar__nav {
       display: flex;
@@ -200,7 +89,6 @@
       }
 
       .sidebar__nav_item {
-        padding: 0 20px;
         margin-block: 12.5px;
         display: flex;
         align-items: center;
@@ -227,5 +115,49 @@
   }
 }
 
-@include un_active;
+.sidebar {
+  &.unactive {
+    .sidebar__container {
+      width: 80px;
+      padding: 20px 0;
+    }
 
+    .sidebar__header {
+      .sidebar__login {
+        justify-content: center;
+
+        &_link {
+          display: none;
+        }
+      }
+
+      .sidebar__menu_cta {
+        gap: 0;
+
+        &_item {
+          &:first-child {
+            display: none;
+          }
+
+          i {
+            font-size: 24px;
+          }
+        }
+      }
+    }
+
+    .sidebar__menu {
+      .sidebar__nav {
+        .sidebar__nav_item {
+          justify-content: center;
+
+          .sidebar__nav_link {
+            .sidebar__nav_text {
+              display: none;
+            }
+          }
+        }
+      }
+    }
+  }
+}
