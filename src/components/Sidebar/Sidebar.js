@@ -1,21 +1,31 @@
-import React, {useState} from 'react';
+import React from 'react';
 import styles from './Sidebar.module.scss';
+import {useDispatch, useSelector} from "react-redux";
+import {showSidebar, toggleSidebar} from "../../store/slices/sidebarSlice";
 
 const Sidebar = () => {
-    const [isSidebarActive, setIsSidebarActive] = useState(false);
+    const {isSidebarActive, isShowSidebar} = useSelector(state => state.sidebar);
+    const dispatch = useDispatch();
 
-    const toggleSidebar = () => {
-        setIsSidebarActive(!isSidebarActive);
+    const handleToggleSidebar = () => {
+        dispatch(toggleSidebar(!isSidebarActive));
+    };
+
+    const handleShowSidebar = () => {
+        dispatch(showSidebar());
+        dispatch(toggleSidebar(true));
     }
 
     return (
-        <nav className={`${styles.sidebar} ${!isSidebarActive ? styles.unactive : ""} ${styles.is_active}` }>
+        <nav
+            className={`${styles.sidebar} ${isSidebarActive ? styles.un_active : ""}  ${isShowSidebar ? styles.is_open : styles.is_close}` }>
             <div
                 className={`${styles.sidebar__overlay}`}
+                onClick={handleShowSidebar}
             ></div>
             <div className={`${styles.sidebar__container} d-md-flex flex-column`}>
                 <div className={`${styles.sidebar__header}`}>
-                    <div className={`${styles.sidebar__login} d-flex`}>
+                    <div className={`${styles.sidebar__login}`}>
                         <div className={`${styles.sidebar__login_link}`}>
                             <a href="#!" className={`${styles.sidebar__login_link_text} caro_btn btn_primary`}>
                                 <i className="fa-solid fa-user"></i> Đăng nhập
@@ -30,7 +40,7 @@ const Sidebar = () => {
                             <div className={`${styles.sidebar__menu_cta_item}`}>
                                 <a
                                     href="#!"
-                                   onClick={toggleSidebar}
+                                    onClick={handleToggleSidebar}
                                 >
                                     <i className="fa-solid fa-sidebar"></i>
                                 </a>

@@ -5,7 +5,8 @@ const Content = ({className}) => {
     return (
         <div className={`${styles.content} ${className}`}>
             <Header/>
-            <div className={`${styles.test}`}>
+            <div className={`${styles.test} flex-grow-1`}>
+                <h1>Content</h1>
 
             </div>
         </div>

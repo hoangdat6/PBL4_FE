@@ -88,7 +88,7 @@
   const TRANSITION_END = 'transitionend';
 
   /**
-   * Properly escape IDs selectors to handle weird IDs
+   * Properly escape IDs selectors.js to handle weird IDs
    * @param {string} selector
    * @returns {string}
    */

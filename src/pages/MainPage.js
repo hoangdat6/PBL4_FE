@@ -4,7 +4,7 @@ import Content from "./Content/Content";
 
 const MainPage = () => {
     return (
-        <div className={`d-flex flex-grow-1`}>
+        <div className={`d-flex flex-grow-1`} style={{backgroundColor: 'var(--bg-color-dark)'} }>
             <Sidebar />
             <Content className={`flex-grow-1`}/>
         </div>

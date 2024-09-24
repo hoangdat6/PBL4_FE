@@ -1,17 +1,20 @@
 @import "../../styles/scss/mixin";
 
 .c_header {
-  position: sticky;
-  top: 0;
+
   &__container {
-    position: absolute;
+    height: 59px;
+
+    @include respond-to($breakpoint-sm) {
+     height: 72px;
+    }
+
     width: 100%;
-    padding: 0 30px ;
+    padding: 0 30px;
     display: flex;
     align-items: center;
-    background-color: var(--nav-color-dark);
-    height: 72px;
     justify-content: space-between;
+    background-color: var(--nav-color-dark);
 
     @include respond-to($breakpoint-md) {
       justify-content: flex-end;
@@ -34,8 +37,12 @@
   }
 
   &__actions {
-    display: flex;
+    display: none;
 
+    @include respond-to($breakpoint-sm) {
+      display: flex;
+      gap: 20px;
+    }
 
 
     .c_header__action_item {
@@ -48,7 +55,7 @@
       }
 
       &:last-child {
-        margin-left: 10px;
+        margin-left: 5px;
 
         @include respond-to($breakpoint-md) {
           margin-left: 20px;
