@@ -9,12 +9,6 @@
     overflow-y: auto; /* Cho phép cuộn chỉ trong phần test */
     height: 100%; /* Chiều cao 100% trong không gian còn lại */
 
-    h1 {
-      text-align: center;
-      color: #fff;
-      height: 1500px; /* Chiều cao lớn để test cuộn */
-    }
-
     /* Tùy chỉnh thanh cuộn cho WebKit browsers */
     &::-webkit-scrollbar {
       width: 3px;

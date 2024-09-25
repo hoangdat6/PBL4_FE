@@ -1,87 +1,69 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import styles from './CaroBoard.module.scss';
 import useWebSocket from "../../hooks/useWebSocket";
+import { useCaroGame } from '../../hooks/useCaroGame';
+import PlayerInfo from "./PlayerInfo/PlayerInfo";
+import CaroBoardUI from "./CaroBoardUI/CaroBoardUI";
+
+
+import War from "../../assets/statics/imgs/war.svg";
+import Avatar from "../../assets/statics/imgs/Avatar.png";
+import Rank from "../../assets/statics/imgs/Rank.svg";
+import checker1 from "../../assets/statics/imgs/checker1.svg";
+import checker2 from "../../assets/statics/imgs/checker2.svg";
+
+import checker3 from "../../assets/statics/imgs/checker3.svg";
+import checker4 from "../../assets/statics/imgs/checker4.svg";
+
+
+const player1 = {
+    playerName: "Hoang Dat",
+    time: "05:00",
+    score: "0",
+    avatar: Avatar,
+    rankIcon: Rank,
+    checkers: checker1,
+    reverse: true,
+};
+
+const player2 = {
+    playerName: "Hoang Dat",
+    time: "05:00",
+    score: "0",
+    avatar: Avatar,
+    rankIcon: Rank,
+    checkers: checker2,
+};
+
 
 const CaroBoard = () => {
-    const [roomId, setRoomId] = useState("room_1");
-    const [board, setBoard] = useState(Array(15).fill().map(() => Array(15).fill(-1)));  // Khởi tạo board với 15x15 ô, mỗi ô có giá trị -1
-    const [isPlayerTurn, setIsPlayerTurn] = useState(true);
+    const roomId = "room_1";
     const { sendMessage, lastMessage } = useWebSocket(`http://localhost:8080/game?roomId=${roomId}`);
-    const [cnt, setCnt] = useState(0);
-
-    const handleClick = (row, col) => {
-        console.log(`Clicked on row: ${row}, col: ${col}`);
-
-        if(board[row][col] !== -1) {
-            console.log("Cell is already checked");
-            return;
-        }
-
-        if(!isPlayerTurn) {
-            return;
-        }
-
-        setCnt(cnt + 1);
-        const newBoard = board.map((r, rIndex) => {
-            if(rIndex === row) {
-                return r.map((c, cIndex) => {
-                    if(cIndex === col) {
-                        return cnt % 2;
-                    }
-                    return c;
-                });
-            }
-            return r;
-        });
-        setBoard(newBoard);
-
-        sendMessage({
-            row,
-            col,
-            cnt
-        });
-        setIsPlayerTurn(false);
-    };
-
-    useEffect(() => {
-        if (lastMessage) {
-            const { row, col, cnt } = lastMessage;
-            setCnt(cnt + 1);
-            const updatedBoard = board.map((r, rIndex) => {
-                if (rIndex === row) {
-                    return r.map((c, cIndex) => (cIndex === col ? cnt % 2 : c));
-                }
-                return r;
-            });
-
-            setBoard(updatedBoard);
-            setIsPlayerTurn(true);  // Sau khi nhận thông tin từ server, lượt sẽ quay lại cho người chơi
-        }
-    }, [lastMessage]);
-
+    const { board, handleClick } = useCaroGame(roomId, sendMessage, lastMessage);
 
     return (
         <section className={styles.boardSection}>
-            <table className={styles.boardTable}>
-                <tbody>
-                {board.map((row, rowIndex) => (
-                    <tr key={rowIndex}>
-                        {row.map((cell, colIndex) => (
-                            <td key={colIndex} className={styles.boardCell}>
-                                <button
-                                    className={styles.boardButton}
-                                    onClick={() => handleClick(rowIndex, colIndex)}
-                                >
-                                    {cell !== -1 ? cell === 0 ? "O" : "X" : ""}
-                                </button>
-                            </td>
-                        ))}
-                    </tr>
-                ))}
-                </tbody>
-            </table>
+            <section className={`${styles.game_section}`}>
+                <div className={`${styles.game_container}`}>
+                    {/* Player 1 */}
+                    <PlayerInfo {...player1} />
+                    {/* VS icon */}
+                    <div className={styles.vs_icon}>
+                        <img src={War} alt="VS icon" />
+                    </div>
+
+                    {/* Player 2 */}
+                    <PlayerInfo {...player2} />
+                </div>
+            </section>
+
+            {/* Caro Board */}
+            <CaroBoardUI board={board} handleClick={handleClick} />
         </section>
     );
 };
+
+
+
 
 export default CaroBoard;
