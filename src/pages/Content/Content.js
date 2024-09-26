@@ -1,6 +1,7 @@
 import Header from "../../components/Header/Header";
 import styles from "./Content.module.scss";
 import CaroBoard from "../../components/CaroBoard/CaroBoard";
+import HomePage from "../../components/HomePage/HomePage";
 
 const Content = ({className}) => {
     return (
@@ -8,7 +9,7 @@ const Content = ({className}) => {
         <div className={`${styles.content} ${className}`}>
             <Header/>
             <div className={`${styles.test} flex-grow-1`}>
-                <CaroBoard/>
+                <HomePage/>
             </div>
         </div>
     )
