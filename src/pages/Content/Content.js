@@ -1,6 +1,5 @@
 import Header from "../../components/Header/Header";
 import styles from "./Content.module.scss";
-import CaroBoard from "../../components/CaroBoard/CaroBoard";
 import HomePage from "../../components/HomePage/HomePage";
 
 const Content = ({className}) => {

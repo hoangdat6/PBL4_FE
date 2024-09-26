@@ -12,8 +12,6 @@ import Rank from "../../assets/statics/imgs/Rank.svg";
 import checker1 from "../../assets/statics/imgs/checker1.svg";
 import checker2 from "../../assets/statics/imgs/checker2.svg";
 
-import checker3 from "../../assets/statics/imgs/checker3.svg";
-import checker4 from "../../assets/statics/imgs/checker4.svg";
 
 
 const player1 = {
