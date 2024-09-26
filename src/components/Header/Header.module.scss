@@ -1,12 +1,11 @@
 @import "../../styles/scss/mixin";
 
 .c_header {
-
   &__container {
     height: 59px;
 
     @include respond-to($breakpoint-sm) {
-     height: 72px;
+      height: 72px;
     }
 
     width: 100%;
