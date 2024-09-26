@@ -1,0 +1,65 @@
+@import "../../styles/scss/mixin";
+
+.c_header {
+  &__container {
+    height: 59px;
+
+    @include respond-to($breakpoint-sm) {
+     height: 72px;
+    }
+
+    width: 100%;
+    padding: 0 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--nav-color-dark);
+
+    @include respond-to($breakpoint-md) {
+      justify-content: flex-end;
+    }
+
+    .c_header__menu_icon {
+      color: var(--color-text-dark);
+      font-size: 20px;
+      cursor: pointer;
+
+      &:hover {
+        color: var(--color-main);
+      }
+
+      @include respond-to($breakpoint-md) {
+        display: none;
+        font-size: 25px;
+      }
+    }
+  }
+
+  &__actions {
+    display: none;
+
+    @include respond-to($breakpoint-sm) {
+      display: flex;
+      gap: 20px;
+    }
+
+
+    .c_header__action_item {
+      a {
+        font-size: 12px;
+
+        @include respond-to($breakpoint-md) {
+          font-size: 14px;
+        }
+      }
+
+      &:last-child {
+        margin-left: 5px;
+
+        @include respond-to($breakpoint-md) {
+          margin-left: 20px;
+        }
+      }
+    }
+  }
+}

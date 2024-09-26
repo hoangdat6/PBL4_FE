@@ -1,0 +1,22 @@
+.boardSection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 50px;
+    height: 100%;
+}
+
+.game_section {
+    border-radius: 10px;
+    background: #21222D;
+    box-shadow: 0 0 10px 0 rgba(255, 255, 255, 0.25);
+
+    .game_container {
+        padding: 10px 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 35px;
+    }
+}

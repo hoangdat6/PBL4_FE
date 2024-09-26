@@ -1,0 +1,43 @@
+@import '../../../styles/scss/mixin.scss';
+
+.about_caro {
+    background-color: var(--bg-color-dark);
+    padding: 3rem 1.5rem;
+    color: var(--color-text-dark);
+
+    &__content {
+        max-width: 800px;
+        margin: 0 auto;
+        text-align: left;
+
+        h2 {
+            font-size: 2.5rem;
+            color: var(--color-main);
+        }
+
+        h3 {
+            font-size: 1.8rem;
+            margin-top: 2rem;
+            color: var(--color-main);
+        }
+
+        p {
+            margin-top: 1rem;
+            color: var(--color-text-dark);
+        }
+    }
+
+    @include respond-to(null, $breakpoint-md) {
+        padding: 2rem 1rem;
+
+        &__content {
+            h2 {
+                font-size: 2rem;
+            }
+
+            h3 {
+                font-size: 1.5rem;
+            }
+        }
+    }
+}

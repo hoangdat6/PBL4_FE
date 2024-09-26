@@ -1,0 +1,23 @@
+@font-face {
+    font-family: 'DM_Sans';
+    src: url('../../assets/fonts/DM_Sans_Bold.ttf');
+    font-weight: bold;
+}
+
+@font-face {
+    font-family: 'DM_Sans';
+    src: url('../../assets/fonts/DM_Sans_Regular.ttf');
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: 'DM_Sans';
+    src: url('../../assets/fonts/DM_Sans_Medium.ttf');
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: 'DM_Sans';
+    src: url('../../assets/fonts/DMSans-SemiBold.ttf');
+    font-weight: 600;
+}

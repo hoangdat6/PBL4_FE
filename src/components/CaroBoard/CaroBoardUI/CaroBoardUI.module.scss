@@ -1,0 +1,29 @@
+.boardTable {
+    border-collapse: collapse;
+}
+
+.boardCell {
+    background: var(--caro-board-color);
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--nav-color-dark);
+}
+
+.boardButton {
+    width: 100%;
+    height: 100%;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+        width: 24px;
+        height: 24px;
+    }
+
+
+}
