@@ -2,7 +2,6 @@ import React from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import styles from './RoomCodePopup.module.scss';
-import { useToast } from "../../hooks/useToast/useToast";
 
 const RoomCodePopup = ({ onSubmit }) => {
     const validationSchema = Yup.object({
