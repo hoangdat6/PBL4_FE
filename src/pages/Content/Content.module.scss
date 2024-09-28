@@ -1,5 +1,5 @@
 .content {
-  background-color: var(--bg-color-dark);
+  background-color: var(--bg-color);
   height: 100vh; /* Chiều cao của toàn bộ Content */
   display: flex;
   flex-direction: column;
@@ -15,12 +15,12 @@
     }
 
     &::-webkit-scrollbar-thumb {
-      background-color: var(--nav-color-dark);
+      background-color: var(--nav-color);
       border-radius: 2px;
     }
 
     &::-webkit-scrollbar-track {
-      background-color: var(--bg-color-dark);
+      background-color: var(--bg-color);
       border-radius: 10px;
     }
 

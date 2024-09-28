@@ -1,15 +1,15 @@
 @import '../../../styles/scss/mixin.scss';
 
 .hero {
-    background-color: var(--bg-color-dark);
+    background-color: var(--bg-color);
     text-align: center;
     padding: 5rem 1rem;
-    color: var(--color-text-dark);
+    color: var(--color-text);
 
     &__content {
         h1 {
             font-size: 2.5rem;
-            color: var(--color-main);
+            color: var(--home-text-color);
         }
 
         p {
@@ -17,12 +17,8 @@
         }
 
         .hero__button {
-            padding: 0.8rem 2rem;
-            background-color: var(--color-main);
-            color: var(--bg-color-dark);
-            text-decoration: none;
-            border-radius: 5px;
-            margin-top: 1.5rem;
+            display: inline-block;
+            margin-top: 15px;
         }
     }
 

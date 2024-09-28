@@ -13,14 +13,14 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: var(--nav-color-dark);
+    background-color: var(--nav-color);
 
     @include respond-to($breakpoint-md) {
       justify-content: flex-end;
     }
 
     .c_header__menu_icon {
-      color: var(--color-text-dark);
+      color: var(--color-text);
       font-size: 20px;
       cursor: pointer;
 
@@ -40,7 +40,7 @@
 
     @include respond-to($breakpoint-sm) {
       display: flex;
-      gap: 20px;
+      //gap: 20px;
     }
 
 
@@ -61,5 +61,13 @@
         }
       }
     }
+  }
+
+  &__dark_mode {
+    display: inline-block;
+    font-size: 20px;
+    cursor: pointer;
+    color: var(--color-text);
+    margin-left: 20px;
   }
 }

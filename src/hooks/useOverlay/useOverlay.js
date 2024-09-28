@@ -12,11 +12,11 @@ const useOverlay = () => {
         setOverlay(!overlay);
     };
 
-    const Overlay = ({ children, width, height, closeHidden = true, backColor = "rgba(255, 255, 255, 0.2)"}) => {
+    const Overlay = ({ children, width, height, closeHidden = true, overlayClickHidden = true, backColor = "rgba(255, 255, 255, 0.2)"}) => {
         return createPortal(
             <div
                 id={`c_overlay`}
-                onClick={toggleOverlay}
+                {...(overlayClickHidden ? { onClick: toggleOverlay } : {})}
                 className={`${styles.c_overlay} ${overlay ? styles.active : ""}`}
                 style={{
                     backgroundColor: backColor

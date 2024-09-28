@@ -1,9 +1,9 @@
 @import '../../../styles/scss/mixin.scss';
 
 .features {
-    background-color: var(--bg-color-dark);
+    background-color: var(--bg-color);
     padding: 3rem 1rem;
-    color: var(--color-text-dark);
+    color: var(--color-text);
 
     h2 {
         text-align: center;
@@ -23,12 +23,12 @@
 
             h3 {
                 font-size: 1.5rem;
-                color: var(--color-main);
+                color: var(--home-text-color);
             }
 
             p {
                 margin-top: 0.5rem;
-                color: var(--color-text-dark);
+                color: var(--color-text);
             }
         }
     }

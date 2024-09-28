@@ -6,6 +6,10 @@
     background: var(--caro-board-color);
     width: 36px;
     height: 36px;
+    min-height: 36px;
+    max-height: 36px;
+    min-width: 36px;
+    max-width: 36px;
     border: 1px solid var(--nav-color-dark);
 }
 
@@ -23,7 +27,6 @@
     img {
         width: 24px;
         height: 24px;
+        animation: pulse 1s infinite;
     }
-
-
 }

@@ -16,8 +16,14 @@ export const useCaroGame = (roomId, sendMessage, lastMessage) => {
             return r;
         });
         setBoard(newBoard);
-
-        sendMessage({ row, col, cnt });
+        console.log("click", row, col, roomId);
+        const move = {
+            roomId: roomId,
+            playerId: "1",
+            x: col,
+            y: row,
+        };
+        sendMessage('/app/move' , { move });
         setIsPlayerTurn(false);
     };
 

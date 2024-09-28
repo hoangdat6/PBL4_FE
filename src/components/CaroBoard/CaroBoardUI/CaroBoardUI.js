@@ -23,7 +23,10 @@ const CaroBoardUI = ({ board, handleClick }) => {
                                 {hoveredCell?.rowIndex === rowIndex && hoveredCell?.colIndex === colIndex ? (
                                     <img src={cell === 0 ? Checker3 : Checker4} alt="checker" />
                                 ) : (
-                                    (cell !== -1 ? (cell === 0 ? "O" : "X") : "")
+                                    (cell !== -1 ? (cell === 0 ?
+                                        <img src={Checker3} alt="checker" /> :
+                                        <img src={Checker4}/>
+                                        ) : "")
                                 )}
                             </button>
                         </td>

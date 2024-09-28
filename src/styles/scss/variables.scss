@@ -3,12 +3,35 @@
   --bg-color-dark: #171821;
   --bg-color-light: #fff;
   --color-line-dark: #47494e;
-  --color-text-dark: #969FA8;
+  --color-text-dark: #D3D3D3;
   --color-text-light: #000;
   --nav-color-dark: #21222D;
-  --nav-color-light: #fff;
+  --nav-color-light: #f5f5f5;
   --caro-board-color: #0D0A11;
   --gray-400: #2C3E50!important;
 
   --font-family: "DM_sans", sans-serif;
+}
+
+body.dark {
+  --bg-color: var(--bg-color-dark);
+  --color-line: var(--color-line-dark);
+  --color-text: var(--color-text-dark);
+  .caro_btn {
+    --color-text: var(--color-text-light);
+  }
+  --nav-color: var(--nav-color-dark);
+  --home-text-color: var(--color-main);
+}
+
+body.light {
+  --color-main: #424769; /* Màu xanh đậm thay đổi cho light mode */
+  --bg-color: var(--bg-color-light);
+  --color-line: var(--color-line-dark);
+  --color-text: var(--color-text-light);
+  .caro_btn {
+    --color-text: var(--color-text-dark);
+  }
+  --nav-color: var(--nav-color-light);
+  --home-text-color: var(--color-text-light);
 }

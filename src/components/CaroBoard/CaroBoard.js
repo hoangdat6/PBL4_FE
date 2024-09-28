@@ -1,18 +1,16 @@
 import React from 'react';
+import { useParams } from 'react-router-dom'; // Để lấy roomId từ URL
 import styles from './CaroBoard.module.scss';
 import useWebSocket from "../../hooks/useWebSocket";
 import { useCaroGame } from '../../hooks/useCaroGame';
 import PlayerInfo from "./PlayerInfo/PlayerInfo";
 import CaroBoardUI from "./CaroBoardUI/CaroBoardUI";
 
-
 import War from "../../assets/statics/imgs/war.svg";
 import Avatar from "../../assets/statics/imgs/Avatar.png";
 import Rank from "../../assets/statics/imgs/Rank.svg";
 import checker1 from "../../assets/statics/imgs/checker1.svg";
 import checker2 from "../../assets/statics/imgs/checker2.svg";
-
-
 
 const player1 = {
     playerName: "Hoang Dat",
@@ -33,14 +31,20 @@ const player2 = {
     checkers: checker2,
 };
 
-
 const CaroBoard = () => {
-    const roomId = "room_1";
-    const { sendMessage, lastMessage } = useWebSocket(`http://localhost:8080/game?roomId=${roomId}`);
+    const { roomId } = useParams(); // Lấy roomId từ URL
+    console.log(roomId);
+    const { sendMessage, lastMessage } = useWebSocket(`http://localhost:8080/game?roomId=${roomId}`, roomId, `/topic/room/${roomId}`); // Kết nối WebSocket
+    sendMessage('/app/joinRoom', {
+        roomId: roomId,
+        playerName: 'Hoang Dat',
+    });
     const { board, handleClick } = useCaroGame(roomId, sendMessage, lastMessage);
 
     return (
         <section className={styles.boardSection}>
+            {/*header*/}
+
             <section className={`${styles.game_section}`}>
                 <div className={`${styles.game_container}`}>
                     {/* Player 1 */}
@@ -60,8 +64,5 @@ const CaroBoard = () => {
         </section>
     );
 };
-
-
-
 
 export default CaroBoard;

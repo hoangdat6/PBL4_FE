@@ -17,23 +17,22 @@
 }
 
 .btn_primary:hover {
-    color: #000;
     fill: #000;
-    background: var(--color-main);
-    animation: pulse 1s infinite;
+    opacity: 0.8;
 }
 
 .btn_secondary {
     background: var(--color-main);
-    color: #000;
-
+    border: 1px solid var(--color-main);
+    color: var(--color-text );
 }
 
 .btn_secondary:hover {
-    color: var(--color-main);
-    background: transparent;
-    border: 1px solid var(--color-main);
-    animation: pulse 1s infinite;
+    opacity: 0.8;
+}
+
+.main_page {
+    transition: all 1s ease-in-out;
 }
 
 a {

@@ -7,7 +7,7 @@ const Hero = () => {
             <div className={`${styles.hero__content}`}>
                 <h1>Welcome to Caro Arena</h1>
                 <p>The ultimate platform for Caro enthusiasts. Play, Compete, and Win!</p>
-                <a href="#features" className={`${styles.hero__button}`}>Learn More</a>
+                <a href="#features" className={`${styles.hero__button} caro_btn btn_secondary`}>Learn More</a>
             </div>
         </section>
     );
