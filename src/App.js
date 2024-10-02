@@ -7,7 +7,6 @@ import "./styles/css/main.css";
 import "./styles/css/typograply.css";
 import './styles/scss/main.scss';
 import './assets/font-awesome-6-pro/font-awesome-6-pro/css/all.min.css';
-import Content from "./pages/Content/Content";
 import CaroBoard from "./components/CaroBoard/CaroBoard";
 import MainPage from "./pages/MainPage";
 import {useSelector} from "react-redux";

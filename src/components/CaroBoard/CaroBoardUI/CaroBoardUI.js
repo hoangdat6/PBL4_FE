@@ -25,7 +25,7 @@ const CaroBoardUI = ({ board, handleClick }) => {
                                 ) : (
                                     (cell !== -1 ? (cell === 0 ?
                                         <img src={Checker3} alt="checker" /> :
-                                        <img src={Checker4}/>
+                                        <img src={Checker4} alt={checker}/>
                                         ) : "")
                                 )}
                             </button>

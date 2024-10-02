@@ -1,24 +1,26 @@
 import React from 'react';
 import styles from './Sidebar.module.scss';
-import {useDispatch, useSelector} from "react-redux";
-import {showSidebar, toggleSidebar} from "../../store/slices/sidebarSlice";
+import useSidebar from "../../hooks/useSidebar";
+import useOverlay from "../../hooks/useOverlay/useOverlay";
+import SignInSignUp from "../LoginSignUp/SignInSignUp";
 
 const Sidebar = () => {
-    const {isSidebarActive, isShowSidebar} = useSelector(state => state.sidebar);
-    const dispatch = useDispatch();
+    const { toggleOverlay, Overlay } = useOverlay();
 
-    const handleToggleSidebar = () => {
-        dispatch(toggleSidebar(!isSidebarActive));
-    };
+    const {
+        handleShowSidebar,
+        handleToggleSidebar,
+        isShowSidebar,
+        isSidebarActive,
+        // setLoginFormVisible,
+        // isLoginFormVisible
+    } = useSidebar();
 
-    const handleShowSidebar = () => {
-        dispatch(showSidebar());
-        dispatch(toggleSidebar(true));
-    }
 
     return (
         <nav
             className={`${styles.sidebar} ${isSidebarActive ? styles.un_active : ""}  ${isShowSidebar ? styles.is_open : styles.is_close}` }>
+            <SignInSignUp Overlay={Overlay} toggleOverlay={toggleOverlay}/>
             <div
                 className={`${styles.sidebar__overlay}`}
                 onClick={handleShowSidebar}
@@ -27,7 +29,10 @@ const Sidebar = () => {
                 <div className={`${styles.sidebar__header}`}>
                     <div className={`${styles.sidebar__login}`}>
                         <div className={`${styles.sidebar__login_link}`}>
-                            <a href="#!" className={`${styles.sidebar__login_link_text} caro_btn btn_primary`}>
+                            <a
+                                href="#!" className={`${styles.sidebar__login_link_text} caro_btn btn_primary`}
+                                onClick={toggleOverlay}
+                            >
                                 <i className="fa-solid fa-user"></i> Đăng nhập
                             </a>
                         </div>

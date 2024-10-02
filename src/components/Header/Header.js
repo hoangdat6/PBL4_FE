@@ -4,7 +4,6 @@ import {useDispatch, useSelector} from "react-redux";
 import {showSidebar} from "../../store/slices/sidebarSlice";
 import useOverlay from "../../hooks/useOverlay/useOverlay";
 import RoomCodePopup from "../RoomCodePopup/RoomCodePopup";
-import useJoinGame from "../../hooks/useJoinGame";
 import {toggleDarkMode} from "../../store/slices/darkModeSlice";
 
 const Header = () => {

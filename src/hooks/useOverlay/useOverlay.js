@@ -8,7 +8,6 @@ const useOverlay = () => {
     const [overlay, setOverlay] = useState(false);
 
     const toggleOverlay = () => {
-        console.log("toggleOverlay");
         setOverlay(!overlay);
     };
 
