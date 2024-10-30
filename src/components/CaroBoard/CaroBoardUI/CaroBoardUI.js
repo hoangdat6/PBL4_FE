@@ -3,7 +3,7 @@ import styles from "./CaroBoardUI.module.scss";
 import Checker3 from "../../../assets/statics/imgs/checker3.svg";
 import Checker4 from "../../../assets/statics/imgs/checker4.svg";
 
-const CaroBoardUI = ({ board, handleClick }) => {
+const CaroBoardUI = ({ board, handleClick, isStartPlayer }) => {
     const [hoveredCell, setHoveredCell] = useState(null); // State để theo dõi ô đang hover
 
     return (
@@ -19,14 +19,14 @@ const CaroBoardUI = ({ board, handleClick }) => {
                                 onMouseEnter={() => setHoveredCell({ rowIndex, colIndex })} // Set ô đang hover
                                 onMouseLeave={() => setHoveredCell(null)} // Reset khi rời khỏi ô
                             >
+                                {/* Hiển thị icon nếu ô đã được đánh */}
+                                {cell !== -1 ? (cell === 0 ? <img src={Checker4} alt="checker" /> : <img src={Checker3} alt="checker" />) : ""}
+
                                 {/* Hiển thị icon nếu đang hover */}
-                                {hoveredCell?.rowIndex === rowIndex && hoveredCell?.colIndex === colIndex ? (
-                                    <img src={cell === 0 ? Checker3 : Checker4} alt="checker" />
+                                {hoveredCell?.rowIndex === rowIndex && hoveredCell?.colIndex === colIndex && cell === -1 ? (
+                                    isStartPlayer ? <img src={Checker4} alt="checker" /> : <img src={Checker3} alt="checker" />
                                 ) : (
-                                    (cell !== -1 ? (cell === 0 ?
-                                        <img src={Checker3} alt="checker" /> :
-                                        <img src={Checker4} alt={"checker"}/>
-                                        ) : "")
+                                    ""
                                 )}
                             </button>
                         </td>

@@ -5,8 +5,6 @@ import { useState } from "react";
 const SignInSignUp = ({ Overlay, toggleOverlay }) => {
     const [isSignInMode, setIsSignInMode] = useState(true);
 
-    console.log("Overlay", Overlay, isSignInMode);
-
     const toggleMode = () => {
         setIsSignInMode((prevMode) => !prevMode);
     };

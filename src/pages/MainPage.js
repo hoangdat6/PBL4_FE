@@ -1,7 +1,6 @@
 import Sidebar from "../components/Sidebar/Sidebar";
 import Content from "./Content/Content";
 
-
 const MainPage = () => {
     return (
         <div className={`main_page d-flex flex-grow-1`}

@@ -14,8 +14,6 @@ const useSidebar = () => {
         dispatch(toggleSidebar(true));
     };
 
-
-
     return {
         isSidebarActive,
         isShowSidebar,

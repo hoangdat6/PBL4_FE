@@ -1,10 +1,19 @@
 import { useState, useEffect } from 'react';
+import {useSelector} from "react-redux";
 
-export const useCaroGame = (roomId, sendMessage, lastMessage) => {
-    const [board, setBoard] = useState(Array(16).fill().map(() => Array(16).fill(-1)));
-    const [isPlayerTurn, setIsPlayerTurn] = useState(true);
-    const [cnt, setCnt] = useState(0);
+export const useCaroGame = (roomCode, sendMove) => {
+    const playerId = useSelector((state) => state.auth.userId);
+    // kiểm tra xem lượt đi của người chơi hiện tại hay không
+    const {lastMove, startPlayerId, nthMove, boardState}  = useSelector((state) => state.caroGame);
 
+    const isTurn = (playerId === startPlayerId && nthMove % 2 === 0) || (playerId !== startPlayerId && nthMove % 2 === 1);
+    const [board, setBoard] = useState(boardState.board);
+    const [isPlayerTurn, setIsPlayerTurn] = useState(isTurn);
+    const [cnt, setCnt] = useState(nthMove);
+
+    const isPlayerStart = playerId === startPlayerId;
+
+    // xử lý khi người chơi đánh vào một nước cờ
     const handleClick = (row, col) => {
         if (board[row][col] !== -1 || !isPlayerTurn) return;
 
@@ -16,57 +25,43 @@ export const useCaroGame = (roomId, sendMessage, lastMessage) => {
             return r;
         });
         setBoard(newBoard);
-        console.log("click", row, col, roomId);
         const move = {
-            roomId: roomId,
-            playerId: "1",
-            x: col,
-            y: row,
+            col,
+            row,
+            nthMove: cnt,
         };
-        sendMessage('/app/move' , { move });
+
+        sendMove(`/app/move/${roomCode}` , move);
         setIsPlayerTurn(false);
     };
 
     useEffect(() => {
-        if (lastMessage) {
-            const { row, col, cnt } = lastMessage;
-            setCnt(cnt + 1);
+        if (lastMove) {
+            const { row, col, nthMove, win} = lastMove;
+            console.log(lastMove);
             const updatedBoard = board.map((r, rIndex) => {
                 if (rIndex === row) {
-                    return r.map((c, cIndex) => (cIndex === col ? cnt % 2 : c));
+                    return r.map((c, cIndex) => (cIndex === col ? nthMove % 2 : c));
                 }
                 return r;
             });
             setBoard(updatedBoard);
-            setIsPlayerTurn(true);
-        }
-    }, [lastMessage]);
+            setIsPlayerTurn(!((nthMove % 2 === 0 && playerId === startPlayerId) || (nthMove % 2 === 1 && playerId !== startPlayerId)))
 
-    const checkWin = (row, col) => {
-        const check = (r, c, dr, dc) => {
-            let cnt = 0;
-            while (r >= 0 && r < 16 && c >= 0 && c < 16 && board[r][c] === board[row][col]) {
-                cnt++;
-                r += dr;
-                c += dc;
+            if(win === true) {
+                if((playerId === startPlayerId && nthMove % 2 === 1) || (playerId !== startPlayerId && nthMove % 2 === 0)) {
+                    alert("You lose");
+                }else {
+                    alert("You win");
+                }
             }
-            return cnt;
+
+            setCnt(nthMove + 1);
         }
+    }, [lastMove]);
 
-        const directions = [
-            [0, 1], [1, 0], [1, 1], [1, -1]
-        ];
 
-        for (let [dr, dc] of directions) {
-            const cnt = check(row + dr, col + dc, dr, dc) + check(row - dr, col - dc, -dr, -dc) - 1;
-            if (cnt >= 5) return true;
-        }
-        return false;
-    }
-
-    const handleHover = (row, col) => {
-        
-    }
-
-    return { board, handleClick, isPlayerTurn };
+    return { board, handleClick, isPlayerTurn, isPlayerStart };
 };
+
+

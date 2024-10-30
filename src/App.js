@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import "./assets/statics/bootstrap/dist/css/bootstrap.min.css";
@@ -7,13 +7,12 @@ import "./styles/css/main.css";
 import "./styles/css/typograply.css";
 import './styles/scss/main.scss';
 import './assets/font-awesome-6-pro/font-awesome-6-pro/css/all.min.css';
-import CaroBoard from "./components/CaroBoard/CaroBoard";
-import MainPage from "./pages/MainPage";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import { initialize } from './store/slices/authSlice';
+import AppRoutes from "./AppRoutes";
 
 function App() {
     const isDarkMode = useSelector(state => state.darkMode.isDarkMode);
-    console.log(isDarkMode);
 
     if(isDarkMode) {
         document.body.classList.add('dark');
@@ -23,16 +22,14 @@ function App() {
         document.body.classList.add('light');
     }
 
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(initialize());
+    }, [dispatch]);
+
     return (
-        <div>
-            <Router>
-                <Routes>
-                    {/* Sử dụng element và truyền JSX element */}
-                    <Route path="/" element={<MainPage />} />
-                    <Route path="/room/:roomId" element={<CaroBoard />} />
-                </Routes>
-            </Router>
-        </div>
+            <AppRoutes/>
     );
 }
 

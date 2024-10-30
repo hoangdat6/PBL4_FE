@@ -15,7 +15,7 @@ export const useToast = () => {
 
     return {
         showSuccessToast: (title, message) => showToast({ title, message, type: 'success', duration: 5000 }),
-        showErrorToast: (title, message) => showToast({ title, message, type: 'error', duration: 5000 }),
+        showErrorToast: (title, message) => showToast({ title, message, type: 'error', duration: 50000 }),
         showInfoToast: (title, message) => showToast({ title, message, type: 'info', duration: 5000 }),
         showWarningToast: (title, message) => showToast({ title, message, type: 'warning', duration: 5000 }),
         ToastContainer: () => (

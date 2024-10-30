@@ -1,0 +1,58 @@
+.c_waitingRoomContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-primary);
+    color: #fff;
+    height: 100vh;
+    padding: 20px;
+    text-align: center;
+}
+
+.c_title {
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.c_linkContainer {
+    display: flex;
+    align-items: center;
+    background-color: #f5e6ca;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.c_roomLink {
+    border: none;
+    background: none;
+    font-size: 16px;
+    color: #333;
+    margin-right: 10px;
+}
+
+.c_copyButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.c_qrCodeContainer {
+    margin-bottom: 20px;
+    border: 1px solid #f5e6ca;
+}
+
+.c_leaveButton {
+    background-color: #444;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.c_leaveButton:hover {
+    background-color: #555;
+}

@@ -3,6 +3,8 @@ import styles from './Sidebar.module.scss';
 import useSidebar from "../../hooks/useSidebar";
 import useOverlay from "../../hooks/useOverlay/useOverlay";
 import SignInSignUp from "../LoginSignUp/SignInSignUp";
+import axios from "axios";
+import {useNavigate} from "react-router-dom";
 
 const Sidebar = () => {
     const { toggleOverlay, Overlay } = useOverlay();
@@ -15,7 +17,12 @@ const Sidebar = () => {
         // setLoginFormVisible,
         // isLoginFormVisible
     } = useSidebar();
+    const navigate = useNavigate();
 
+
+    const handleCreateRoom = async () => {
+        navigate('/room/waiting/');
+    };
 
     return (
         <nav
@@ -30,7 +37,7 @@ const Sidebar = () => {
                     <div className={`${styles.sidebar__login}`}>
                         <div className={`${styles.sidebar__login_link}`}>
                             <a
-                                href="#!" className={`${styles.sidebar__login_link_text} caro_btn btn_primary`}
+                                href={""} className={`${styles.sidebar__login_link_text} caro_btn btn_primary`}
                                 onClick={toggleOverlay}
                             >
                                 <i className="fa-solid fa-user"></i> Đăng nhập
@@ -38,17 +45,16 @@ const Sidebar = () => {
                         </div>
                         <div className={`${styles.sidebar__menu_cta}`}>
                             <div className={`${styles.sidebar__menu_cta_item}`}>
-                                <a href="#!">
+                                <a href={""}>
                                     <i className="fa-sharp fa-regular fa-bell"></i>
                                 </a>
                             </div>
                             <div className={`${styles.sidebar__menu_cta_item}`}>
-                                <a
-                                    href="#!"
+                                <button
                                     onClick={handleToggleSidebar}
                                 >
                                     <i className="fa-solid fa-sidebar"></i>
-                                </a>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -57,7 +63,7 @@ const Sidebar = () => {
                 <div className={`${styles.sidebar__menu}`}>
                     <nav className={`${styles.sidebar__nav}`}>
                         <div className={`${styles.sidebar__nav_item}`} title="Bạn bè">
-                            <a href="#!" className={`${styles.sidebar__nav_link} d-flex align-items-center`}>
+                            <a href={""} className={`${styles.sidebar__nav_link} d-flex align-items-center`}>
                                 <div className={`${styles.sidebar__nav_icon}`}>
                                     <i className="fa-solid fa-user-group"></i>
                                 </div>
@@ -65,7 +71,7 @@ const Sidebar = () => {
                             </a>
                         </div>
                         <div className={`${styles.sidebar__nav_item}`} title="Lịch sử">
-                            <a href="#!" className={`${styles.sidebar__nav_link} d-flex align-items-center`}>
+                            <a href={""} className={`${styles.sidebar__nav_link} d-flex align-items-center`}>
                                 <div className={`${styles.sidebar__nav_icon}`}>
                                     <i className="fa-solid fa-clock-rotate-left"></i>
                                 </div>
@@ -73,7 +79,7 @@ const Sidebar = () => {
                             </a>
                         </div>
                         <div className={`${styles.sidebar__nav_item}`} title="Bảng xếp hạng">
-                            <a href="#!" className={`${styles.sidebar__nav_link} d-flex align-items-center`}>
+                            <a href={""} className={`${styles.sidebar__nav_link} d-flex align-items-center`}>
                                 <div className={`${styles.sidebar__nav_icon}`}>
                                     <i className="fa-solid fa-trophy"></i>
                                 </div>
@@ -81,7 +87,7 @@ const Sidebar = () => {
                             </a>
                         </div>
                         <div className={`${styles.sidebar__nav_item}`} title="Nhắn tin">
-                            <a href="#!" className={`${styles.sidebar__nav_link} d-flex align-items-center`}>
+                            <a href={""} className={`${styles.sidebar__nav_link} d-flex align-items-center`}>
                                 <div className={`${styles.sidebar__nav_icon}`}>
                                     <i className="fa-solid fa-messages"></i>
                                 </div>
@@ -92,7 +98,7 @@ const Sidebar = () => {
 
                     <nav className={`${styles.sidebar__nav}`}>
                         <div className={`${styles.sidebar__nav_item}`} title="Chơi trực tuyến">
-                            <a href="#!" className={`${styles.sidebar__nav_link} d-flex align-items-center`}>
+                            <a href={""} className={`${styles.sidebar__nav_link} d-flex align-items-center`}>
                                 <div className={`${styles.sidebar__nav_icon}`}>
                                     <i className="fa-solid fa-earth-americas"></i>
                                 </div>
@@ -100,7 +106,7 @@ const Sidebar = () => {
                             </a>
                         </div>
                         <div className={`${styles.sidebar__nav_item}`} title="Đấu với máy">
-                            <a href="#!" className={`${styles.sidebar__nav_link} d-flex align-items-center`}>
+                            <a href={""} className={`${styles.sidebar__nav_link} d-flex align-items-center`}>
                                 <div className={`${styles.sidebar__nav_icon}`}>
                                     <i className="fa-solid fa-user-robot"></i>
                                 </div>
@@ -108,7 +114,9 @@ const Sidebar = () => {
                             </a>
                         </div>
                         <div className={`${styles.sidebar__nav_item}`} title="Chơi với bạn bè">
-                            <a href="#!" className={`${styles.sidebar__nav_link} d-flex align-items-center`}>
+                            <a href={""} className={`${styles.sidebar__nav_link} d-flex align-items-center`}
+                               onClick={handleCreateRoom}
+                            >
                                 <div className={`${styles.sidebar__nav_icon}`}>
                                     <i className="fa-solid fa-people-arrows"></i>
                                 </div>
@@ -116,18 +124,26 @@ const Sidebar = () => {
                             </a>
                         </div>
                         <div className={`${styles.sidebar__nav_item}`} title="Tạo giải đấu">
-                            <a href="#!" className={`${styles.sidebar__nav_link} d-flex align-items-center`}>
+                            <a href={""} className={`${styles.sidebar__nav_link} d-flex align-items-center`}>
                                 <div className={`${styles.sidebar__nav_icon}`}>
                                     <i className="fa-solid fa-circle-plus"></i>
                                 </div>
                                 <span className={`${styles.sidebar__nav_text}`}> Tạo giải đấu </span>
                             </a>
                         </div>
+                        <div className={`${styles.sidebar__nav_item}`} title="Tạo giải đấu">
+                            <a href={""} className={`${styles.sidebar__nav_link} d-flex align-items-center`}>
+                                <div className={`${styles.sidebar__nav_icon}`}>
+                                    <i className="fa-solid fa-circle-plus"></i>
+                                </div>
+                                <span className={`${styles.sidebar__nav_text}`}> Phòng hoạt động </span>
+                            </a>
+                        </div>
                     </nav>
 
                     <nav className={`${styles.sidebar__nav}`}>
                         <div className={`${styles.sidebar__nav_item}`} title="Luật chơi">
-                            <a href="#!" className={`${styles.sidebar__nav_link} d-flex align-items-center`}>
+                            <a href={""} className={`${styles.sidebar__nav_link} d-flex align-items-center`}>
                                 <div className={`${styles.sidebar__nav_icon}`}>
                                     <i className="fa-solid fa-book-tanakh"></i>
                                 </div>
@@ -138,7 +154,7 @@ const Sidebar = () => {
 
                     <nav className={`${styles.sidebar__nav}`}>
                         <div className={`${styles.sidebar__nav_item}`} title="Cửa hàng">
-                            <a href="#!" className={`${styles.sidebar__nav_link} d-flex align-items-center`}>
+                            <a href={""} className={`${styles.sidebar__nav_link} d-flex align-items-center`}>
                                 <div className={`${styles.sidebar__nav_icon}`}>
                                     <i className="fa-solid fa-cart-shopping"></i>
                                 </div>
@@ -146,7 +162,7 @@ const Sidebar = () => {
                             </a>
                         </div>
                         <div className={`${styles.sidebar__nav_item}`} title="Tài khoản của tôi">
-                            <a href="#!" className={`${styles.sidebar__nav_link} d-flex align-items-center`}>
+                            <a href={""} className={`${styles.sidebar__nav_link} d-flex align-items-center`}>
                                 <div className={`${styles.sidebar__nav_icon}`}>
                                     <i className="fa-thin fa-user"></i>
                                 </div>
@@ -154,7 +170,7 @@ const Sidebar = () => {
                             </a>
                         </div>
                         <div className={`${styles.sidebar__nav_item}`} title="Hồ sơ của tôi">
-                            <a href="#!" className={`${styles.sidebar__nav_link} d-flex align-items-center`}>
+                            <a href={""} className={`${styles.sidebar__nav_link} d-flex align-items-center`}>
                                 <div className={`${styles.sidebar__nav_icon}`}>
                                     <i className="fa-solid fa-link"></i>
                                 </div>
@@ -162,7 +178,7 @@ const Sidebar = () => {
                             </a>
                         </div>
                         <div className={`${styles.sidebar__nav_item}`} title="Cài đặt">
-                            <a href="#!" className={`${styles.sidebar__nav_link} d-flex align-items-center`}>
+                            <a href={""} className={`${styles.sidebar__nav_link} d-flex align-items-center`}>
                                 <div className={`${styles.sidebar__nav_icon}`}>
                                     <i className="fa-solid fa-gear"></i>
                                 </div>

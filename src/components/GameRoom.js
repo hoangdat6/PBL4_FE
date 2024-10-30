@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ChatMessage from './ChatMessage';
 import ScoreInput from './ScoreInput';
-import useWebSocket from '../hooks/useWebSocket';
+import useWebSocket from '../hooks/useGameWebSocket';
 import '../styles/GameRoom.css';
 
 const GameRoom = () => {
