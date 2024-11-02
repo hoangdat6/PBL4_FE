@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import styles from "./CaroBoardUI.module.scss";
 import Checker3 from "../../../assets/statics/imgs/checker3.svg";
 import Checker4 from "../../../assets/statics/imgs/checker4.svg";
+import ParticipantType from "../../../enums/participantType";
 
-const CaroBoardUI = ({ board, handleClick, isStartPlayer }) => {
-    const [hoveredCell, setHoveredCell] = useState(null); // State để theo dõi ô đang hover
+const CaroBoardUI = ({ board, handleClick, isStartPlayer, participantType }) => {
+    const [hoveredCell, setHoveredCell] = useState(null);
 
+    console.log(participantType)
     return (
         <table className={styles.boardTable}>
             <tbody>
@@ -16,14 +18,24 @@ const CaroBoardUI = ({ board, handleClick, isStartPlayer }) => {
                             <button
                                 className={styles.boardButton}
                                 onClick={() => handleClick(rowIndex, colIndex)}
-                                onMouseEnter={() => setHoveredCell({ rowIndex, colIndex })} // Set ô đang hover
-                                onMouseLeave={() => setHoveredCell(null)} // Reset khi rời khỏi ô
+                                {...(participantType === ParticipantType.SPECTATOR && { disabled: true })} // Disable nếu là khán giả
+                                onMouseEnter={() => {
+                                    if (participantType !== ParticipantType.SPECTATOR) {
+                                        setHoveredCell({ rowIndex, colIndex });
+                                    }
+                                }}
+                                onMouseLeave={() => {
+                                    if (participantType !== ParticipantType.SPECTATOR) {
+                                        setHoveredCell(null);
+                                    }
+                                }}
                             >
                                 {/* Hiển thị icon nếu ô đã được đánh */}
                                 {cell !== -1 ? (cell === 0 ? <img src={Checker4} alt="checker" /> : <img src={Checker3} alt="checker" />) : ""}
 
                                 {/* Hiển thị icon nếu đang hover */}
-                                {hoveredCell?.rowIndex === rowIndex && hoveredCell?.colIndex === colIndex && cell === -1 ? (
+
+                                {participantType === ParticipantType.PLAYER && hoveredCell?.rowIndex === rowIndex && hoveredCell?.colIndex === colIndex && cell === -1 ? (
                                     isStartPlayer ? <img src={Checker4} alt="checker" /> : <img src={Checker3} alt="checker" />
                                 ) : (
                                     ""

@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from "./MainLayout.module.scss";
-const Sidebar = React.lazy(() => import('../components/Sidebar/Sidebar'));
-const Header = React.lazy(() => import('../components/Header/Header'));
+import Sidebar from '../components/Sidebar/Sidebar';
+import Header from "../components/Header/Header";
 
 const MainLayout = ({ children }) => {
     return (

@@ -34,6 +34,7 @@ const SignUp = ({toggleOverlay, onSignUp}) => {
         onSubmit: (values) => {
             console.log("Form data", values);
             // Xử lý đăng ký tại đây
+            toggleOverlay();
         },
     });
 
@@ -47,10 +48,6 @@ const SignUp = ({toggleOverlay, onSignUp}) => {
             <div className={styles.c__container}>
                 <div className={styles.c__header}>
                     <h2 className={styles.c__title}>Đăng ký</h2>
-                    <i
-                        className={`fa-solid fa-close ${styles.c__close_icon}`}
-                        onClick={toggleOverlay}
-                    ></i>
                 </div>
                 <form className={styles.c__form} onSubmit={formik.handleSubmit}>
                     <div className={styles.c__form_group}>

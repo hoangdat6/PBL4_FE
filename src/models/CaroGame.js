@@ -1,3 +1,5 @@
+import ParticipantType  from "../enums/participantType";
+
 class CaroGame {
     constructor(roomCode, startPlayerId, nthMove, board, size, winLength) {
         this.roomCode = roomCode;
@@ -31,7 +33,7 @@ class CaroGame {
             roomCode: this.roomCode,
             startPlayerId: this.startPlayerId,
             nthMove: this.nthMove,
-            boardState: this.boardState
+            boardState: this.boardState,
         };
     }
 }

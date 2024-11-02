@@ -8,10 +8,13 @@ import styles from '../Common.module.scss';
 import GoogleIcon from '../../../assets/statics/imgs/SignIn/icons8-google.svg';
 import FacebookIcon from '../../../assets/statics/imgs/SignIn/icons8-facebook.svg';
 import AppleIcon from '../../../assets/statics/imgs/SignIn/icons8-apple.svg';
+import {useLocation, useNavigate} from "react-router-dom";
 
 
-const SignIn = ({ toggleOverlay, onSignUp }) => {
+const SignIn = ({ toggleOverlay, onSignUp, handleLoginSuccess }) => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const location = useLocation();
 
     const validationSchema = Yup.object({
         email: Yup.string().email('Email không hợp lệ').required('Vui lòng nhập email'),
@@ -25,8 +28,9 @@ const SignIn = ({ toggleOverlay, onSignUp }) => {
         },
         validationSchema,
         onSubmit: (values) => {
-            console.log('values', values);
+            handleLoginSuccess();
             dispatch(loginUser(JSON.stringify(values)));
+            toggleOverlay();
         },
     });
 
@@ -35,15 +39,12 @@ const SignIn = ({ toggleOverlay, onSignUp }) => {
         onSignUp();
     };
 
+
     return (
         <form onSubmit={formik.handleSubmit} className={`${styles.c}`}>
             <div className={`${styles.c__container}`}>
                 <div className={`${styles.c__header}`}>
                     <h2 className={`${styles.c__title}`}>Bạn đã trở lại?</h2>
-                    <i
-                        className={`fa-solid fa-close ${styles.c__close_icon}`}
-                        onClick={toggleOverlay}
-                    ></i>
                 </div>
                 <div className={`${styles.c__form}`}>
                     <div className={`${styles.c__form_group}`}>

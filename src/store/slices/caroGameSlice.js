@@ -1,12 +1,19 @@
 import { createSlice } from '@reduxjs/toolkit';
-import CaroGame from '../../models/CaroGame';
+import ParticipantType from "../../enums/participantType";
 
 const caroGameSlice = createSlice({
     name: 'caroGame',
     initialState: {
+
         roomCode: null,
         startPlayerId: null,
         nthMove: 0,
+        participantType: null,
+        roomConfig: {
+            timeLimitForMove: 0,
+            timeLimitForMatch: 0,
+            firstMoveOption: null,
+        },
         boardState: {
             board: [],
             size: 16,
@@ -21,11 +28,19 @@ const caroGameSlice = createSlice({
             state.startPlayerId = startPlayerId;
             state.nthMove = nthMove;
             state.boardState = boardState;
+            state.lastMove = null;
+        },
+        setRoomConfig: (state, action) => {
+            state.roomConfig.timeLimitForMove = action.payload.timeLimitForMove;
+            state.roomConfig.timeLimitForMatch = action.payload.timeLimitForMatch;
+            state.roomConfig.firstMoveOption = action.payload.firstMoveOption;
+        },
+        setParticipantType: (state, action) => {
+            state.participantType = action.payload === "PLAYER" ? ParticipantType.PLAYER : ParticipantType.SPECTATOR;
         },
         setRoomCode: (state, action) => {
             state.roomCode = action.payload;
-        }
-        ,
+        },
         addMove: (state, action) => {
             state.lastMove = action.payload;
         },
@@ -35,5 +50,5 @@ const caroGameSlice = createSlice({
     },
 });
 
-export const { setGameState, setRoomCode,  addMove, resetGame,  } = caroGameSlice.actions;
+export const { setGameState, setRoomCode,  addMove, resetGame, setRoomConfig,setParticipantType } = caroGameSlice.actions;
 export default caroGameSlice.reducer;

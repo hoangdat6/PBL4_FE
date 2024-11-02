@@ -2,7 +2,6 @@ import React from 'react';
 import {useFormik} from 'formik';
 import * as Yup from 'yup';
 import {useNavigate} from "react-router-dom";
-import {useToast} from "../../hooks/useToast/useToast";
 
 import styles from './RoomCodePopup.module.scss';
 

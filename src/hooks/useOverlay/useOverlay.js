@@ -11,30 +11,28 @@ const useOverlay = () => {
         setOverlay(!overlay);
     };
 
-    const Overlay = ({ children, width, height, closeHidden = true, overlayClickHidden = true, backColor = "rgba(255, 255, 255, 0.2)"}) => {
+    const Overlay = ({ children, width, height, closeHidden = false, overlayClickHidden = true, backColor = "rgba(0, 0, 0, 0.7)" }) => {
         return createPortal(
             <div
-                id={`c_overlay`}
+                id="c_overlay"
                 {...(overlayClickHidden ? { onClick: toggleOverlay } : {})}
                 className={`${styles.c_overlay} ${overlay ? styles.active : ""}`}
                 style={{
-                    backgroundColor: backColor
+                    backgroundColor: backColor,
                 }}
             >
-                <div>
-                    {!closeHidden &&
-                        <FontAwesomeIcon
-                            icon={faClose}
-                            className={`${styles.close}`}
-                            onClick={toggleOverlay}
-                        />
-                    }
-                </div>
                 <div
                     className={`${styles.overlay_content}`}
                     style={{ width, height }}
                     onClick={(e) => e.stopPropagation()}
                 >
+                    {!closeHidden && (
+                        <FontAwesomeIcon
+                            icon={faClose}
+                            className={styles.close}
+                            onClick={toggleOverlay}
+                        />
+                    )}
                     {children}
                 </div>
             </div>,

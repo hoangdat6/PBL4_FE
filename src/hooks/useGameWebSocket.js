@@ -2,10 +2,10 @@ import { useEffect, useState, useCallback, useRef } from 'react';
 import { Client } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
 import CaroGame from '../models/CaroGame';
-import {useDispatch} from "react-redux";
-import {addMove, setGameState} from "../store/slices/caroGameSlice"; // Import the CaroGame class
+import {useDispatch, useSelector} from "react-redux";
+import { addMove, setGameState } from "../store/slices/caroGameSlice";
 
-const useGameWebSocket = (roomCode, playerId) => {
+const useGameWebSocket = () => {
     const stompClient = useRef(null);
     const dispatch = useDispatch();
     const [moves, setMoves] = useState([]);
@@ -13,7 +13,9 @@ const useGameWebSocket = (roomCode, playerId) => {
     const [loading, setLoading] = useState(true);
     const [isConnected, setIsConnected] = useState(false);
 
-    const connect = useCallback(() => {
+    const connect = (roomCode, playerId) => {
+        if (!roomCode || !playerId) return; // Đảm bảo có roomCode và playerId trước khi kết nối
+
         const socket = new SockJS(`http://localhost:8080/caro-game?roomCode=${roomCode}`);
         const client = new Client({
             connectHeaders: {
@@ -39,7 +41,7 @@ const useGameWebSocket = (roomCode, playerId) => {
                         gameStart.nthMove,
                         gameStart.boardState.board,
                         gameStart.boardState.size,
-                        gameStart.boardState.winLength
+                        gameStart.boardState.winLength,
                     );
                     console.log("Game state: ", newCaroGame.getCurrentState());
                     dispatch(setGameState(newCaroGame.getCurrentState()));
@@ -50,18 +52,15 @@ const useGameWebSocket = (roomCode, playerId) => {
                 stompClient.current = client;
             },
             onStompError: (frame) => {
-                console.error('Broker reported error: ' + frame.headers['message']);
-                console.error('Additional details: ' + frame.body);
                 setLoading(false);
             },
             onWebSocketClose: () => {
-                console.log("WebSocket connection closed");
                 setLoading(false);
             }
         });
 
         client.activate();
-    }, [roomCode, playerId]);
+    };
 
     const sendMove = (destination, move) => {
         if (stompClient.current) {
@@ -69,30 +68,21 @@ const useGameWebSocket = (roomCode, playerId) => {
         }
     };
 
-    const sendMessage = (msg) => {
+    const sendMessage = (destination, msg) => {
         if (stompClient.current && stompClient.current.connected) {
-            stompClient.current.send(`/app/message/${roomCode}`, {}, JSON.stringify(msg));
-        }
-    };
-
-    const joinRoom = () => {
-        if (stompClient.current) {
-            stompClient.current.publish({ destination: `/app/join-room`, body: JSON.stringify({ roomCode }) });
+            stompClient.current.send({destination: destination}, {}, JSON.stringify(msg));
         }
     };
 
     useEffect(() => {
-        if (roomCode) {
-            connect();
-        }
         return () => {
             if (stompClient.current) {
                 stompClient.current.deactivate();
             }
         };
-    }, [roomCode, connect]);
+    }, []);
 
-    return { moves, isGameStarted, sendMove, joinRoom, isConnected, loading, stompClient };
+    return { moves, isGameStarted, sendMove, isConnected, loading, connect, stompClient };
 };
 
 export default useGameWebSocket;

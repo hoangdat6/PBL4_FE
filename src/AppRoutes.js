@@ -1,10 +1,9 @@
-import {createBrowserRouter, Outlet, RouterProvider} from "react-router-dom";
-import JoinRoom from "./pages/JoinRoom/JoinRoom";
-import CreateRoom from "./pages/CreateRoom/CreateRoom";
+import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import React from "react";
 import LayoutWrapper from "./layouts/LayoutWrapper";
 import HomePage from "./components/HomePage/HomePage";
 import PrivateRoute from "./components/PrivateRoute";
+import JoinRoomCopy from "./pages/JoinRoom/JoinRoomCopy";
 
 const routes = createBrowserRouter([
     {
@@ -22,37 +21,17 @@ const routes = createBrowserRouter([
     },
     {
         path: "/room" ,
-        // element: (
-        //     <LayoutWrapper layoutType={'mainPage'}>
-        //         <div>room</div>
-        //     </LayoutWrapper>
-        // ),
-        errorElement: (
-            <LayoutWrapper layoutType={'default'}>
-                <div>404</div>
-            </LayoutWrapper>
-        ),
         children: [
             {
                 path: ":roomCode",
                 element: (
                     <PrivateRoute>
                         <LayoutWrapper layoutType={'default'}>
-                            <JoinRoom/>
+                            <JoinRoomCopy/>
                         </LayoutWrapper>
                     </PrivateRoute>
                 )
             },
-            {
-                path: "waiting",
-                element: (
-                    <PrivateRoute>
-                        <LayoutWrapper layoutType={'default'}>
-                            <CreateRoom/>
-                        </LayoutWrapper>
-                    </PrivateRoute>
-                )
-            }
         ]
     },
 

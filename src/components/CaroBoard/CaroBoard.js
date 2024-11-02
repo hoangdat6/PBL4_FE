@@ -1,7 +1,6 @@
-import React, {useEffect} from 'react';
-import {useNavigate, useParams} from 'react-router-dom'; // Để lấy roomCode từ URL
+import React from 'react';
+import {useParams} from 'react-router-dom'; // Để lấy roomCode từ URL
 import styles from './CaroBoard.module.scss';
-import useWebSocket from "../../hooks/useGameWebSocket";
 import { useCaroGame } from '../../hooks/useCaroGame';
 import PlayerInfo from "./PlayerInfo/PlayerInfo";
 import CaroBoardUI from "./CaroBoardUI/CaroBoardUI";
@@ -11,9 +10,6 @@ import Avatar from "../../assets/statics/imgs/Avatar.png";
 import Rank from "../../assets/statics/imgs/Rank.svg";
 import checker1 from "../../assets/statics/imgs/checker1.svg";
 import checker2 from "../../assets/statics/imgs/checker2.svg";
-import useGameWebSocket from "../../hooks/useGameWebSocket";
-import Loading from "../Loading/Loading";
-import {useSelector} from "react-redux";
 
 const player1 = {
     playerName: "Hoang Dat",
@@ -36,8 +32,7 @@ const player2 = {
 
 const CaroBoard = ({sendMove, handleLeaveRoom}) => {
     const { roomCode } = useParams();
-    const { board, handleClick, isPlayerStart } = useCaroGame(roomCode, sendMove);
-    const userId = useSelector((state) => state.auth.userId);
+    const { board, handleClick, isPlayerStart, roomConfig, participantType } = useCaroGame(roomCode, sendMove);
 
     return (
         <section className={styles.boardSection}>
@@ -62,6 +57,7 @@ const CaroBoard = ({sendMove, handleLeaveRoom}) => {
                 board={board}
                 handleClick={handleClick}
                 isStartPlayer={isPlayerStart}
+                participantType={participantType}
             />
 
             {/* Nút rời khỏi phòng */}

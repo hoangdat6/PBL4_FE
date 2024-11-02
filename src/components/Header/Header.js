@@ -5,13 +5,11 @@ import {showSidebar} from "../../store/slices/sidebarSlice";
 import useOverlay from "../../hooks/useOverlay/useOverlay";
 import RoomCodePopup from "../RoomCodePopup/RoomCodePopup";
 import {toggleDarkMode} from "../../store/slices/darkModeSlice";
-import {useToast} from "../../hooks/useToast/useToast";
 
 const Header = () => {
     const { toggleOverlay, Overlay} = useOverlay();
     const isDarkMode = useSelector(state => state.darkMode.isDarkMode);
 
-    const {showErrorToast, showSuccessToast, ToastContainer} = useToast();
 
     const dispatch = useDispatch();
 
@@ -23,9 +21,6 @@ const Header = () => {
         dispatch(toggleDarkMode());
     }
 
-    const handle = () => {
-        showErrorToast("Error", "Error message");
-    }
 
     return (
         <header className={`${styles.c_header}`}>
@@ -38,6 +33,7 @@ const Header = () => {
                     toggleOverlay={toggleOverlay}
                 />
             </Overlay>
+
             <div className={`${styles.c_header__container}`}>
                 <div
                     className={`${styles.c_header__menu_icon}`}
@@ -57,10 +53,8 @@ const Header = () => {
                         </div>
                         <div className={`${styles.c_header__action_item}`}>
                             <a href="#!" className="caro_btn btn_secondary"
-                               onClick={handle}
                             >
                                 <i className="fa-regular fa-user"></i>
-
                                 Tìm trận
                             </a>
                         </div>

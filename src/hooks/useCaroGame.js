@@ -4,7 +4,7 @@ import {useSelector} from "react-redux";
 export const useCaroGame = (roomCode, sendMove) => {
     const playerId = useSelector((state) => state.auth.userId);
     // kiểm tra xem lượt đi của người chơi hiện tại hay không
-    const {lastMove, startPlayerId, nthMove, boardState}  = useSelector((state) => state.caroGame);
+    const {lastMove, startPlayerId, nthMove, boardState, participantType, roomConfig}  = useSelector((state) => state.caroGame);
 
     const isTurn = (playerId === startPlayerId && nthMove % 2 === 0) || (playerId !== startPlayerId && nthMove % 2 === 1);
     const [board, setBoard] = useState(boardState.board);
@@ -47,6 +47,7 @@ export const useCaroGame = (roomCode, sendMove) => {
             });
             setBoard(updatedBoard);
             setIsPlayerTurn(!((nthMove % 2 === 0 && playerId === startPlayerId) || (nthMove % 2 === 1 && playerId !== startPlayerId)))
+            setCnt(nthMove + 1);
 
             if(win === true) {
                 if((playerId === startPlayerId && nthMove % 2 === 1) || (playerId !== startPlayerId && nthMove % 2 === 0)) {
@@ -56,12 +57,11 @@ export const useCaroGame = (roomCode, sendMove) => {
                 }
             }
 
-            setCnt(nthMove + 1);
         }
     }, [lastMove]);
 
 
-    return { board, handleClick, isPlayerTurn, isPlayerStart };
+    return { board, handleClick, isPlayerTurn, isPlayerStart, roomConfig, participantType };
 };
 
 

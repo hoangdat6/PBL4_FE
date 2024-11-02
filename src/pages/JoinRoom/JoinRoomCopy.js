@@ -7,8 +7,11 @@ import { useSnackbar } from "../../hooks/useSnackbar";
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import axios from "axios";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import useLeaveRoom from "../../hooks/useLeaveRoom";
+import JoinRoomResponse from "../../models/JoinRoomResponse";
+import WaitingRoom from "../../components/WaitingRoom/WaitingRoom";
+import {setParticipantType, setRoomConfig} from "../../store/slices/caroGameSlice";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -18,14 +21,15 @@ const JoinRoom = () => {
     const navigate = useNavigate();
     const { roomCode } = useParams(); // Lấy roomCode từ URL
     const [isJoined, setIsJoined] = useState(false);
-    const [roomCodeResponse, setRoomCode] = useState(null);
     const [hasProcessedResponse, setHasProcessedResponse] = useState(false);
     const playerId = useSelector((state) => state.auth.userId);
+    const [joinRoomState, setJoinRoomState] = useState(new JoinRoomResponse());
+    const dispatch = useDispatch();
 
     const { open, message, autoHideDuration, openSnackbar, closeSnackbar, stompClient } = useSnackbar();
 
     // Kết nối WebSocket khi roomCode có giá trị
-    const { sendMove, isConnected, connect} = useGameWebSocket();
+    const { sendMove, isConnected, connect, isGameStarted} = useGameWebSocket();
 
     useEffect(() => {
         connect(roomCode, playerId);
@@ -45,7 +49,14 @@ const JoinRoom = () => {
                 playerId: playerId,
             }
         }).then((response) => {
-            setRoomCode(response.data.roomCode);
+            const joinRoomState = new JoinRoomResponse(
+                response.data.roomCode,
+                response.data.participantType,
+                response.data.isStarted,
+            )
+            console.log(joinRoomState);
+            dispatch(setParticipantType(joinRoomState.participantType));
+            setJoinRoomState(joinRoomState);
         }).catch((error) => {
             if (error.response) {
                 console.error('Error joining room:', error.response.data);
@@ -54,12 +65,7 @@ const JoinRoom = () => {
             }
             navigate('/');
         });
-
     }
-
-    useEffect(() => {
-        connect();
-    }, []);
 
     // Join room
     useEffect(() => {
@@ -72,8 +78,8 @@ const JoinRoom = () => {
 
     // Xử lý kết quả join room
     useEffect(() => {
-        if (roomCodeResponse !== null && !hasProcessedResponse) {
-            if (!roomCodeResponse) {
+        if (joinRoomState !== null && !hasProcessedResponse) {
+            if (!joinRoomState) {
                 openSnackbar('Failed to join room. Redirecting to home page.');
                 leaveRoomHandler();
             } else {
@@ -82,24 +88,28 @@ const JoinRoom = () => {
             }
             setHasProcessedResponse(true);
         }
-    }, [roomCodeResponse, hasProcessedResponse, navigate, openSnackbar]);
-
+    }, [joinRoomState, hasProcessedResponse, navigate, openSnackbar]);
 
     return (
         <>
-            {isJoined ? (
-                <div>
-                    <CaroBoard
-                        sendMove={sendMove}
-                        handleLeaveRoom={leaveRoomHandler}
-                    />
-                    <Snackbar open={open} autoHideDuration={autoHideDuration} onClose={closeSnackbar}>
-                        <Alert onClose={closeSnackbar} severity="error" sx={{ width: '100%' }}>
-                            {message}
-                        </Alert>
-                    </Snackbar>
-                </div>
-            ) : <Loading />}
+            {!isJoined ? <Loading/> : <div>
+                {joinRoomState.isStarted == true || isGameStarted ? (
+                    <div>
+                        <CaroBoard
+                            sendMove={sendMove}
+                            handleLeaveRoom={leaveRoomHandler}
+                        />
+                        <Snackbar open={open} autoHideDuration={autoHideDuration} onClose={closeSnackbar}>
+                            <Alert onClose={closeSnackbar} severity="error" sx={{width: '100%'}}>
+                                {message}
+                            </Alert>
+                        </Snackbar>
+                    </div>
+                ) : (
+                    <WaitingRoom roomCode={roomCode} handleLeaveRoom={leaveRoomHandler}/>
+                )}
+            </div>
+            }
         </>
     );
 };
