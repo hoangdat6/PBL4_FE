@@ -12,6 +12,7 @@ import checker1 from "../../assets/statics/imgs/checker1.svg";
 import checker2 from "../../assets/statics/imgs/checker2.svg";
 
 const player1 = {
+    playerId: 1,
     playerName: "Hoang Dat",
     time: "05:00",
     score: "0",
@@ -22,6 +23,7 @@ const player1 = {
 };
 
 const player2 = {
+    playerId: 2,
     playerName: "Hoang Dat",
     time: "05:00",
     score: "0",
@@ -32,7 +34,8 @@ const player2 = {
 
 const CaroBoard = ({sendMove, handleLeaveRoom}) => {
     const { roomCode } = useParams();
-    const { board, handleClick, isPlayerStart, roomConfig, participantType } = useCaroGame(roomCode, sendMove);
+    const { board, handleClick, isPlayerStart, roomConfig, participantType, playersInfo } = useCaroGame(roomCode, sendMove);
+
 
     return (
         <section className={styles.boardSection}>
@@ -61,7 +64,7 @@ const CaroBoard = ({sendMove, handleLeaveRoom}) => {
             />
 
             {/* Nút rời khỏi phòng */}
-            <button className={styles.leaveButton} onClick={() => {handleLeaveRoom()}}>
+            <button className={styles.leave_button} onClick={() => {handleLeaveRoom()}}>
                 Rời khỏi phòng
             </button>
         </section>

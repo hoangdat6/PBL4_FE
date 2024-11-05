@@ -10,6 +10,7 @@ import './assets/font-awesome-6-pro/font-awesome-6-pro/css/all.min.css';
 import {useDispatch, useSelector} from "react-redux";
 import { initialize } from './store/slices/authSlice';
 import AppRoutes from "./AppRoutes";
+import useViewportHeight from "./hooks/useViewportHeight";
 
 function App() {
     const isDarkMode = useSelector(state => state.darkMode.isDarkMode);
@@ -27,9 +28,12 @@ function App() {
     useEffect(() => {
         dispatch(initialize());
     }, [dispatch]);
+    useViewportHeight();
 
     return (
+        <div className={"app-container"}>
             <AppRoutes/>
+        </div>
     );
 }
 

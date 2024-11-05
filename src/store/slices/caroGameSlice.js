@@ -4,9 +4,10 @@ import ParticipantType from "../../enums/participantType";
 const caroGameSlice = createSlice({
     name: 'caroGame',
     initialState: {
-
         roomCode: null,
         startPlayerId: null,
+        playerId1: null,
+        playerId2: null,
         nthMove: 0,
         participantType: null,
         roomConfig: {
