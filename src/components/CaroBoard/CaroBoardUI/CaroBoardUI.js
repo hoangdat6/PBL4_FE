@@ -4,7 +4,7 @@ import Checker3 from "../../../assets/statics/imgs/checker3.svg";
 import Checker4 from "../../../assets/statics/imgs/checker4.svg";
 import ParticipantType from "../../../enums/participantType";
 
-const CaroBoardUI = ({ board, handleClick, isStartPlayer, participantType }) => {
+const CaroBoardUI = ({ board, handleClick, isStartPlayer, participantType, sendMove }) => {
     const [hoveredCell, setHoveredCell] = useState(null);
 
     console.log(participantType)
@@ -18,7 +18,7 @@ const CaroBoardUI = ({ board, handleClick, isStartPlayer, participantType }) => 
                             <button
                                 className={styles.boardButton}
                                 onClick={() => handleClick(rowIndex, colIndex)}
-                                {...(participantType === ParticipantType.SPECTATOR && { disabled: true })} // Disable nếu là khán giả
+                                {...(participantType === ParticipantType.SPECTATOR && { disabled: true })}
                                 onMouseEnter={() => {
                                     if (participantType !== ParticipantType.SPECTATOR) {
                                         setHoveredCell({ rowIndex, colIndex });

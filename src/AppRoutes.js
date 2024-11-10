@@ -3,7 +3,7 @@ import React from "react";
 import LayoutWrapper from "./layouts/LayoutWrapper";
 import HomePage from "./components/HomePage/HomePage";
 import PrivateRoute from "./components/PrivateRoute";
-import JoinRoomCopy from "./pages/JoinRoom/JoinRoomCopy";
+import JoinRoom from "./pages/JoinRoom/JoinRoom";
 
 const routes = createBrowserRouter([
     {
@@ -27,7 +27,7 @@ const routes = createBrowserRouter([
                 element: (
                     <PrivateRoute>
                         <LayoutWrapper layoutType={'default'}>
-                            <JoinRoomCopy/>
+                            <JoinRoom/>
                         </LayoutWrapper>
                     </PrivateRoute>
                 )

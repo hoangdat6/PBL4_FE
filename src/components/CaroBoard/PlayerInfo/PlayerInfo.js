@@ -5,7 +5,6 @@ import styles from './PlayerInfo.module.scss';
 const PlayerInfo = ({playerName, time, score, avatar, rankIcon, checkers, reverse}) => (
 
     <div className={`${styles.player} ${reverse ? "flex-row-reverse" : ""}`}>
-    {/*<div className={`${reverse ? "flex-row-reverse" : ""}`}>*/}
         <div className={`${styles.player_info_container} ${reverse ? "flex-row-reverse" : ""}`}>
             <div className={`${styles.player_score}`}>
                 <span>{score}</span>

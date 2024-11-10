@@ -1,9 +1,12 @@
-import { useEffect, useState, useCallback, useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { Client } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
 import CaroGame from '../models/CaroGame';
-import {useDispatch, useSelector} from "react-redux";
-import { addMove, setGameState } from "../store/slices/caroGameSlice";
+import { useDispatch } from "react-redux";
+import { addMove, setGameState } from "../store/slices/RoomSlice";
+import { GAME_PROGRESS_TOPIC, GAME_STATE_TOPIC, GAME_END_TOPIC, PLAY_AGAIN_TOPIC } from '../constants/socketEndpoint';
+
+const SOCKET_URL = process.env.REACT_APP_SOCKET_URL;
 
 const useGameWebSocket = () => {
     const stompClient = useRef(null);
@@ -12,11 +15,14 @@ const useGameWebSocket = () => {
     const [isGameStarted, setIsGameStarted] = useState(false);
     const [loading, setLoading] = useState(true);
     const [isConnected, setIsConnected] = useState(false);
+    const [winner, setWinner] = useState(null);
+    const [playAgain, setPlayAgain] = useState(false);
+
 
     const connect = (roomCode, playerId) => {
-        if (!roomCode || !playerId) return; // Đảm bảo có roomCode và playerId trước khi kết nối
+        if (!roomCode || !playerId) return;
 
-        const socket = new SockJS(`http://localhost:8080/caro-game?roomCode=${roomCode}`);
+        const socket = new SockJS(SOCKET_URL);
         const client = new Client({
             connectHeaders: {
                 'playerId': playerId,
@@ -27,13 +33,13 @@ const useGameWebSocket = () => {
                     setLoading(false);
                 }, 1000);
 
-                client.subscribe(`/topic/game-progress/${roomCode}`, (message) => {
+                client.subscribe(GAME_PROGRESS_TOPIC(roomCode), (message) => {
                     const move = JSON.parse(message.body);
                     setMoves((prevMoves) => [...prevMoves, move]);
                     dispatch(addMove(move));
                 });
 
-                client.subscribe(`/topic/game-state/${roomCode}`, (gameStartDTO) => {
+                client.subscribe(GAME_STATE_TOPIC(roomCode), (gameStartDTO) => {
                     const gameStart = JSON.parse(gameStartDTO.body);
                     const newCaroGame = new CaroGame(
                         gameStart.roomCode,
@@ -46,6 +52,16 @@ const useGameWebSocket = () => {
                     console.log("Game state: ", newCaroGame.getCurrentState());
                     dispatch(setGameState(newCaroGame.getCurrentState()));
                     setIsGameStarted(true);
+                });
+
+                client.subscribe(GAME_END_TOPIC(roomCode), (message) => {
+                    const winner = JSON.parse(message.body);
+                    setWinner(winner.body);
+                });
+
+                client.subscribe(PLAY_AGAIN_TOPIC(roomCode), (message) => {
+                    const playAgain = JSON.parse(message.body);
+                    setPlayAgain(playAgain.body);
                 });
 
                 setIsConnected(true);
@@ -70,9 +86,15 @@ const useGameWebSocket = () => {
 
     const sendMessage = (destination, msg) => {
         if (stompClient.current && stompClient.current.connected) {
-            stompClient.current.send({destination: destination}, {}, JSON.stringify(msg));
+            stompClient.current.send({ destination: destination }, {}, JSON.stringify(msg));
         }
     };
+
+    const sendPlayAgain = (destination, msg) => {
+        if (stompClient.current && stompClient.current.connected) {
+            stompClient.current.publish({ destination: destination , body: JSON.stringify(msg)});
+        }
+    }
 
     useEffect(() => {
         return () => {
@@ -82,7 +104,7 @@ const useGameWebSocket = () => {
         };
     }, []);
 
-    return { moves, isGameStarted, sendMove, isConnected, loading, connect, stompClient };
+    return { moves, isGameStarted, sendMove, isConnected, loading, connect, stompClient, winner, sendPlayAgain, playAgain };
 };
 
 export default useGameWebSocket;

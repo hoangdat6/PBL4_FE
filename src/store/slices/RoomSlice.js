@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 import ParticipantType from "../../enums/participantType";
 
-const caroGameSlice = createSlice({
-    name: 'caroGame',
+const roomSlice = createSlice({
+    name: 'room',
     initialState: {
         roomCode: null,
         startPlayerId: null,
@@ -21,6 +21,7 @@ const caroGameSlice = createSlice({
             winLength: 5,
         },
         lastMove: null,
+        conflictRoomCode: null,
     },
     reducers: {
         setGameState: (state, action) => {
@@ -42,8 +43,15 @@ const caroGameSlice = createSlice({
         setRoomCode: (state, action) => {
             state.roomCode = action.payload;
         },
+        setRoomConflict: (state, action) => {
+            console.log(action.payload);
+            state.conflictRoomCode = action.payload;
+        },
         addMove: (state, action) => {
             state.lastMove = action.payload;
+        },
+        setBoard: (state, action) => {
+            state.boardState.board = action.payload;
         },
         resetGame: (state) => {
             state.gameState = null;
@@ -51,5 +59,13 @@ const caroGameSlice = createSlice({
     },
 });
 
-export const { setGameState, setRoomCode,  addMove, resetGame, setRoomConfig,setParticipantType } = caroGameSlice.actions;
-export default caroGameSlice.reducer;
+export const { setGameState
+    ,setRoomCode,
+    addMove,
+    resetGame,
+    setRoomConfig,
+    setParticipantType,
+    setBoard,
+    setRoomConflict
+} = roomSlice.actions;
+export default roomSlice.reducer;

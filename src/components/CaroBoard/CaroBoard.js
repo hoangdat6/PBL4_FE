@@ -10,8 +10,9 @@ import Avatar from "../../assets/statics/imgs/Avatar.png";
 import Rank from "../../assets/statics/imgs/Rank.svg";
 import checker1 from "../../assets/statics/imgs/checker1.svg";
 import checker2 from "../../assets/statics/imgs/checker2.svg";
+import useTimer from "../../hooks/useTimer";
 
-const player1 = {
+let player1 = {
     playerId: 1,
     playerName: "Hoang Dat",
     time: "05:00",
@@ -22,9 +23,9 @@ const player1 = {
     reverse: true,
 };
 
-const player2 = {
+let player2 = {
     playerId: 2,
-    playerName: "Hoang Dat",
+    playerName: "Do Tuan",
     time: "05:00",
     score: "0",
     avatar: Avatar,
@@ -32,19 +33,20 @@ const player2 = {
     checkers: checker2,
 };
 
-const CaroBoard = ({sendMove, handleLeaveRoom}) => {
+const CaroBoard = ({
+                       sendMove,
+                       handleLeaveRoom
+}) => {
     const { roomCode } = useParams();
     const { board, handleClick, isPlayerStart, roomConfig, participantType, playersInfo } = useCaroGame(roomCode, sendMove);
 
-
     return (
         <section className={styles.boardSection}>
-            {/*header*/}
 
             <section className={`${styles.game_section}`}>
                 <div className={`${styles.game_container}`}>
                     {/* Player 1 */}
-                    <PlayerInfo {...player1} />
+                    <PlayerInfo {...player1}/>
                     {/* VS icon */}
                     <div className={styles.vs_icon}>
                         <img src={War} alt="VS icon" />

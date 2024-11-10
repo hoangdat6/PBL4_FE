@@ -6,12 +6,11 @@ const useLeaveRoom = () => {
     const navigate = useNavigate();
     const userId = useSelector((state) => state.auth.userId);
 
-    const leaveRoom = async (stompClient, roomCode) => {
+    const leaveRoom = async (stompClient) => {
         // Kiểm tra và đóng kết nối WebSocket nếu có
         if (stompClient && stompClient.current) {
             stompClient.current.deactivate();
         }
-
         // Gọi API rời phòng
         try {
             await axios.post(`${process.env.REACT_APP_CARO_BE_API_URL}/api/room/leave`, null, {
@@ -29,7 +28,7 @@ const useLeaveRoom = () => {
         }
     };
 
-    return leaveRoom;
+    return {leaveRoom};
 };
 
 export default useLeaveRoom;
