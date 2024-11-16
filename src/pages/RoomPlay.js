@@ -7,7 +7,6 @@ import Avatar from "../assets/statics/imgs/Avatar.png";
 import Rank from "../assets/statics/imgs/Rank.svg";
 import checker1 from "../assets/statics/imgs/checker1.svg";
 import checker2 from "../assets/statics/imgs/checker2.svg";
-import WinnerNotification from "../components/WinnerNotification/WinnerNotification";
 
 let player1 = {
     playerId: 1,
@@ -41,8 +40,12 @@ const RoomPlay = ({
                       timer,
                       showSwal,
                       onPlayAgain,
+                      onLeaveRoom,
                       playAgain,
                   }) => {
+
+    const  [isPlaying, setIsPlaying] = React.useState(false);
+
     return (
         <div>
             <div className={styles.winner_notif}>
@@ -61,6 +64,7 @@ const RoomPlay = ({
                         <PlayerInfo {...player2} />
                     </div>
                 </section>
+
                 {/* Caro Board */}
                 <CaroBoardUI
                     board={board}
@@ -68,9 +72,10 @@ const RoomPlay = ({
                     isStartPlayer={isPlayerStart}
                     participantType={participantType}
                 />
+
                 {/* Nút rời khỏi phòng */}
-                <button className={styles.leave_button} onClick={handleLeaveRoom}>
-                    Rời khỏi phòng ({timer}s)
+                <button className={styles.leave_button} onClick={onLeaveRoom}>
+                    Rời khỏi phòng {isPlaying ? `(${timer}s)` : ""}
                 </button>
             </section>
         </div>

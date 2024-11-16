@@ -5,6 +5,7 @@ import styles from "../Common.module.scss"; // Đảm bảo bạn có file SCSS 
 import GoogleIcon from '../../../assets/statics/imgs/SignIn/icons8-google.svg';
 import FacebookIcon from '../../../assets/statics/imgs/SignIn/icons8-facebook.svg';
 import AppleIcon from '../../../assets/statics/imgs/SignIn/icons8-apple.svg';
+import AuthService from "../../../services/auth.service";
 
 
 const SignUp = ({toggleOverlay, onSignUp}) => {
@@ -32,8 +33,10 @@ const SignUp = ({toggleOverlay, onSignUp}) => {
                 .oneOf([true], "Bạn phải đồng ý với các điều khoản và điều kiện"),
         }),
         onSubmit: (values) => {
-            console.log("Form data", values);
-            // Xử lý đăng ký tại đây
+
+            AuthService.register(values.display_name, values.email, values.password).then((response) => {
+                console.log(((response)));
+            })
             toggleOverlay();
         },
     });

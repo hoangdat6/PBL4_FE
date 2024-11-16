@@ -18,14 +18,13 @@ const useGameWebSocket = () => {
     const [winner, setWinner] = useState(null);
     const [playAgain, setPlayAgain] = useState(false);
 
+    const connect = (roomCode) => {
+        if (!roomCode) return;
 
-    const connect = (roomCode, playerId) => {
-        if (!roomCode || !playerId) return;
-
-        const socket = new SockJS(SOCKET_URL);
+        const socket = new SockJS(SOCKET_URL, null, { withCredentials: true });
         const client = new Client({
-            connectHeaders: {
-                'playerId': playerId,
+            debug: (str) => {
+                console.log(str);
             },
             webSocketFactory: () => socket,
             onConnect: () => {
@@ -48,10 +47,12 @@ const useGameWebSocket = () => {
                         gameStart.boardState.board,
                         gameStart.boardState.size,
                         gameStart.boardState.winLength,
+                        gameStart.lastMove
                     );
                     console.log("Game state: ", newCaroGame.getCurrentState());
                     dispatch(setGameState(newCaroGame.getCurrentState()));
                     setIsGameStarted(true);
+                    dispatch(addMove(gameStart.lastMove));
                 });
 
                 client.subscribe(GAME_END_TOPIC(roomCode), (message) => {
@@ -65,12 +66,15 @@ const useGameWebSocket = () => {
                 });
 
                 setIsConnected(true);
+                console.log('Connected to room: ' + roomCode);
                 stompClient.current = client;
             },
             onStompError: (frame) => {
+                console.error('Broker reported error: ' + frame.headers['message']);
                 setLoading(false);
             },
             onWebSocketClose: () => {
+                console.log('Socket closed');
                 setLoading(false);
             }
         });
@@ -81,12 +85,6 @@ const useGameWebSocket = () => {
     const sendMove = (destination, move) => {
         if (stompClient.current) {
             stompClient.current.publish({ destination: destination, body: JSON.stringify(move) });
-        }
-    };
-
-    const sendMessage = (destination, msg) => {
-        if (stompClient.current && stompClient.current.connected) {
-            stompClient.current.send({ destination: destination }, {}, JSON.stringify(msg));
         }
     };
 

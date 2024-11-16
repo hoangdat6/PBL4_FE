@@ -1,6 +1,6 @@
 export const GAME_PROGRESS_TOPIC = (roomCode) => `/topic/game-progress/${roomCode}`;
 export const GAME_STATE_TOPIC = (roomCode) => `/topic/game-state/${roomCode}`;
-export const GAME_END_TOPIC = (roomCode) => `/topic/game-end/${roomCode}`;
+export const GAME_END_TOPIC = (roomCode) => `/topic/end-game/${roomCode}`;
 export const PLAY_AGAIN_TOPIC = (roomCode) => `/topic/play-again/${roomCode}`;
 
 // app

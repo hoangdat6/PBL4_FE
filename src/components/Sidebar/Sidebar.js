@@ -1,14 +1,21 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import styles from './Sidebar.module.scss';
 import useSidebar from "../../hooks/useSidebar";
 import useOverlay from "../../hooks/useOverlay/useOverlay";
 import SignInSignUp from "../../pages/AuthPage/SignInSignUp";
 import {useNavigate} from "react-router-dom";
 import CreateRoomPage from "../../pages/CreateRoomPage/ConfigGamePage";
+import axios from "axios";
+import {setRoomConflict} from "../../store/slices/RoomSlice";
+import UserService from "../../services/user.service";
+import {useSelector} from "react-redux";
+import UserMenu from "../LoginSignUp/UserMenu";
 
 const Sidebar = () => {
     const { toggleOverlay, Overlay } = useOverlay();
     const [isOpen, setIsOpen] = useState(false);
+    const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+    const [user, setUser] = useState({});
 
     const {
         handleShowSidebar,
@@ -21,6 +28,17 @@ const Sidebar = () => {
         setIsOpen(true);
     };
 
+    useEffect(() => {
+        if(isAuthenticated) {
+            UserService.getProfile().then((res) => {
+                console.log(res);
+
+            }).catch((err) => {
+                console.log(err);
+            });
+        }
+    },[isAuthenticated]);
+
     return (
         <nav
             className={`${styles.sidebar} ${isSidebarActive ? styles.un_active : ""}  ${isShowSidebar ? styles.is_open : styles.is_close}` }>
@@ -32,36 +50,60 @@ const Sidebar = () => {
             ></div>
             <div className={`${styles.sidebar__container} d-md-flex flex-column`}>
                 <div className={`${styles.sidebar__header}`}>
-                    <div className={`${styles.sidebar__login}`}>
-                        <div className={`${styles.sidebar__login_link}`}>
-                            <button
-                                className={`${styles.sidebar__login_link_text} caro_btn btn_primary`}
-                                onClick={toggleOverlay}
-                            >
-                                <i className="fa-solid fa-user"></i> Đăng nhập
-                            </button>
-                        </div>
-                        <div className={`${styles.sidebar__menu_cta}`}>
-                            <div className={`${styles.sidebar__menu_cta_item}`}>
-                                <button>
-                                    <i className="fa-sharp fa-regular fa-bell"></i>
-                                </button>
+                    {isAuthenticated ? (
+                        <div className={`${styles.sidebar__login} ${styles.info}`}>
+                            <UserMenu user={user} />
+
+                            <div className={`${styles.sidebar__menu_cta}`}>
+                                <div className={`${styles.sidebar__menu_cta_item}`}>
+                                    <button>
+                                        <i className="fa-sharp fa-regular fa-bell"></i>
+                                    </button>
+                                </div>
+                                <div className={`${styles.sidebar__menu_cta_item}`}>
+                                    <button
+                                        onClick={handleToggleSidebar}
+                                    >
+                                        <i className="fa-solid fa-sidebar"></i>
+                                    </button>
+                                </div>
                             </div>
-                            <div className={`${styles.sidebar__menu_cta_item}`}>
+                        </div>
+                    ) : (
+                        <div className={`${styles.sidebar__login}`}>
+                            <div className={`${styles.sidebar__login_link}`}>
                                 <button
-                                    onClick={handleToggleSidebar}
+                                    className={`${styles.sidebar__login_link_text} caro_btn btn_primary`}
+                                    onClick={toggleOverlay}
                                 >
-                                    <i className="fa-solid fa-sidebar"></i>
+                                    <i className="fa-solid fa-user"></i> Đăng nhập
                                 </button>
                             </div>
+                            <div className={`${styles.sidebar__menu_cta}`}>
+                                <div className={`${styles.sidebar__menu_cta_item}`}>
+                                    <button>
+                                        <i className="fa-sharp fa-regular fa-bell"></i>
+                                    </button>
+                                </div>
+                                <div className={`${styles.sidebar__menu_cta_item}`}>
+                                    <button
+                                        onClick={handleToggleSidebar}
+                                    >
+                                        <i className="fa-solid fa-sidebar"></i>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                    )}
+
                 </div>
 
                 <div className={`${styles.sidebar__menu}`}>
                     <nav className={`${styles.sidebar__nav}`}>
                         <div className={`${styles.sidebar__nav_item}`} title="Bạn bè">
-                            <button className={`${styles.sidebar__nav_link} d-flex align-items-center`}>
+                            <button className={`${styles.sidebar__nav_link} d-flex align-items-center`}
+                                    // onClick={test}
+                            >
                                 <div className={`${styles.sidebar__nav_icon}`}>
                                     <i className="fa-solid fa-user-group"></i>
                                 </div>

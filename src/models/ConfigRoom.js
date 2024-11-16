@@ -1,7 +1,6 @@
 
 class ConfigGameDTO {
-    constructor(ownerId, timeLimitForMove, timeLimitForMatch, firstMoveOption) {
-        this.ownerId = ownerId;
+    constructor(timeLimitForMove, timeLimitForMatch, firstMoveOption) {
         this.timeLimitForMove = timeLimitForMove;
         this.timeLimitForMatch = timeLimitForMatch;
         this.firstMoveOption = firstMoveOption;

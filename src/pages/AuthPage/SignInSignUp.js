@@ -1,7 +1,6 @@
 import SignIn from "../../components/LoginSignUp/SignIn/SignIn";
 import SignUp from "../../components/LoginSignUp/SignUp/SignUp";
 import { useState } from "react";
-import {useLocation, useNavigate} from "react-router-dom";
 
 const SignInSignUp = ({ Overlay, toggleOverlay, handleLoginSuccess }) => {
     const [isSignInMode, setIsSignInMode] = useState(true);
@@ -17,7 +16,7 @@ const SignInSignUp = ({ Overlay, toggleOverlay, handleLoginSuccess }) => {
 
     const renderForm = () => {
         return isSignInMode ? (
-            <SignIn toggleOverlay={toggleOverlayCustom} onSignUp={toggleMode} handleLoginSuccess={handleLoginSuccess} />
+            <SignIn toggleOverlay={toggleOverlayCustom} onSignUp={toggleMode} />
         ) : (
             <SignUp toggleOverlay={toggleOverlayCustom} onSignUp={toggleMode} />
         );

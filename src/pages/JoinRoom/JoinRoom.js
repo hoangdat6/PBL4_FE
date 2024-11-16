@@ -16,7 +16,6 @@ import ParticipantType from "../../enums/participantType";
 import JoinRoomResponse from "../../models/JoinRoomResponse";
 import Swal from 'sweetalert2';
 
-
 const JoinRoom = () => {
     const navigate = useNavigate();
     const { roomCode } = useParams();
@@ -25,16 +24,14 @@ const JoinRoom = () => {
 
     const dispatch = useDispatch();
 
-    const {leaveRoom} = useLeaveRoom();
+    const {leaveRoom, leaveRoomHandler, isLeaving} = useLeaveRoom();
     const { sendMove, connect, isConnected, isGameStarted, winner, sendPlayAgain, playAgain, stompClient} = useGameWebSocket();
     const {joinRoom, joinRoomState, setJoinRoomState} = useJoinRoom();
     const { board, handleClick, isPlayerStart, participantType } = useCaroGame(roomCode, sendMove);
 
-
     useEffect(() => {
-        connect(roomCode, playerId);
-    },[roomCode, playerId]);
-    // Hook để rời phòng
+        connect(roomCode);
+    },[roomCode]);
 
     // Tạo hàm leaveRoomHandler để xử lý rời phòng
     const handleLeaveRoom = () => {
@@ -44,7 +41,7 @@ const JoinRoom = () => {
     // Join room
     useEffect(() => {
         if (isConnected) {
-            joinRoom(roomCode, playerId)
+            joinRoom(roomCode)
                 .then((response) => {
                     const joinRoomState = new JoinRoomResponse(
                         response.data.roomCode,
@@ -63,7 +60,7 @@ const JoinRoom = () => {
                     }
                 });
         }
-    }, [isConnected, roomCode, playerId]);
+    }, [isConnected, roomCode]);
 
     const handleSendPlayAgain = () => {
         return sendPlayAgain(SEND_PLAY_AGAIN(roomCode), playerId);
@@ -72,17 +69,19 @@ const JoinRoom = () => {
     useEffect(() => {
         if (playAgain.code === PLAY_AGAIN_ACCEPT) {
             navigate(`/room/${roomCode}`);
+            window.location.reload();
         }
     }, [playAgain, roomCode]);
 
     const showSwal = (winner, playerId, handlePlayAgain, handleLeaveRoom, playAgain, timer) => {
         const MySwal = withReactContent(Swal);
         const message = winner === playerId ? 'Bạn Thắng' : participantType === ParticipantType.SPECTATOR ? `${winner} thắng` : `Bạn thua`;
-        const playAgainMessage = playAgain.code === PLAY_AGAIN && playAgain.playerId !== playerId ? 'Đối thủ muốn chơi lại!' : '';
+        const playAgainMessage = playAgain.code === PLAY_AGAIN
+            ? playAgain.playerId !== playerId ?  'Đối thủ muốn chơi lại!' : "Đang chờ đối thủ ..." : 'Bạn muốn chơi lại không?';
 
         MySwal.fire({
             title: message,
-            text: `${playAgainMessage} Do you want to play again or leave the room?`,
+            text: `${playAgainMessage}`,
             icon: 'success',
             showCancelButton: true,
             confirmButtonText: 'Play Again',
@@ -105,6 +104,7 @@ const JoinRoom = () => {
         if (winner) {
             if (timer === 0) {
                 handleLeaveRoom();
+                Swal.close();
             }
 
             const interval = setInterval(() => {
@@ -126,7 +126,7 @@ const JoinRoom = () => {
         timer,
         showSwal,
         onPlayAgain: handleSendPlayAgain,
-        onLeaveRoom: handleLeaveRoom,
+        onLeaveRoom: leaveRoomHandler,
         playAgain,
     }
 
@@ -136,7 +136,7 @@ const JoinRoom = () => {
                 {joinRoomState.isStarted == true || isGameStarted ? (
                         <RoomPlay {...propsRoomPlay}/>
                 ) : (
-                    <WaitingRoom roomCode={roomCode} handleLeaveRoom={handleLeaveRoom}/>
+                    <WaitingRoom roomCode={roomCode} handleLeaveRoom={leaveRoomHandler}/>
                 )}
             </div>
             }

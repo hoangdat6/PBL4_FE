@@ -3,25 +3,54 @@ import styles from "./CaroBoardUI.module.scss";
 import Checker3 from "../../../assets/statics/imgs/checker3.svg";
 import Checker4 from "../../../assets/statics/imgs/checker4.svg";
 import ParticipantType from "../../../enums/participantType";
+import {useSelector} from "react-redux";
 
-const CaroBoardUI = ({ board, handleClick, isStartPlayer, participantType, sendMove }) => {
+const CaroBoardUI = ({ board, handleClick, isStartPlayer, participantType }) => {
     const [hoveredCell, setHoveredCell] = useState(null);
+    const { lastMove } = useSelector((state) => state.room);
 
-    console.log(participantType)
     return (
-        <table className={styles.boardTable}>
-            <tbody>
-            {board.map((row, rowIndex) => (
-                <tr key={rowIndex}>
-                    {row.map((cell, colIndex) => (
-                        <td key={colIndex} className={styles.boardCell}>
-                            <button
-                                className={styles.boardButton}
-                                onClick={() => handleClick(rowIndex, colIndex)}
-                                {...(participantType === ParticipantType.SPECTATOR && { disabled: true })}
+        <div className={styles.table_wrapper}>
+            <table className={styles.boardTableAfter}>
+                <tbody>
+                {board.map((row, rowIndex) => (
+                    <tr key={rowIndex}>
+                        {row.map((cell, colIndex) => (
+                            <td key={colIndex} className={`${styles.boardCell} `}>
+                                {/* Existing cells */}
+                            </td>
+                        ))}
+                        <td key={`${rowIndex}-extra`} className={`${styles.boardCell} `}>
+                            {/* Extra cell */}
+                        </td>
+                    </tr>
+                ))}
+                <tr>
+                    {board[0].map((cell, colIndex) => (
+                        <td key={colIndex} className={`${styles.boardCell} `}>
+                            {/* Existing cells */}
+                        </td>
+                    ))}
+                    <td key="extra" className={`${styles.boardCell} `}>
+                        {/* Extra cell */}
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <table className={styles.boardTable}>
+                <tbody>
+                {board.map((row, rowIndex) => (
+                    <tr key={rowIndex}>
+                        {row.map((cell, colIndex) => (
+                            <td key={colIndex}
+                                className={`${styles.boardCell} `}>
+                                <button
+                                    className={`${styles.boardButton} ${lastMove?.row === rowIndex && lastMove?.col === colIndex ? styles.lastClicked : ''}`}
+                                    onClick={() => handleClick(rowIndex, colIndex)}
+                                {...(participantType === ParticipantType.SPECTATOR && {disabled: true})}
                                 onMouseEnter={() => {
                                     if (participantType !== ParticipantType.SPECTATOR) {
-                                        setHoveredCell({ rowIndex, colIndex });
+                                        setHoveredCell({rowIndex, colIndex});
                                     }
                                 }}
                                 onMouseLeave={() => {
@@ -31,12 +60,13 @@ const CaroBoardUI = ({ board, handleClick, isStartPlayer, participantType, sendM
                                 }}
                             >
                                 {/* Hiển thị icon nếu ô đã được đánh */}
-                                {cell !== -1 ? (cell === 0 ? <img src={Checker4} alt="checker" /> : <img src={Checker3} alt="checker" />) : ""}
+                                {cell !== -1 ? (cell === 0 ? <img src={Checker4} alt="checker"/> :
+                                    <img src={Checker3} alt="checker"/>) : ""}
 
                                 {/* Hiển thị icon nếu đang hover */}
-
                                 {participantType === ParticipantType.PLAYER && hoveredCell?.rowIndex === rowIndex && hoveredCell?.colIndex === colIndex && cell === -1 ? (
-                                    isStartPlayer ? <img src={Checker4} alt="checker" /> : <img src={Checker3} alt="checker" />
+                                    isStartPlayer ? <img src={Checker4} alt="checker"/> :
+                                        <img src={Checker3} alt="checker"/>
                                 ) : (
                                     ""
                                 )}
@@ -47,6 +77,8 @@ const CaroBoardUI = ({ board, handleClick, isStartPlayer, participantType, sendM
             ))}
             </tbody>
         </table>
+        </div>
+
     );
 };
 

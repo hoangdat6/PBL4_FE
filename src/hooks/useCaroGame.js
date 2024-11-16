@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
 import { setBoard } from "../store/slices/RoomSlice";
 import {SEND_MOVE} from "../constants/socketEndpoint";
 
@@ -59,5 +58,5 @@ export const useCaroGame = (roomCode, sendMove) => {
         }
     }, [lastMove]);
 
-    return { board: boardState.board, handleClick, isPlayerTurn, isPlayerStart, roomConfig, participantType };
+    return { board: boardState.board, handleClick, isPlayerTurn, isPlayerStart, roomConfig, participantType, lastMove };
 };

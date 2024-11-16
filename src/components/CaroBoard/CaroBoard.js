@@ -1,5 +1,5 @@
 import React from 'react';
-import {useParams} from 'react-router-dom'; // Để lấy roomCode từ URL
+import {useParams} from 'react-router-dom';
 import styles from './CaroBoard.module.scss';
 import { useCaroGame } from '../../hooks/useCaroGame';
 import PlayerInfo from "./PlayerInfo/PlayerInfo";
@@ -10,7 +10,6 @@ import Avatar from "../../assets/statics/imgs/Avatar.png";
 import Rank from "../../assets/statics/imgs/Rank.svg";
 import checker1 from "../../assets/statics/imgs/checker1.svg";
 import checker2 from "../../assets/statics/imgs/checker2.svg";
-import useTimer from "../../hooks/useTimer";
 
 let player1 = {
     playerId: 1,
@@ -38,7 +37,7 @@ const CaroBoard = ({
                        handleLeaveRoom
 }) => {
     const { roomCode } = useParams();
-    const { board, handleClick, isPlayerStart, roomConfig, participantType, playersInfo } = useCaroGame(roomCode, sendMove);
+    const { board, handleClick, isPlayerStart, roomConfig, participantType, playersInfo, lastMove } = useCaroGame(roomCode, sendMove);
 
     return (
         <section className={styles.boardSection}>
@@ -63,6 +62,7 @@ const CaroBoard = ({
                 handleClick={handleClick}
                 isStartPlayer={isPlayerStart}
                 participantType={participantType}
+                lastMove={lastMove}
             />
 
             {/* Nút rời khỏi phòng */}

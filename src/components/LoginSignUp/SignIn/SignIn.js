@@ -2,20 +2,21 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { loginUser } from '../../../store/slices/authSlice';
 import styles from '../Common.module.scss';
 
 import GoogleIcon from '../../../assets/statics/imgs/SignIn/icons8-google.svg';
 import FacebookIcon from '../../../assets/statics/imgs/SignIn/icons8-facebook.svg';
 import AppleIcon from '../../../assets/statics/imgs/SignIn/icons8-apple.svg';
 import {useLocation, useNavigate} from "react-router-dom";
+import AuthService from "../../../services/auth.service";
+import Cookies from "js-cookie";
+import {setUserId} from "../../../store/slices/authSlice";
 
 
-const SignIn = ({ toggleOverlay, onSignUp, handleLoginSuccess }) => {
-    const dispatch = useDispatch();
+const SignIn = ({ toggleOverlay, onSignUp }) => {
     const navigate = useNavigate();
     const location = useLocation();
-
+    const dispatch = useDispatch();
     const validationSchema = Yup.object({
         email: Yup.string().email('Email không hợp lệ').required('Vui lòng nhập email'),
         password: Yup.string().min(6, 'Mật khẩu phải có ít nhất 6 ký tự').required('Vui lòng nhập mật khẩu'),
@@ -28,8 +29,18 @@ const SignIn = ({ toggleOverlay, onSignUp, handleLoginSuccess }) => {
         },
         validationSchema,
         onSubmit: (values) => {
-            handleLoginSuccess();
-            dispatch(loginUser(JSON.stringify(values)));
+            AuthService.login(values.email, values.password).then(
+                (response) => {
+                    Cookies.set('userId', JSON.stringify(response.data.id), { expires: 7 });
+                    dispatch(setUserId(response.data.id));
+                    navigate(location.state?.from || '/');
+                    toggleOverlay();
+                    console.log(response);
+                },
+                (error) => {
+                    console.error(error);
+                }
+            );
             toggleOverlay();
         },
     });
@@ -38,7 +49,6 @@ const SignIn = ({ toggleOverlay, onSignUp, handleLoginSuccess }) => {
         e.preventDefault();
         onSignUp();
     };
-
 
     return (
         <form onSubmit={formik.handleSubmit} className={`${styles.c}`}>
