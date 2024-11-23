@@ -5,10 +5,9 @@ import Checker4 from "../../../assets/statics/imgs/checker4.svg";
 import ParticipantType from "../../../enums/participantType";
 import {useSelector} from "react-redux";
 
-const CaroBoardUI = ({ board, handleClick, isStartPlayer, participantType }) => {
+const CaroBoardUI = ({ board, handleClick, isStartPlayer, participantType, isPlayerTurn }) => {
     const [hoveredCell, setHoveredCell] = useState(null);
-    const { lastMove } = useSelector((state) => state.room);
-
+    const { lastMove } = useSelector((state) => state.game);
     return (
         <div className={styles.table_wrapper}>
             <table className={styles.boardTableAfter}>
@@ -47,7 +46,7 @@ const CaroBoardUI = ({ board, handleClick, isStartPlayer, participantType }) => 
                                 <button
                                     className={`${styles.boardButton} ${lastMove?.row === rowIndex && lastMove?.col === colIndex ? styles.lastClicked : ''}`}
                                     onClick={() => handleClick(rowIndex, colIndex)}
-                                {...(participantType === ParticipantType.SPECTATOR && {disabled: true})}
+                                {...((participantType === ParticipantType.SPECTATOR || !isPlayerTurn) && {disabled: true})}
                                 onMouseEnter={() => {
                                     if (participantType !== ParticipantType.SPECTATOR) {
                                         setHoveredCell({rowIndex, colIndex});

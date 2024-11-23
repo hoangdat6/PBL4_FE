@@ -1,63 +1,75 @@
 import { useEffect, useState, useRef } from 'react';
 import { Client } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
-import CaroGame from '../models/CaroGame';
-import { useDispatch } from "react-redux";
-import { addMove, setGameState } from "../store/slices/RoomSlice";
+import {useDispatch, useSelector} from "react-redux";
+import {
+    addMove,
+    setGameConfig,
+    setGameState,
+    setPlayerTimeInfo1,
+    setPlayerTimeInfo2,
+    setWinner
+} from "../store/slices/gameSlice";
 import { GAME_PROGRESS_TOPIC, GAME_STATE_TOPIC, GAME_END_TOPIC, PLAY_AGAIN_TOPIC } from '../constants/socketEndpoint';
+import GameState from "../models/GameState";
+import {setPlayer1Info, setPlayer2Info, setRoomState} from "../store/slices/roomSlice";
 
 const SOCKET_URL = process.env.REACT_APP_SOCKET_URL;
 
 const useGameWebSocket = () => {
     const stompClient = useRef(null);
     const dispatch = useDispatch();
-    const [moves, setMoves] = useState([]);
-    const [isGameStarted, setIsGameStarted] = useState(false);
-    const [loading, setLoading] = useState(true);
     const [isConnected, setIsConnected] = useState(false);
-    const [winner, setWinner] = useState(null);
-    const [playAgain, setPlayAgain] = useState(false);
+    const [playAgain, setPlayAgain] = useState({});
+    const winner = useSelector((state) => state.game.winnerId);
 
     const connect = (roomCode) => {
         if (!roomCode) return;
 
         const socket = new SockJS(SOCKET_URL, null, { withCredentials: true });
         const client = new Client({
-            debug: (str) => {
-                console.log(str);
-            },
+            // debug: (str) => {
+            //     console.log(str);
+            // },
             webSocketFactory: () => socket,
             onConnect: () => {
-                setTimeout(() => {
-                    setLoading(false);
-                }, 1000);
 
                 client.subscribe(GAME_PROGRESS_TOPIC(roomCode), (message) => {
                     const move = JSON.parse(message.body);
-                    setMoves((prevMoves) => [...prevMoves, move]);
                     dispatch(addMove(move));
                 });
 
                 client.subscribe(GAME_STATE_TOPIC(roomCode), (gameStartDTO) => {
                     const gameStart = JSON.parse(gameStartDTO.body);
-                    const newCaroGame = new CaroGame(
+
+                    const gameState = new GameState(
                         gameStart.roomCode,
                         gameStart.startPlayerId,
                         gameStart.nthMove,
                         gameStart.boardState.board,
                         gameStart.boardState.size,
                         gameStart.boardState.winLength,
-                        gameStart.lastMove
+                        gameStart.lastMove,
+                        true,
+                        gameStart.player1Info,
+                        gameStart.player2Info,
+                        gameStart.gameConfig,
                     );
-                    console.log("Game state: ", newCaroGame.getCurrentState());
-                    dispatch(setGameState(newCaroGame.getCurrentState()));
-                    setIsGameStarted(true);
-                    dispatch(addMove(gameStart.lastMove));
+
+                    console.log(gameState.getCurrentState());
+
+                    dispatch(setGameState(gameState.getCurrentState()));
+                    dispatch(setRoomState(gameState.getCurrentState()));
+                    dispatch(setGameConfig(gameState.getCurrentState().gameConfig)); // phai set gameConfig truoc
+                    dispatch(setPlayer1Info(gameState.getCurrentState().player1Info))
+                    dispatch(setPlayer2Info(gameState.getCurrentState().player2Info))
+                    dispatch(setPlayerTimeInfo1(gameState.getCurrentState().player1Info.timeInfo));
+                    dispatch(setPlayerTimeInfo2(gameState.getCurrentState().player2Info.timeInfo));
                 });
 
                 client.subscribe(GAME_END_TOPIC(roomCode), (message) => {
                     const winner = JSON.parse(message.body);
-                    setWinner(winner.body);
+                    dispatch(setWinner(winner.body));
                 });
 
                 client.subscribe(PLAY_AGAIN_TOPIC(roomCode), (message) => {
@@ -71,11 +83,9 @@ const useGameWebSocket = () => {
             },
             onStompError: (frame) => {
                 console.error('Broker reported error: ' + frame.headers['message']);
-                setLoading(false);
             },
             onWebSocketClose: () => {
                 console.log('Socket closed');
-                setLoading(false);
             }
         });
 
@@ -94,6 +104,7 @@ const useGameWebSocket = () => {
         }
     }
 
+
     useEffect(() => {
         return () => {
             if (stompClient.current) {
@@ -102,7 +113,7 @@ const useGameWebSocket = () => {
         };
     }, []);
 
-    return { moves, isGameStarted, sendMove, isConnected, loading, connect, stompClient, winner, sendPlayAgain, playAgain };
+    return { sendMove, connect, sendPlayAgain, isConnected, stompClient, winner, playAgain };
 };
 
 export default useGameWebSocket;

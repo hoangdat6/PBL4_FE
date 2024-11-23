@@ -6,6 +6,8 @@ const getProfile = () => {
     return axios.get(API_URL + "user");
 }
 
+
+
 const UserService = {
     getProfile
 }

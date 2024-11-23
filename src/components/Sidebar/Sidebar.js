@@ -3,13 +3,11 @@ import styles from './Sidebar.module.scss';
 import useSidebar from "../../hooks/useSidebar";
 import useOverlay from "../../hooks/useOverlay/useOverlay";
 import SignInSignUp from "../../pages/AuthPage/SignInSignUp";
-import {useNavigate} from "react-router-dom";
 import CreateRoomPage from "../../pages/CreateRoomPage/ConfigGamePage";
-import axios from "axios";
-import {setRoomConflict} from "../../store/slices/RoomSlice";
 import UserService from "../../services/user.service";
 import {useSelector} from "react-redux";
 import UserMenu from "../LoginSignUp/UserMenu";
+import TestService from "../../services/test.service";
 
 const Sidebar = () => {
     const { toggleOverlay, Overlay } = useOverlay();
@@ -28,20 +26,27 @@ const Sidebar = () => {
         setIsOpen(true);
     };
 
-    useEffect(() => {
-        if(isAuthenticated) {
-            UserService.getProfile().then((res) => {
-                console.log(res);
+    // useEffect(() => {
+    //     if(isAuthenticated) {
+    //         UserService.getProfile().then((res) => {
+    //             console.log(res);
+    //         }).catch((err) => {
+    //             console.log(err);
+    //         });
+    //     }
+    // },[isAuthenticated]);
 
-            }).catch((err) => {
-                console.log(err);
-            });
-        }
-    },[isAuthenticated]);
+    const test = () => {
+        TestService.getPublicContent().then((res) => {
+            console.log(res);
+        }).catch((err) => {
+            console.log(err);
+        });
+    }
 
     return (
         <nav
-            className={`${styles.sidebar} ${isSidebarActive ? styles.un_active : ""}  ${isShowSidebar ? styles.is_open : styles.is_close}` }>
+            className={`${styles.sidebar} ${isSidebarActive ? styles.un_active : ""}  ` }>
             <SignInSignUp Overlay={Overlay} toggleOverlay={toggleOverlay}/>
             <CreateRoomPage isOpen={isOpen} setIsOpen={setIsOpen} />
             <div
@@ -102,7 +107,7 @@ const Sidebar = () => {
                     <nav className={`${styles.sidebar__nav}`}>
                         <div className={`${styles.sidebar__nav_item}`} title="Bạn bè">
                             <button className={`${styles.sidebar__nav_link} d-flex align-items-center`}
-                                    // onClick={test}
+                                    onClick={test}
                             >
                                 <div className={`${styles.sidebar__nav_icon}`}>
                                     <i className="fa-solid fa-user-group"></i>

@@ -26,10 +26,13 @@ const authSlice = createSlice({
             state.userId = action.payload;
             state.isAuthenticated = true;
             Cookies.set('userId', JSON.stringify(action.payload));
-        }
+        },
+        setError : (state, action) => {
+            state.error = action.payload;
+        },
     }
 
 });
 
-export const { logout, initialize, setUserId } = authSlice.actions;
+export const { logout, initialize, setUserId, setError } = authSlice.actions;
 export default authSlice.reducer;

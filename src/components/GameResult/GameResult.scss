@@ -1,0 +1,39 @@
+.game-result {
+    text-align: center;
+    margin: 20px;
+
+    &__message {
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-bottom: 15px;
+    }
+
+    &__actions {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+
+        .game-result__btn {
+            padding: 10px 20px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+
+            &.play-again {
+                background-color: #4caf50;
+                color: #fff;
+            }
+
+            &.leave-room {
+                background-color: #f44336;
+                color: #fff;
+            }
+
+            &:disabled {
+                background-color: #ccc;
+                cursor: not-allowed;
+            }
+        }
+    }
+}

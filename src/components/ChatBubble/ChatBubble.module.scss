@@ -1,0 +1,159 @@
+@keyframes slideUp {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        transform: translateX(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.chatBubbleContainer {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+
+    .toggleButton {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: #a9dfd8; /* Màu chủ đạo */
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s ease;
+
+        &:hover {
+            transform: scale(1.1);
+        }
+    }
+
+    .chatWindow {
+        position: absolute;
+        right: 50px;
+        bottom: 50px;
+        width: 300px;
+        height: 400px;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        display: flex;
+        flex-direction: column;
+        animation: slideUp 0.3s ease-out;
+
+        .chatHeader {
+            background-color: #a9dfd8; /* Màu chủ đạo */
+            color: white;
+            padding: 10px;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            button {
+                background: none;
+                border: none;
+                color: white;
+                font-size: 20px;
+                cursor: pointer;
+            }
+        }
+
+        .chatContent {
+            flex: 1;
+            padding: 10px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+
+            &::-webkit-scrollbar {
+                width: 5px;
+            }
+
+            &::-webkit-scrollbar-thumb {
+                background-color: #a9dfd8; /* Màu chủ đạo */
+                border-radius: 5px;
+            }
+
+            &::-webkit-scrollbar-track {
+                background-color: #f1f1f1;
+            }
+
+            .message {
+                max-width: 70%;
+                padding: 10px;
+                border-radius: 10px;
+                font-size: 14px;
+                animation: slideInRight 0.3s ease-out;
+
+                &.user {
+                    align-self: flex-end;
+                    background-color: #e0f7fa;
+                }
+
+                &.bot {
+                    align-self: flex-start;
+                    background-color: #f1f1f1;
+                    animation: slideInLeft 0.3s ease-out;
+                }
+            }
+        }
+
+        .chatInput {
+            display: flex;
+            gap: 5px;
+            padding: 10px;
+            border-top: 1px solid #ddd;
+
+            input {
+                flex: 1;
+                padding: 10px;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                font-size: 14px;
+            }
+
+            button {
+                padding: 10px;
+                border: none;
+                background-color: #a9dfd8; /* Màu chủ đạo */
+                color: white;
+                border-radius: 5px;
+                cursor: pointer;
+
+                &:hover {
+                    background-color: #8cc9c0;
+                }
+            }
+        }
+    }
+}

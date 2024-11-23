@@ -3,7 +3,8 @@ import sidebarReducer from './slices/sidebarSlice';
 import darkModeReducer from './slices/darkModeSlice';
 import gameSlice from "./slices/gameSlice";
 import authSlice from "./slices/authSlice";
-import RoomSlice from "./slices/RoomSlice";
+import RoomSlice from "./slices/roomSlice";
+import userPlaySlice from "./slices/userPlaySlice";
 
 const store = configureStore({
     reducer: {
@@ -11,7 +12,8 @@ const store = configureStore({
         darkMode: darkModeReducer,
         game: gameSlice,
         auth: authSlice,
-        room: RoomSlice
+        room: RoomSlice,
+        user: userPlaySlice,
     },
 });
 

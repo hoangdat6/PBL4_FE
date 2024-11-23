@@ -1,35 +1,34 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import ConfigGame from "../../components/ConfigGame/ConfigGame";
 import useCreateRoom from "../../hooks/useCreateRoom";
-import { useSelector, useDispatch } from "react-redux";
 import RoomConflictNotification from "../../components/RoomConflictNotification/RoomConflictNotification";
-import {setRoomCode, setRoomConflict} from "../../store/slices/RoomSlice";
-import {useNavigate} from "react-router-dom";
-import useLeaveRoom from "../../hooks/useLeaveRoom";
+import useConflictRoom from "../../hooks/useConflictRoom";
+import {useDispatch} from "react-redux";
+import {setPlayingRoom} from "../../store/slices/userPlaySlice";
 
 const CreateRoomPage = ({ isOpen, setIsOpen }) => {
-    const conflictRoomCode = useSelector((state) => state.room.conflictRoomCode);
     const createRoom = useCreateRoom();
     const dispatch = useDispatch();
-    const navigator = useNavigate();
-    const {leaveRoom} = useLeaveRoom();
 
-    const handleLeaveRoom = () => {
-        dispatch(setRoomConflict(null));
-        leaveRoom();
-    };
+    const {conflictRoomCode, continuePlayCurrentRoom, continuePlay} = useConflictRoom();
 
-    const handleContinue = () => {
-        dispatch(setRoomCode(conflictRoomCode));
-        navigator(`/room/${conflictRoomCode}`);
-    };
+
+    const continuePlayHandler = () => {
+        continuePlay();
+    }
+
+    const continuePlayCurrentRoomHandler = () => {
+        // rời phòng hiện tại
+        continuePlayCurrentRoom();
+        dispatch(setPlayingRoom(null));
+    }
 
     return (
         <>
             {conflictRoomCode ? (
                 <RoomConflictNotification
-                    onLeaveRoom={handleLeaveRoom}
-                    onContinue={handleContinue}
+                    onLeaveRoom={continuePlayCurrentRoomHandler}
+                    onContinue={continuePlayHandler}
                 />
             ) : (
                 <ConfigGame isOpen={isOpen} setIsOpen={setIsOpen} {...createRoom} />

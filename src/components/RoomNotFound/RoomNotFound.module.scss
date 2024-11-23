@@ -1,0 +1,41 @@
+.container {
+    text-align: center;
+    padding: 50px;
+    background-color: var(--bg-color);
+    color: var(--color-text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    & > * {
+        margin-bottom: 20px;
+    }
+}
+
+.title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--color-main); // Màu chủ đạo bạn chọn
+}
+
+.message {
+    font-size: 1.2rem;
+    color: var(--color-text);
+}
+
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: var(--color-main);
+    color: var(--color-text);
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+
+    &:hover {
+        background-color: #87c9c2;
+    }
+}

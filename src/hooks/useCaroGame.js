@@ -1,21 +1,48 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import { setBoard } from "../store/slices/RoomSlice";
+import {setBoard, setIsPlayerTurn} from "../store/slices/gameSlice";
 import {SEND_MOVE} from "../constants/socketEndpoint";
+import {setIsTurn} from "../store/slices/roomSlice";
 
 export const useCaroGame = (roomCode, sendMove) => {
-    const playerId = useSelector((state) => state.auth.userId);
-    const { lastMove, startPlayerId, nthMove, boardState, participantType, roomConfig } = useSelector((state) => state.room);
     const dispatch = useDispatch();
-
+    const playerId = useSelector((state) => state.auth.userId);
+    const { participantType, roomConfig } = useSelector((state) => state.room);
+    const {lastMove, startPlayerId, nthMove, boardState } = useSelector((state) => state.game);
     const isTurn = (playerId === startPlayerId && nthMove % 2 === 0) || (playerId !== startPlayerId && nthMove % 2 === 1);
-    const [isPlayerTurn, setIsPlayerTurn] = useState(isTurn);
+    const { isPlayerTurn } = useSelector((state) => state.game);
     const [nthMoveState, setNthMoveState] = useState(nthMove);
     const isPlayerStart = playerId === startPlayerId;
+    const [playerTurnId, setPlayerTurnId] = useState(null);
+
+    const {id: id1} = useSelector((state) => state.room.player1Info);
+    const {id: id2} = useSelector((state) => state.room.player2Info);
 
     useEffect(() => {
-        setIsPlayerTurn(isTurn);
-    }, [startPlayerId, nthMove, playerId]);
+        dispatch(setIsPlayerTurn(isTurn));
+    }, [isTurn, dispatch]);
+
+    useEffect(() => {
+        if(startPlayerId && id1 && startPlayerId === id1) {
+            if(nthMoveState % 2 === 0) {
+                dispatch(setIsTurn(true));
+                setPlayerTurnId(id2);
+            }else {
+                dispatch(setIsTurn(false));
+                setPlayerTurnId(id1);
+            }
+        }else {
+            if(nthMoveState % 2 === 0) {
+                dispatch(setIsTurn(false));
+                setPlayerTurnId(id1);
+            }else {
+                dispatch(setIsTurn(true));
+                setPlayerTurnId(id2);
+            }
+        }
+
+    }, [startPlayerId, nthMoveState]);
+
 
     const setNewBoard = (board) => {
         dispatch(setBoard(board));
@@ -37,9 +64,10 @@ export const useCaroGame = (roomCode, sendMove) => {
             col,
             row,
             nthMove: nthMoveState,
+            playerTurnId
         };
         sendMove(SEND_MOVE(roomCode), move);
-        setIsPlayerTurn(false);
+        dispatch(setIsPlayerTurn(false));
     };
 
     useEffect(() => {
@@ -53,7 +81,7 @@ export const useCaroGame = (roomCode, sendMove) => {
                 return r;
             });
             setNewBoard(updatedBoard);
-            setIsPlayerTurn(!((nthMove % 2 === 0 && playerId === startPlayerId) || (nthMove % 2 === 1 && playerId !== startPlayerId)));
+            dispatch(setIsPlayerTurn(!((nthMove % 2 === 0 && playerId === startPlayerId) || (nthMove % 2 === 1 && playerId !== startPlayerId))));
             setNthMoveState(nthMove + 1);
         }
     }, [lastMove]);

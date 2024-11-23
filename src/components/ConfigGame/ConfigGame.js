@@ -19,8 +19,8 @@ import {FirstMoveOption} from "../../enums/FirstMoveOption";
 const ConfigGame = ({
                         isOpen,
                         setIsOpen,
-                        turnTime,
-                        setTurnTime,
+                        moveDuration,
+                        setMoveDuration,
                         totalTime,
                         setTotalTime,
                         firstPlayer,
@@ -48,19 +48,23 @@ const ConfigGame = ({
                     <InputLabel>Thời gian mỗi lượt</InputLabel>
                     {isCustomTime ? (
                             <>
-                                <Input className={"input-custom"} placeholder="Nhập số giây" value={40}
-                                       type={"number"}
+                                <Input
+                                    className={"input-custom"}
+                                    onChange={(e) => setMoveDuration(e.target.value)}
+                                    placeholder="Nhập số giây"
+                                    value={moveDuration}
+                                    type={"number"}
                                 />
                                 <span>Giây</span>
                             </>
                         ) :
                         (
-                            <Select value={turnTime} onChange={(e) => setTurnTime(e.target.value)}>
+                            <Select onChange={(e) => setMoveDuration(e.target.value)} defaultValue={moveDuration}>
                                 <MenuItem value="10">10 giây</MenuItem>
                                 <MenuItem value="20">20 giây</MenuItem>
                                 <MenuItem value="30">30 giây</MenuItem>
                                 <MenuItem value="40">40 giây</MenuItem>
-                                <MenuItem value="0">Không giới hạn</MenuItem>
+                                <MenuItem value="-1">Không giới hạn</MenuItem>
                             </Select>
                         )
                     }
@@ -71,19 +75,19 @@ const ConfigGame = ({
                     {
                         isCustomTime ? (
                             <>
-                                <Input className={"input-custom"} placeholder="Nhập số phút" value={5}
+                                <Input className={"input-custom"} onChange={(e) => setTotalTime(e.target.value)} placeholder="Nhập số phút" value={totalTime}
                                        type={"number"}
                                 />
                                 <span>Phút</span>
                             </>
                         ) : (
-                            <Select value={totalTime} onChange={(e) => setTotalTime(e.target.value)} defaultValue={"5"}>
+                            <Select onChange={(e) => setTotalTime(e.target.value)} defaultValue={totalTime}>
                                 <MenuItem value="1">1 phút</MenuItem>
                                 <MenuItem value="2">2 phút</MenuItem>
                                 <MenuItem value="3">3 phút</MenuItem>
                                 <MenuItem value="4">4 phút</MenuItem>
                                 <MenuItem value="5">5 phút</MenuItem>
-                                <MenuItem value="0">Không giới hạn</MenuItem>
+                                <MenuItem value="-1">Không giới hạn</MenuItem>
                             </Select>
                         )
                     }

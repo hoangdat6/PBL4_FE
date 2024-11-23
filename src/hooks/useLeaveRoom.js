@@ -1,26 +1,30 @@
-import { useNavigate } from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import RoomService from "../services/room.service";
 import showLeaveRoomPopup from "../components/showLeaveRoomPopup/showLeaveRoomPopup";
-import {useState} from "react";
+import {resetGame} from "../store/slices/gameSlice";
+import {useDispatch} from "react-redux";
+import {resetRoom} from "../store/slices/roomSlice";
 
 const useLeaveRoom = () => {
-    const [isLeaving, setIsLeaving] = useState(false);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
-    const leaveRoom = async () => {
-        RoomService.leaveRoom().then((response) => {
-            navigate('/');
+    const leaveRoomNotPopup = async (redirectURL) => {
+        dispatch(resetGame());
+        dispatch(resetRoom());
+        redirectURL = redirectURL || "/";
+        return RoomService.leaveRoom().then(() => {
+            navigate(redirectURL || "/");
         }).catch((error) => {
-            console.error('Error leaving room:', error.response.data);
+            console.log(error);
         });
     };
 
-    const leaveRoomHandler = () => {
-        setIsLeaving(true);
-        showLeaveRoomPopup(leaveRoom);
+    const leaveRoomWithPopup = () => {
+        showLeaveRoomPopup(leaveRoomNotPopup);
     }
 
-    return {leaveRoom, leaveRoomHandler, isLeaving};
+    return {leaveRoomNotPopup, leaveRoomWithPopup};
 };
 
 export default useLeaveRoom;

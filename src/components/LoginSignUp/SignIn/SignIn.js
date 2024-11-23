@@ -22,6 +22,7 @@ const SignIn = ({ toggleOverlay, onSignUp }) => {
         password: Yup.string().min(6, 'Mật khẩu phải có ít nhất 6 ký tự').required('Vui lòng nhập mật khẩu'),
     });
 
+
     const formik = useFormik({
         initialValues: {
             email: '',
@@ -33,7 +34,7 @@ const SignIn = ({ toggleOverlay, onSignUp }) => {
                 (response) => {
                     Cookies.set('userId', JSON.stringify(response.data.id), { expires: 7 });
                     dispatch(setUserId(response.data.id));
-                    navigate(location.state?.from || '/');
+                    navigate(location.pathname || '/');
                     toggleOverlay();
                     console.log(response);
                 },

@@ -15,8 +15,6 @@ const WinnerNotification = ({ winner, playerId, participantType }) => {
         }
     }
 
-    console.log(winner, playerId, participantType);
-
     return (
         <div className={styles.notification}>
             <p>{message}</p>

@@ -1,45 +1,40 @@
-// mode: infinity, limit
-// timeInit: is the time received from the server
-// in the infinity mode timeInit up to
-// in the limit mode timeInit down from init time to zero
-// if timeinit == 0, this player won
-import {useState} from "react";
-import {useSelector} from "react-redux";
+import { useState, useEffect } from "react";
 
-const useTimer = ({
-                      timeMoveInit, timeRoomInit, timeMovePlayerState, timeRoomPlayerState, timeMoveOppState, timeRoomOppState, isPlayerTurnState
-                  }) => {
-    const [isInfiniteTimeMove, setIsInfiniteTimeMove] = useState(timeMoveInit === -1);
-    const [isInfiniteTimeRoom, setIsInfiniteTimeRoom] = useState(timeRoomInit === -1);
+const useTimer = (initialTime) => {
+    const [timer, setTimer] = useState(initialTime);
+    const [isRunning, setIsRunning] = useState(false);
 
-    const [timeMovePlayer, setTimeMovePlayer] = useState(timeMovePlayerState);
-    const [timeRoomPlayer, setTimeRoomPlayer] = useState(timeRoomPlayerState);
-    const [timeMoveOpponent, setTimeMoveOpponent] = useState(timeMoveOppState);
-    const [timeRoomOpponent, setTimeRoomOpponent] = useState(timeRoomOppState);
-    const [isPlayerTurn, setIsPlayerTurn] = useState(isPlayerTurnState);
+    const startTimer = (time) => {
+        setTimer(time);
+        setIsRunning(true);
+    };
 
-    const roomConfig = useSelector((state) => state.room.roomConfig);
+    const resetTimer = (time) => {
+        setTimer(time);
+        setIsRunning(false); // Reset trạng thái chạy để đảm bảo interval không bị kích hoạt
+    };
 
-    const counter = () => {
-        if(isPlayerTurn) {
+    useEffect(() => {
+        let interval;
 
-        }else {
-
+        if (isRunning) {
+            interval = setInterval(() => {
+                setTimer((prevTimer) => {
+                    if (prevTimer > 0) {
+                        return prevTimer - 1;
+                    } else {
+                        clearInterval(interval); // Dừng interval khi timer đạt 0
+                        setIsRunning(false); // Dừng đồng hồ
+                        return 0;
+                    }
+                });
+            }, 1000);
         }
-    }
 
-    const counterMs = () => {
+        return () => clearInterval(interval); // Dọn dẹp interval cũ khi unmount hoặc isRunning thay đổi
+    }, [isRunning]);
 
-    }
-
-    return {
-        timeMovePlayer,
-        timeRoomPlayer,
-        timeMoveOpponent,
-        timeRoomOpponent,
-        isPlayerTurn,
-    }
-
-}
+    return { timer, startTimer, resetTimer };
+};
 
 export default useTimer;

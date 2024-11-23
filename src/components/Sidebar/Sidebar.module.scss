@@ -151,7 +151,7 @@
             max-height: 72px;
             justify-content: space-between;
 
-            &_link {
+                &_link {
                 font-size: 14px;
             }
 
@@ -234,6 +234,7 @@
             }
         }
     }
+
 }
 
 @include un_active;
@@ -243,22 +244,7 @@
     justify-content: center;
     align-items: center;
     gap: 10px;
-    margin-bottom: 0;
-
-    &__name {
-        font-size: 14px;
-        span {
-            color: var(--color-text-dark);
-        }
-    }
-
-    &__coin {
-        font-size: 14px;
-            color: #E1B530;
-        span {
-            margin-left: 2px;
-        }
-    }
+    margin-bottom: 0 !important;
 
     .info__avatar {
         width: 40px;
@@ -276,6 +262,21 @@
     .info_user {
         display: flex;
         flex-direction: column;
+
+        .info__name {
+            font-size: 14px;
+            span {
+                color: var(--color-text-dark);
+            }
+        }
+
+        .info__coin {
+            font-size: 14px;
+            color: #E1B530;
+            span {
+                margin-left: 2px;
+            }
+        }
     }
 }
 

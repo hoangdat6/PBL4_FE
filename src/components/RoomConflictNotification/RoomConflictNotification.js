@@ -4,16 +4,17 @@ import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Typography }
 const RoomConflictNotification = ({ onLeaveRoom, onContinue }) => {
     return (
         <Dialog open={true} onClose={onContinue}>
-            <DialogTitle>Room Conflict</DialogTitle>
+            <DialogTitle>Xung đột phòng chơi</DialogTitle>
             <DialogContent>
                 <Typography variant="body1">Bạn đang chơi ở một phòng khác!</Typography>
+                <Typography variant="body1">Bạn có muốn tiếp tục chơi phòng đó</Typography>
             </DialogContent>
             <DialogActions>
                 <Button onClick={() => onLeaveRoom()} color="primary">
-                    Rời phòng
+                    Không, rời phòng đó
                 </Button>
                 <Button onClick={onContinue} color="secondary">
-                    Tiếp tục chơi
+                    Có, tiếp tục chơi
                 </Button>
             </DialogActions>
         </Dialog>

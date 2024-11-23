@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import styles from "../Sidebar/Sidebar.module.scss";
 import {logout} from "../../store/slices/authSlice";
 import {useDispatch} from "react-redux";
+import UserService from "../../services/user.service";
+import AuthService from "../../services/auth.service";
 
 const UserMenu = ({ user }) => {
     const [anchorEl, setAnchorEl] = useState(null);
@@ -19,6 +21,7 @@ const UserMenu = ({ user }) => {
 
     const handleLogout = () => {
         dispatch(logout());
+        AuthService.logout();
         handleClose();
     };
 
