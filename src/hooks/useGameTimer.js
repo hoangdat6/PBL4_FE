@@ -27,14 +27,11 @@ const useGameTimer = () => {
     }, []);
 
     useEffect(() => {
-        console.log("call useGameTimer");
         if (player1Info.isTurn) {
-            console.log("start timer 1 with remain move duration", playerTimeInfo1.remainMoveDuration);
             startTimer1(playerTimeInfo1.remainMoveDuration);
             resetTimer2(moveDuration);
             dispatch(setRemainMoveDuration2(moveDuration));
         } else if (player2Info.isTurn) {
-            console.log("start timer 2 with remain move duration", playerTimeInfo2.remainMoveDuration);
             startTimer2(playerTimeInfo2.remainMoveDuration);
             resetTimer1(moveDuration);
             dispatch(setRemainMoveDuration1(moveDuration));
@@ -42,8 +39,6 @@ const useGameTimer = () => {
     }, [player1Info.isTurn]);
 
     useEffect(() => {
-        console.log("set remain move duration");
-
         if(timer1 === 0) {
             dispatch(setWinner(player2Info.id));
         }
@@ -67,7 +62,15 @@ const useGameTimer = () => {
          }
     }, [timer1, timer2]);
 
+    useEffect(() => {
+        if(playerTimeInfo1.remainTime === 0) {
+            dispatch(setWinner(player2Info.id));
+        }
 
+        if(playerTimeInfo2.remainTime === 0) {
+            dispatch(setWinner(player1Info.id));
+        }
+    }, [playerTimeInfo1.remainTime, playerTimeInfo2.remainTime]);
 
     return { timer1, timer2};
 };

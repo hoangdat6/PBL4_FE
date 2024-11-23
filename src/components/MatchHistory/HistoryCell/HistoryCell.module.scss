@@ -1,0 +1,83 @@
+.history_cell {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 2fr;
+    align-items: center;
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    background-color: #2a2a3b; /* Màu nền của từng cell */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    color: #ffffff;
+    transition: background-color 0.2s;
+
+    &:hover {
+        background-color: #3a3a4b; /* Màu nền khi hover */
+    }
+
+    & > div {
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+.players_cell {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    .player {
+        font-weight: bold;
+        color: #e6e6e6;
+        cursor: pointer;
+
+        a {
+            text-decoration: none;
+            color: #6eb5ff;
+            transition: color 0.2s;
+
+            &:hover {
+                color: #ffffff;
+            }
+        }
+    }
+}
+
+.scores {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    .score {
+        font-size: 1.2rem;
+        font-weight: bold;
+        background: #393958;
+        padding: 5px 10px;
+        border-radius: 5px;
+        color: #ffffff;
+
+        &:first-of-type {
+            color: #ff6b6b; /* Màu đỏ cho người chơi đầu */
+        }
+
+        &:last-of-type {
+            color: #1dd1a1; /* Màu xanh cho người chơi sau */
+        }
+    }
+}
+
+.game_count {
+    font-size: 1rem;
+    font-weight: bold;
+    background: #4a4a62;
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: #e6e6e6;
+}
+
+.create_at {
+    font-size: 0.9rem;
+    font-style: italic;
+    color: #bdbdbd;
+}

@@ -102,8 +102,13 @@ const useGameWebSocket = () => {
         if (stompClient.current && stompClient.current.connected) {
             stompClient.current.publish({ destination: destination , body: JSON.stringify(msg)});
         }
-    }
+    };
 
+    const sendWinner = (destination, winnerId) => {
+        if (stompClient.current && stompClient.current.connected) {
+            stompClient.current.publish({ destination: destination , body: JSON.stringify(winnerId)});
+        }
+    };
 
     useEffect(() => {
         return () => {
@@ -113,7 +118,7 @@ const useGameWebSocket = () => {
         };
     }, []);
 
-    return { sendMove, connect, sendPlayAgain, isConnected, stompClient, winner, playAgain };
+    return { sendMove, connect, sendPlayAgain, sendWinner, isConnected, stompClient, winner, playAgain };
 };
 
 export default useGameWebSocket;

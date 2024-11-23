@@ -129,7 +129,7 @@
         max-width: 280px;
         @include scrollbar;
 
-        @include respond-to(null, $breakpoint-md) {
+        @include respond-to(null, $breakpoint-lg) {
             position: fixed;
             width: 100%;
             top: 0;

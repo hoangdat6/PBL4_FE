@@ -8,6 +8,7 @@ import UserService from "../../services/user.service";
 import {useSelector} from "react-redux";
 import UserMenu from "../LoginSignUp/UserMenu";
 import TestService from "../../services/test.service";
+import {useNavigate} from "react-router-dom";
 
 const Sidebar = () => {
     const { toggleOverlay, Overlay } = useOverlay();
@@ -42,6 +43,11 @@ const Sidebar = () => {
         }).catch((err) => {
             console.log(err);
         });
+    }
+
+    const navigate = useNavigate();
+    const navigateTo = (path) => {
+        navigate(path);
     }
 
     return (
@@ -105,6 +111,7 @@ const Sidebar = () => {
 
                 <div className={`${styles.sidebar__menu}`}>
                     <nav className={`${styles.sidebar__nav}`}>
+
                         <div className={`${styles.sidebar__nav_item}`} title="Bạn bè">
                             <button className={`${styles.sidebar__nav_link} d-flex align-items-center`}
                                     onClick={test}
@@ -116,7 +123,9 @@ const Sidebar = () => {
                             </button>
                         </div>
                         <div className={`${styles.sidebar__nav_item}`} title="Lịch sử">
-                            <button className={`${styles.sidebar__nav_link} d-flex align-items-center`}>
+                            <button className={`${styles.sidebar__nav_link} d-flex align-items-center`}
+                                    onClick={() => navigateTo('/history')}
+                            >
                                 <div className={`${styles.sidebar__nav_icon}`}>
                                     <i className="fa-solid fa-clock-rotate-left"></i>
                                 </div>
@@ -140,7 +149,18 @@ const Sidebar = () => {
                             </button>
                         </div>
                     </nav>
-
+                    <nav className={`${styles.sidebar__nav}`}>
+                        <div className={`${styles.sidebar__nav_item}`} title="Trang chủ">
+                            <button className={`${styles.sidebar__nav_link} d-flex align-items-center`}
+                                    onClick={() => navigateTo('/')}
+                            >
+                                <div className={`${styles.sidebar__nav_icon}`}>
+                                    <i className="fa-solid fa-user-group"></i>
+                                </div>
+                                <span className={`${styles.sidebar__nav_text}`}> Trang chủ </span>
+                            </button>
+                        </div>
+                    </nav>
                     <nav className={`${styles.sidebar__nav}`}>
                         <div className={`${styles.sidebar__nav_item}`} title="Chơi trực tuyến">
                             <button className={`${styles.sidebar__nav_link} d-flex align-items-center`}>

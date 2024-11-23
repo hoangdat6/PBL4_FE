@@ -11,13 +11,10 @@ import ChatBubble from "../components/ChatBubble/ChatBubble";
 import {useSelector} from "react-redux";
 import {useCaroGame} from "../hooks/useCaroGame";
 import useGameTimer from "../hooks/useGameTimer";
+import ChatBox from "../components/ChatBox/ChatBox";
+import SpectatorList from "../components/SpectatorList/SpectatorList";
 
 const RoomPlay = ({
-                      // board,
-                      // handleClick,
-                      // isPlayerStart,
-                      // participantType,
-                      // isPlayerTurn,
                         roomCode,
                         sendMove,
                       timer,
@@ -46,7 +43,7 @@ const RoomPlay = ({
     } = useSelector((state) => state.game.playerTimeInfo2);
 
 
-    const {totalTime, moveDuration} = useSelector((state) => state.game.gameConfig);
+    const { totalTime, moveDuration} = useSelector((state) => state.game.gameConfig);
 
     const isInfiniteTime = totalTime < 0;
 
@@ -80,7 +77,8 @@ const RoomPlay = ({
     }
 
     return (
-        <div>
+        <div className={styles.game_room__wrapper}>
+            <SpectatorList spectators={[]} />
             <section className={styles.boardSection}>
                 <section className={`${styles.game_section}`}>
                     <div className={`${styles.game_container}`}>
@@ -108,8 +106,9 @@ const RoomPlay = ({
                 <button className={styles.leave_button} onClick={leaveRoomWithPopup}>
                     Rời khỏi phòng {isPlaying ? `(${timer}s)` : ""}
                 </button>
-                <ChatBubble />
+                {/*<ChatBubble />*/}
             </section>
+            <ChatBox />
         </div>
     );
 };

@@ -7,7 +7,7 @@ import useLeaveRoom from "../../hooks/useLeaveRoom";
 import WaitingRoom from "../../components/WaitingRoom/WaitingRoom";
 import {useCaroGame} from "../../hooks/useCaroGame";
 import RoomPlay from "../RoomPlay";
-import {SEND_PLAY_AGAIN} from "../../constants/socketEndpoint";
+import {SEND_PLAY_AGAIN, SEND_WINNER} from "../../constants/socketEndpoint";
 import {setParticipantType, setRoomCode} from "../../store/slices/roomSlice";
 import {PLAY_AGAIN_ACCEPT} from "../../enums/PlayAgainCode";
 import RoomConflictNotification from "../../components/RoomConflictNotification/RoomConflictNotification";
@@ -22,20 +22,19 @@ import useGameTimer from "../../hooks/useGameTimer";
 
 const PlayWithFriendPage = () => {
     // states
+    const { roomCode } = useParams();
     const [isJoined, setIsJoined] = useState(false);
     const [isRoomNotFound, setIsRoomNotFound] = useState(false);
     const isGameStarted = useSelector((state) => state.game.isGameStarted);
 
     const playerId = useSelector((state) => state.auth.userId);
-    const { roomCode } = useParams();
 
     const dispatch = useDispatch();
 
     const { timer, startTimer } = useTimer(30); // Custom hook
     const {leaveRoomNotPopup, leaveRoomWithPopup} = useLeaveRoom();
     const {conflictRoomCode, continuePlay, continuePlayCurrentRoom} = useConflictRoom();
-    const { sendMove, connect, sendPlayAgain, isConnected, winner, playAgain, sendMessage} = useGameWebSocket();
-
+    const { sendMove, connect, sendPlayAgain, sendWinner, isConnected, winner, playAgain, sendMessage} = useGameWebSocket();
 
     useEffect(() => {
         connect(roomCode);
@@ -72,12 +71,12 @@ const PlayWithFriendPage = () => {
     useEffect(() => {
         if (winner) {
             startTimer(30);
+            sendWinner(SEND_WINNER(roomCode), winner);
         }
     }, [winner]);
 
     useEffect(() => {
         if (playAgain.code === PLAY_AGAIN_ACCEPT) {
-            // navigate(`/room/${roomCode}`);
             window.location.reload();
         }
     }, [playAgain, roomCode]);

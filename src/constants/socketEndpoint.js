@@ -6,3 +6,4 @@ export const PLAY_AGAIN_TOPIC = (roomCode) => `/topic/play-again/${roomCode}`;
 // app
 export const SEND_MOVE = (roomCode) => `/app/move/${roomCode}`;
 export const SEND_PLAY_AGAIN = (roomCode) => `/app/play-again/${roomCode}`;
+export const SEND_WINNER = (roomCode) => `/app/winner/${roomCode}`;

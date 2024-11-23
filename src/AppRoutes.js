@@ -1,10 +1,11 @@
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import React from "react";
 import LayoutWrapper from "./layouts/LayoutWrapper";
-import HomePage from "./components/HomePage/HomePage";
 import PrivateRoute from "./components/PrivateRoute";
 import GameResult from "./pages/GameResult/GameResult";
 import PlayWithFriendPage from "./pages/PlayWithFriendPage/PlayWithFriendPage";
+import MatchHistory from "./components/MatchHistory/MatchHistory";
+import HomePage from "./pages/HomePage/HomePage";
 
 const routes = createBrowserRouter([
     {
@@ -45,6 +46,18 @@ const routes = createBrowserRouter([
             }
         ]
     },
+    {
+        path: "/history",
+        element: (
+            <LayoutWrapper layoutType={'mainPage'}>
+                <MatchHistory/>
+            </LayoutWrapper>
+        )
+
+    },
+    {
+        path: "/"
+    }
 
 ]
 )

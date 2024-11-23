@@ -1,0 +1,76 @@
+@import "../../styles/scss/mixin";
+
+/* ChatBox.module.scss */
+.chatBox {
+    display: flex;
+    flex-direction: column;
+    //height: 100%;
+    background-color: var(--nav-color);
+    padding: 10px;
+    border-radius: 8px;
+    max-width: 280px;
+    min-width: 280px;
+
+    @include respond-to(null, $breakpoint-xl) {
+        display: none;
+    }
+}
+
+.chatArea {
+    flex: 1;
+    overflow-y: auto;
+    background: url("../../assets/statics/imgs/img.png") no-repeat center;
+    background-size: cover;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.emptyState {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.icon {
+    font-size: 48px; /* Sử dụng icon class, ví dụ FontAwesome */
+    color: rgba(255, 255, 255, 0.3);
+}
+
+.inputArea {
+    display: flex;
+    padding: 10px;
+    gap: 10px;
+    align-items: center;
+}
+
+.input {
+    //flex: 1;
+    padding: 10px;
+    background: #fff;
+    border-radius: 20px;
+    border: none;
+    outline: none;
+    width: 80%;
+}
+
+.sendButton {
+    background-color: #33cc99;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #28a87d;
+    }
+}
+
+.sendIcon {
+    font-size: 16px;
+    color: white; /* Thay bằng icon phù hợp */
+}

@@ -3,12 +3,16 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    flex: 1;
     gap: 50px;
     height: 100vh;
     background-color: var(--bg-color);
 }
 
+.game_room__wrapper {
+    display: flex;
 
+}
 
 .game_section {
     border-radius: 10px;
