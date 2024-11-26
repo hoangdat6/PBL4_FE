@@ -2,11 +2,9 @@ import React from 'react';
 import styles from "./MainLayout.module.scss";
 import Sidebar from '../components/Sidebar/Sidebar';
 import Header from "../components/Header/Header";
-import ChatBox from "../components/ChatBox/ChatBox";
-import SpectatorList from "../components/SpectatorList/SpectatorList";
 import Footer from "../components/HomePageComponent/Footer/Footer";
 
-const MainLayout = ({ children }) => {
+const MainLayoutWithFooter = ({ children }) => {
     return (
 
         <div className={`main_page d-flex flex-grow-1`}
@@ -25,4 +23,4 @@ const MainLayout = ({ children }) => {
     );
 }
 
-export default MainLayout;
+export default MainLayoutWithFooter;

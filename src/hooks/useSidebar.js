@@ -11,14 +11,11 @@ const useSidebar = () => {
 
     const handleShowSidebar = () => {
         dispatch(showSidebar());
-        dispatch(toggleSidebar(true));
     };
 
     return {
         isSidebarActive,
         isShowSidebar,
-        // isLoginFormVisible,
-        // setLoginFormVisible,
         handleToggleSidebar,
         handleShowSidebar,
     };

@@ -7,11 +7,33 @@
     gap: 50px;
     height: 100vh;
     background-color: var(--bg-color);
+
+    .leave_button {
+        background-color: var(--nav-color);
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+    }
 }
 
 .game_room__wrapper {
     display: flex;
 
+    .left_side {
+        max-width: 280px;
+        min-width: 280px;
+        background-color: var(--nav-color);
+
+    }
+
+    .right_side {
+        max-width: 280px;
+        min-width: 280px;
+        background-color: var(--nav-color);
+    }
 }
 
 .game_section {

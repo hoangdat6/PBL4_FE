@@ -6,7 +6,7 @@ import {useDispatch, useSelector} from "react-redux";
 import useLeaveRoom from "../../hooks/useLeaveRoom";
 import WaitingRoom from "../../components/WaitingRoom/WaitingRoom";
 import {useCaroGame} from "../../hooks/useCaroGame";
-import RoomPlay from "../RoomPlay";
+import RoomPlay from "../RoomPlay/RoomPlay";
 import {SEND_PLAY_AGAIN, SEND_WINNER} from "../../constants/socketEndpoint";
 import {setParticipantType, setRoomCode} from "../../store/slices/roomSlice";
 import {PLAY_AGAIN_ACCEPT} from "../../enums/PlayAgainCode";

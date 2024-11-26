@@ -15,7 +15,7 @@
     justify-content: space-between;
     background-color: var(--nav-color);
 
-    @include respond-to($breakpoint-md) {
+    @include respond-to($breakpoint-lg) {
       justify-content: flex-end;
     }
 
@@ -28,7 +28,7 @@
         color: var(--color-main);
       }
 
-      @include respond-to($breakpoint-md) {
+      @include respond-to($breakpoint-lg) {
         display: none;
         font-size: 25px;
       }

@@ -5,7 +5,7 @@
     padding: 10px 15px;
     margin-bottom: 10px;
     border-radius: 8px;
-    background-color: #2a2a3b; /* Màu nền của từng cell */
+    background-color: var(--nav-color); /* Màu nền của từng cell */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     color: #ffffff;
     transition: background-color 0.2s;

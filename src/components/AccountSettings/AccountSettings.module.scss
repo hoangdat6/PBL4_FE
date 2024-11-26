@@ -1,0 +1,114 @@
+/* AccountSettings.module.scss */
+.accountSettings {
+    color: white;
+    padding: 20px;
+    border-radius: 8px;
+    font-family: Arial, sans-serif;
+    max-width: 600px;
+    margin: 0 auto;
+
+    .title {
+        font-size: 1.8rem;
+        font-weight: bold;
+        margin-bottom: 20px;
+        text-align: center;
+        color: var(--color-main);
+    }
+
+    .form {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .field {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    label {
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.8);
+    }
+
+    input {
+        padding: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 5px;
+        background-color: #1a2b34;
+        color: white;
+    }
+
+    input:focus {
+        outline: none;
+        border-color: #33cc99;
+    }
+
+    .userId {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .copyButton {
+        background-color: #1f6feb;
+        border: none;
+        color: white;
+        border-radius: 5px;
+        padding: 5px 10px;
+        cursor: pointer;
+        font-size: 14px;
+    }
+
+    .copyButton:hover {
+        background-color: #165bb3;
+    }
+
+    .updateButton {
+        background-color: #33cc99;
+        border: none;
+        color: white;
+        padding: 10px 15px;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        align-self: flex-start;
+        transition: background-color 0.2s ease;
+
+        &:hover {
+            background-color: #28a87b;
+        }
+
+        &:disabled {
+            background-color: rgba(51, 204, 153, 0.6);
+            cursor: not-allowed;
+        }
+    }
+
+    .deleteSection {
+        margin-top: 30px;
+    }
+
+    .deleteButton {
+        background-color: #ff4d4f;
+        border: none;
+        color: white;
+        padding: 10px 15px;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+
+        &:hover {
+            background-color: #cc3c3d;
+        }
+    }
+
+    .deleteSection p {
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.6);
+        margin: 10px 0;
+    }
+}
+

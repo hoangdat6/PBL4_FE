@@ -5,11 +5,23 @@ import ParticipantType from "../../enums/participantType";
 import {PLAY_AGAIN} from "../../enums/PlayAgainCode";
 import {useSelector} from "react-redux";
 
-const GameResultComponent = ({ winnerId, playerId, handlePlayAgain, handleLeaveRoom, opponentPlayAgain, timer }) => {
+const GameResultComponent = ({ winnerId, winnerName, playerId, handlePlayAgain, handleLeaveRoom, opponentPlayAgain, timer }) => {
     const participantType = useSelector((state) => state.room.participantType);
-    const message = winnerId === null ? 'Trận đấu hòa!' : winnerId === playerId ? '🎉 Chúc mừng! Bạn đã thắng! 🎉' : participantType === ParticipantType.SPECTATOR ? `${winnerId} thắng` : `😢 Bạn đã thua. Hãy cố gắng lần sau! 😢`;
-    const playAgainMessage = opponentPlayAgain.code === PLAY_AGAIN
-        ? opponentPlayAgain.playerId !== playerId ?  'Đối thủ muốn chơi lại!' : "Đang chờ đối thủ ..." : 'Bạn muốn chơi lại không?';
+    const message = winnerId === null ? 'Trận đấu hòa!' : winnerId === playerId ? '🎉 Chúc mừng! Bạn đã thắng! 🎉' : participantType === ParticipantType.SPECTATOR ? `${winnerName} thắng` : `😢 Bạn đã thua. Hãy cố gắng lần sau! 😢`;
+
+    const playAgainMessage = () => {
+        if (opponentPlayAgain.code === PLAY_AGAIN) {
+            if(participantType === ParticipantType.SPECTATOR) {
+                return `Người chơi đang chơi lại!`;
+            }
+            if (opponentPlayAgain.playerId !== playerId) {
+                return 'Đối thủ muốn chơi lại!';
+            }
+            return "Đang chờ đối thủ ...";
+        }
+        return 'Bạn muốn chơi lại không?';
+    }
+
     return (
         <div className="game-result">
             <div className="game-result__message">
@@ -17,7 +29,7 @@ const GameResultComponent = ({ winnerId, playerId, handlePlayAgain, handleLeaveR
             </div>
             <div className="game-result__actions">
                 <button className="game-result__btn play-again" onClick={handlePlayAgain}>
-                    {playAgainMessage}
+                    {playAgainMessage()}
                 </button>
                 <button className="game-result__btn leave-room" onClick={handleLeaveRoom}>
                     Rời phòng {timer ? `(${timer}s)` : ''}

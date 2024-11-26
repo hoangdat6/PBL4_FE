@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = `${process.env.REACT_APP_CARO_BE_API_URL}/api/room/bot/`;
+const API_URL = `${process.env.REACT_APP_CARO_BE_API_URL}/api/ai/`;
 
 const apiClient = axios.create({
     baseURL: API_URL,

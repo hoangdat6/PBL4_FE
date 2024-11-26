@@ -4,10 +4,12 @@ import { useNavigate } from 'react-router-dom';
 import styles from "../Sidebar/Sidebar.module.scss";
 import {logout} from "../../store/slices/authSlice";
 import {useDispatch} from "react-redux";
-import UserService from "../../services/user.service";
 import AuthService from "../../services/auth.service";
 
-const UserMenu = ({ user }) => {
+const UserMenu = ({
+                      user,
+                      onActiveSidebar
+}) => {
     const [anchorEl, setAnchorEl] = useState(null);
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -36,8 +38,11 @@ const UserMenu = ({ user }) => {
     };
 
     return (
-        <>
-            <IconButton onClick={handleClick}>
+        <div className={styles.user_menu_wrapper}>
+            <IconButton onClick={handleClick}
+                        style={{display: "block"}}
+                        className={`${styles.info__avatar}`}
+            >
                 <Avatar src="https://i.pravatar.cc/150?img=68" alt="avatar" />
             </IconButton>
             <Menu
@@ -49,17 +54,17 @@ const UserMenu = ({ user }) => {
                 <MenuItem onClick={handleProfile}>Hồ sơ của tôi</MenuItem>
                 <MenuItem onClick={handleLogout}>Logout</MenuItem>
             </Menu>
-            <div className={`${styles.info_user}`}>
+            <div className={`${styles.info_user} ${onActiveSidebar ? "" : styles.un_active }`}>
                 <div className={`${styles.info__name}`}>
                     <span>{user.name}</span>
                 </div>
 
                 <div className={`${styles.info__coin}`}>
                     <i className="fa-solid fa-coins"></i>
-                    <span>{user.coin}</span>
+                    <span>{user.score}</span>
                 </div>
             </div>
-        </>
+        </div>
     );
 };
 

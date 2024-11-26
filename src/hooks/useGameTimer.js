@@ -18,13 +18,21 @@ const useGameTimer = () => {
     const { timer: timer1, startTimer: startTimer1, resetTimer: resetTimer1 } = useTimer(playerTimeInfo1.remainMoveDuration);
     const { timer: timer2, startTimer: startTimer2, resetTimer: resetTimer2 } = useTimer(playerTimeInfo2.remainMoveDuration);
 
-    useEffect(() => {
+    const startTimer = () => {
         if(player1Info.isTurn) {
             startTimer1(playerTimeInfo1.remainMoveDuration);
         }else {
             startTimer2(playerTimeInfo2.remainMoveDuration);
         }
-    }, []);
+    }
+
+    // useEffect(() => {
+    //     if(player1Info.isTurn) {
+    //         startTimer1(playerTimeInfo1.remainMoveDuration);
+    //     }else {
+    //         startTimer2(playerTimeInfo2.remainMoveDuration);
+    //     }
+    // }, []);
 
     useEffect(() => {
         if (player1Info.isTurn) {
@@ -72,7 +80,7 @@ const useGameTimer = () => {
         }
     }, [playerTimeInfo1.remainTime, playerTimeInfo2.remainTime]);
 
-    return { timer1, timer2};
+    return { timer1, timer2, startTimer};
 };
 
 export default useGameTimer;

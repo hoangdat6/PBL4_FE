@@ -1,4 +1,4 @@
-import {useLocation, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import RoomService from "../services/room.service";
 import showLeaveRoomPopup from "../components/showLeaveRoomPopup/showLeaveRoomPopup";
 import {resetGame} from "../store/slices/gameSlice";
@@ -10,11 +10,12 @@ const useLeaveRoom = () => {
     const dispatch = useDispatch();
 
     const leaveRoomNotPopup = async (redirectURL) => {
-        dispatch(resetGame());
-        dispatch(resetRoom());
+
         redirectURL = redirectURL || "/";
         return RoomService.leaveRoom().then(() => {
             navigate(redirectURL || "/");
+            dispatch(resetGame());
+            dispatch(resetRoom());
         }).catch((error) => {
             console.log(error);
         });

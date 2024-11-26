@@ -4,11 +4,10 @@ import useSidebar from "../../hooks/useSidebar";
 import useOverlay from "../../hooks/useOverlay/useOverlay";
 import SignInSignUp from "../../pages/AuthPage/SignInSignUp";
 import CreateRoomPage from "../../pages/CreateRoomPage/ConfigGamePage";
-import UserService from "../../services/user.service";
 import {useSelector} from "react-redux";
 import UserMenu from "../LoginSignUp/UserMenu";
-import TestService from "../../services/test.service";
 import {useNavigate} from "react-router-dom";
+import UserService from "../../services/user.service";
 
 const Sidebar = () => {
     const { toggleOverlay, Overlay } = useOverlay();
@@ -27,23 +26,17 @@ const Sidebar = () => {
         setIsOpen(true);
     };
 
-    // useEffect(() => {
-    //     if(isAuthenticated) {
-    //         UserService.getProfile().then((res) => {
-    //             console.log(res);
-    //         }).catch((err) => {
-    //             console.log(err);
-    //         });
-    //     }
-    // },[isAuthenticated]);
+    useEffect(() => {
+        if(isAuthenticated) {
+            UserService.getInfo().then((res) => {
+                console.log(res.data);
+                setUser(res.data);
+            }).catch((err) => {
+                console.log(err);
+            });
+        }
+    },[isAuthenticated]);
 
-    const test = () => {
-        TestService.getPublicContent().then((res) => {
-            console.log(res);
-        }).catch((err) => {
-            console.log(err);
-        });
-    }
 
     const navigate = useNavigate();
     const navigateTo = (path) => {
@@ -51,19 +44,20 @@ const Sidebar = () => {
     }
 
     return (
-        <nav
-            className={`${styles.sidebar} ${isSidebarActive ? styles.un_active : ""}  ` }>
+        <nav className={`${styles.sidebar} ${isSidebarActive ? "" : styles.un_active} ${isShowSidebar ? styles.is_open : styles.is_close}` }>
             <SignInSignUp Overlay={Overlay} toggleOverlay={toggleOverlay}/>
-            <CreateRoomPage isOpen={isOpen} setIsOpen={setIsOpen} />
+            {
+                isOpen && <CreateRoomPage isOpen={isOpen} setIsOpen={setIsOpen} />
+            }
             <div
-                className={`${styles.sidebar__overlay}`}
+                className={`${styles.sidebar__overlay} `}
                 onClick={handleShowSidebar}
             ></div>
             <div className={`${styles.sidebar__container} d-md-flex flex-column`}>
                 <div className={`${styles.sidebar__header}`}>
                     {isAuthenticated ? (
-                        <div className={`${styles.sidebar__login} ${styles.info}`}>
-                            <UserMenu user={user} />
+                        <div className={`${styles.sidebar__login} ${styles.info} ${isSidebarActive ? "" : styles.un_active}`}>
+                            <UserMenu user={user} onActiveSidebar={isSidebarActive} />
 
                             <div className={`${styles.sidebar__menu_cta}`}>
                                 <div className={`${styles.sidebar__menu_cta_item}`}>
@@ -114,7 +108,7 @@ const Sidebar = () => {
 
                         <div className={`${styles.sidebar__nav_item}`} title="Bạn bè">
                             <button className={`${styles.sidebar__nav_link} d-flex align-items-center`}
-                                    onClick={test}
+                                    onClick={() => navigateTo('/friends')}
                             >
                                 <div className={`${styles.sidebar__nav_icon}`}>
                                     <i className="fa-solid fa-user-group"></i>
@@ -133,21 +127,26 @@ const Sidebar = () => {
                             </button>
                         </div>
                         <div className={`${styles.sidebar__nav_item}`} title="Bảng xếp hạng">
-                            <button className={`${styles.sidebar__nav_link} d-flex align-items-center`}>
+                            <button className={`${styles.sidebar__nav_link} d-flex align-items-center`}
+                                    onClick={() => navigateTo('/leaderboard')}
+                            >
                                 <div className={`${styles.sidebar__nav_icon}`}>
                                     <i className="fa-solid fa-trophy"></i>
                                 </div>
                                 <span className={`${styles.sidebar__nav_text}`}> Bảng xếp hạng </span>
                             </button>
                         </div>
-                        <div className={`${styles.sidebar__nav_item}`} title="Nhắn tin">
-                            <button className={`${styles.sidebar__nav_link} d-flex align-items-center`}>
-                                <div className={`${styles.sidebar__nav_icon}`}>
-                                    <i className="fa-solid fa-messages"></i>
-                                </div>
-                                <span className={`${styles.sidebar__nav_text}`}> Nhắn tin </span>
-                            </button>
-                        </div>
+                        {/*<div className={`${styles.sidebar__nav_item}`} title="Nhắn tin"*/}
+                        {/*>*/}
+                        {/*    <button className={`${styles.sidebar__nav_link} d-flex align-items-center`}*/}
+                        {/*        onClick={() => navigateTo('/messages')}*/}
+                        {/*    >*/}
+                        {/*        <div className={`${styles.sidebar__nav_icon}`}>*/}
+                        {/*            <i className="fa-solid fa-messages"></i>*/}
+                        {/*        </div>*/}
+                        {/*        <span className={`${styles.sidebar__nav_text}`}> Nhắn tin </span>*/}
+                        {/*    </button>*/}
+                        {/*</div>*/}
                     </nav>
                     <nav className={`${styles.sidebar__nav}`}>
                         <div className={`${styles.sidebar__nav_item}`} title="Trang chủ">
@@ -171,7 +170,9 @@ const Sidebar = () => {
                             </button>
                         </div>
                         <div className={`${styles.sidebar__nav_item}`} title="Đấu với máy">
-                            <button className={`${styles.sidebar__nav_link} d-flex align-items-center`}>
+                            <button className={`${styles.sidebar__nav_link} d-flex align-items-center`}
+                                    onClick={() => navigateTo('/b/room')}
+                            >
                                 <div className={`${styles.sidebar__nav_icon}`}>
                                     <i className="fa-solid fa-user-robot"></i>
                                 </div>
@@ -188,27 +189,33 @@ const Sidebar = () => {
                                 <span className={`${styles.sidebar__nav_text}`}> Chơi với bạn bè </span>
                             </button>
                         </div>
-                        <div className={`${styles.sidebar__nav_item}`} title="Tạo giải đấu">
-                            <button className={`${styles.sidebar__nav_link} d-flex align-items-center`}>
-                                <div className={`${styles.sidebar__nav_icon}`}>
-                                    <i className="fa-solid fa-circle-plus"></i>
-                                </div>
-                                <span className={`${styles.sidebar__nav_text}`}> Tạo giải đấu </span>
-                            </button>
-                        </div>
-                        <div className={`${styles.sidebar__nav_item}`} title="Tạo giải đấu">
-                            <button className={`${styles.sidebar__nav_link} d-flex align-items-center`}>
-                                <div className={`${styles.sidebar__nav_icon}`}>
-                                    <i className="fa-solid fa-circle-plus"></i>
-                                </div>
-                                <span className={`${styles.sidebar__nav_text}`}> Phòng hoạt động </span>
-                            </button>
-                        </div>
+                        {/*<div className={`${styles.sidebar__nav_item}`} title="Tạo giải đấu">*/}
+                        {/*    <button className={`${styles.sidebar__nav_link} d-flex align-items-center`}*/}
+                        {/*            onClick={() => navigateTo('/create-tournament')}*/}
+                        {/*    >*/}
+                        {/*        <div className={`${styles.sidebar__nav_icon}`}>*/}
+                        {/*            <i className="fa-solid fa-circle-plus"></i>*/}
+                        {/*        </div>*/}
+                        {/*        <span className={`${styles.sidebar__nav_text}`}> Tạo giải đấu </span>*/}
+                        {/*    </button>*/}
+                        {/*</div>*/}
+                        {/*<div className={`${styles.sidebar__nav_item}`} title="Tạo giải đấu">*/}
+                        {/*    <button className={`${styles.sidebar__nav_link} d-flex align-items-center`}*/}
+                        {/*            onClick={() => navigateTo('/room-list')}*/}
+                        {/*    >*/}
+                        {/*        <div className={`${styles.sidebar__nav_icon}`}>*/}
+                        {/*            <i className="fa-solid fa-circle-plus"></i>*/}
+                        {/*        </div>*/}
+                        {/*        <span className={`${styles.sidebar__nav_text}`}> Phòng hoạt động </span>*/}
+                        {/*    </button>*/}
+                        {/*</div>*/}
                     </nav>
 
                     <nav className={`${styles.sidebar__nav}`}>
                         <div className={`${styles.sidebar__nav_item}`} title="Luật chơi">
-                            <button className={`${styles.sidebar__nav_link} d-flex align-items-center`}>
+                            <button className={`${styles.sidebar__nav_link} d-flex align-items-center`}
+                                    onClick={() => navigateTo('/rules')}
+                            >
                                 <div className={`${styles.sidebar__nav_icon}`}>
                                     <i className="fa-solid fa-book-tanakh"></i>
                                 </div>
@@ -219,7 +226,9 @@ const Sidebar = () => {
 
                     <nav className={`${styles.sidebar__nav}`}>
                         <div className={`${styles.sidebar__nav_item}`} title="Cửa hàng">
-                            <button className={`${styles.sidebar__nav_link} d-flex align-items-center`}>
+                            <button className={`${styles.sidebar__nav_link} d-flex align-items-center`}
+                                    onClick={() => navigateTo('/shop')}
+                            >
                                 <div className={`${styles.sidebar__nav_icon}`}>
                                     <i className="fa-solid fa-cart-shopping"></i>
                                 </div>
@@ -227,7 +236,9 @@ const Sidebar = () => {
                             </button>
                         </div>
                         <div className={`${styles.sidebar__nav_item}`} title="Tài khoản của tôi">
-                            <button className={`${styles.sidebar__nav_link} d-flex align-items-center`}>
+                            <button className={`${styles.sidebar__nav_link} d-flex align-items-center`}
+                                    onClick={() => navigateTo('/account')}
+                            >
                                 <div className={`${styles.sidebar__nav_icon}`}>
                                     <i className="fa-thin fa-user"></i>
                                 </div>
@@ -235,7 +246,9 @@ const Sidebar = () => {
                             </button>
                         </div>
                         <div className={`${styles.sidebar__nav_item}`} title="Hồ sơ của tôi">
-                            <button className={`${styles.sidebar__nav_link} d-flex align-items-center`}>
+                            <button className={`${styles.sidebar__nav_link} d-flex align-items-center`}
+                                    onClick={() => navigateTo('/profile')}
+                            >
                                 <div className={`${styles.sidebar__nav_icon}`}>
                                     <i className="fa-solid fa-link"></i>
                                 </div>
@@ -243,7 +256,9 @@ const Sidebar = () => {
                             </button>
                         </div>
                         <div className={`${styles.sidebar__nav_item}`} title="Cài đặt">
-                            <button className={`${styles.sidebar__nav_link} d-flex align-items-center`}>
+                            <button className={`${styles.sidebar__nav_link} d-flex align-items-center`}
+                                    onClick={() => navigateTo('/settings')}
+                            >
                                 <div className={`${styles.sidebar__nav_icon}`}>
                                     <i className="fa-solid fa-gear"></i>
                                 </div>

@@ -1,12 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import { useSelector } from 'react-redux';
-import SignInSignUp from "../pages/AuthPage/SignInSignUp";
 import useOverlay from "../hooks/useOverlay/useOverlay";
-import { Button } from "@mui/material";
 import {useLocation, useNavigate} from "react-router-dom";
 import RequireLogin from "./RequireLogin/RequireLogin";
+import SignInSignUp from "../pages/AuthPage/SignInSignUp";
 
-const PrivateRoute = ({ children }) => {
+const PrivateRoute = ({ children, isWithText }) => {
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
     const { toggleOverlay, Overlay } = useOverlay();
     const navigate = useNavigate();
@@ -28,11 +27,18 @@ const PrivateRoute = ({ children }) => {
 
     if (!isAuthenticated) {
         return (
-            <RequireLogin
-                toggleOverlay={toggleOverlay}
-                Overlay={Overlay}
-                handleLoginSuccess={handleLoginSuccess}
-            />
+            isWithText ? (
+                <RequireLogin
+                    toggleOverlay={toggleOverlay}
+                    Overlay={Overlay}
+                    handleLoginSuccess={handleLoginSuccess}
+                />
+            ) : (
+                <SignInSignUp handleLoginSuccess={handleLoginSuccess}
+                              Overlay={Overlay}
+                              toggleOverlay={toggleOverlay}
+                />
+            )
         );
     }
 

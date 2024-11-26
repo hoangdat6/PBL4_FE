@@ -7,7 +7,8 @@ const initialState = {
     player1Info: {
         id: null,
         name: null,
-        score: 0,
+        matchScore: 0,
+        seasonScore: 0,
         avatar: null,
         checker: null,
         rank: null,
@@ -16,7 +17,8 @@ const initialState = {
     player2Info: {
         id: null,
         name: null,
-        score: 0,
+        matchScore: 0,
+        seasonScore: 0,
         avatar: null,
         checker: null,
         rank: null,
