@@ -26,21 +26,17 @@ const useGameTimer = () => {
         }
     }
 
-    // useEffect(() => {
-    //     if(player1Info.isTurn) {
-    //         startTimer1(playerTimeInfo1.remainMoveDuration);
-    //     }else {
-    //         startTimer2(playerTimeInfo2.remainMoveDuration);
-    //     }
-    // }, []);
-
     useEffect(() => {
         if (player1Info.isTurn) {
-            startTimer1(playerTimeInfo1.remainMoveDuration);
+            setTimeout(() => {
+                startTimer1(playerTimeInfo1.remainMoveDuration);
+            }, 100);
             resetTimer2(moveDuration);
             dispatch(setRemainMoveDuration2(moveDuration));
         } else if (player2Info.isTurn) {
-            startTimer2(playerTimeInfo2.remainMoveDuration);
+            setTimeout(() => {
+                startTimer2(playerTimeInfo2.remainMoveDuration);
+            }, 100);
             resetTimer1(moveDuration);
             dispatch(setRemainMoveDuration1(moveDuration));
         }

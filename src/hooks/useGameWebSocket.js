@@ -22,6 +22,7 @@ const useGameWebSocket = () => {
     const [isConnected, setIsConnected] = useState(false);
     const [playAgain, setPlayAgain] = useState({});
     const winner = useSelector((state) => state.game.winnerId);
+    const [isGameStarted, setIsGameStarted] = useState(false);
 
     const connect = (roomCode) => {
         if (!roomCode) return;
@@ -51,13 +52,14 @@ const useGameWebSocket = () => {
                         gameStart.boardState.winLength,
                         gameStart.lastMove,
                         true,
+                        gameStart.winnerId,
                         gameStart.player1Info,
                         gameStart.player2Info,
                         gameStart.gameConfig,
                     );
 
                     console.log(gameState.getCurrentState());
-
+                    setIsGameStarted(true);
                     dispatch(setGameState(gameState.getCurrentState()));
                     dispatch(setRoomState(gameState.getCurrentState()));
                     dispatch(setGameConfig(gameState.getCurrentState().gameConfig)); // phai set gameConfig truoc
@@ -118,7 +120,7 @@ const useGameWebSocket = () => {
         };
     }, []);
 
-    return { sendMove, connect, sendPlayAgain, sendWinner, isConnected, stompClient, winner, playAgain };
+    return { sendMove, connect, sendPlayAgain, sendWinner, isConnected, stompClient, winner, playAgain, isGameStarted };
 };
 
 export default useGameWebSocket;

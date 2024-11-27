@@ -23,11 +23,16 @@ const leaveRoom = async () => {
     return await apiClient.post('/leave');
 }
 
-const RoomService = {
+const sendMove = async (moveDTO) => {
+    return await apiClient.post('/move', moveDTO);
+}
+
+const GameBot = {
     createRoom,
     joinRoom,
     getRoom,
     leaveRoom,
+    sendMove,
 }
 
-export default RoomService;
+export default GameBot;

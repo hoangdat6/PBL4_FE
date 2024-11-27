@@ -22,9 +22,10 @@ const RoomPlay = ({
     const {startTimer} = useGameTimer();
 
     useEffect(() => {
+
         setTimeout(() => {
             startTimer();
-        }, 1000);
+        }, 1500);
     }, []);
 
     const player1Info = useSelector((state) => state.room.player1Info);

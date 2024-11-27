@@ -12,6 +12,7 @@ const PlayWithBot = () => {
         isPlayerTurn,
         isPlaying,
         roomCode,
+        lastMove,
         handleClick,
         createRoom,
         joinRoom
@@ -27,6 +28,7 @@ const PlayWithBot = () => {
         }
     }, []);
 
+
     return (
         isPlaying ?
             <RoomBot
@@ -36,6 +38,7 @@ const PlayWithBot = () => {
                 isPlayerTurn={isPlayerTurn}
                 handleClick={handleClick}
                 leaveRoomWithPopup={leaveRoomWithPopup}
+                lastMove={lastMove}
             />  : <Loading/>
     );
 }

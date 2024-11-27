@@ -2,6 +2,7 @@ import axios from "axios";
 
 const API_URL = `${process.env.REACT_APP_CARO_BE_API_URL}/api/auth/`;
 
+
 const register = (name, email, password) => {
     return axios.post(API_URL + "signup", {
         name,
@@ -23,6 +24,7 @@ const login = (email, password) => {
 
 const logout = () => {
     return axios.post(API_URL + "signout").then((response) => {
+        console.log(response.data);
         return response.data;
     });
 };

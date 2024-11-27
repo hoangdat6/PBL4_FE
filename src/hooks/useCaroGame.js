@@ -19,6 +19,7 @@ export const useCaroGame = (roomCode, sendMove) => {
     const {id: id2} = useSelector((state) => state.room.player2Info);
 
     useEffect(() => {
+        console.log(isTurn);
         dispatch(setIsPlayerTurn(isTurn));
     }, [isTurn, dispatch]);
 

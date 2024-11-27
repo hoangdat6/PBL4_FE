@@ -15,7 +15,9 @@ const RoomBot = ({
                         isPlayerTurn,
                         handleClick,
                         leaveRoomWithPopup,
-                  }) => {
+                     lastMove
+
+                 }) => {
 
     const player1 = {
         playerId: 1,
@@ -47,6 +49,8 @@ const RoomBot = ({
         reverse: false,
     }
 
+
+
     return (
         <div className={styles.game_room__wrapper}>
             <div className={styles.left_side}></div>
@@ -71,6 +75,7 @@ const RoomBot = ({
                     isStartPlayer={isPlayerStart}
                     isPlayer={isPlayer}
                     isPlayerTurn={isPlayerTurn}
+                    lastMove={lastMove}
                 />
 
                 {/* Nút rời khỏi phòng */}

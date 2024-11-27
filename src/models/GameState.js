@@ -1,9 +1,10 @@
 
 class GameState {
-    constructor(roomCode, startPlayerId, nthMove, board, size, winLength, lastMove, isGameStated, player1Ino, player2Info, gameConfig) {
+    constructor(roomCode, startPlayerId, nthMove, board, size, winLength, lastMove, isGameStated, winnerId, player1Info, player2Info, gameConfig) {
         this.roomCode = roomCode;
         this.startPlayerId = startPlayerId;
         this.nthMove = nthMove;
+        this.winnerId = winnerId;
         this.lastMove = lastMove;
         this.isGameStated = isGameStated;
         this.gameConfig = {
@@ -12,23 +13,25 @@ class GameState {
             firstMoveOption: gameConfig.firstMoveOption
         }
         this.player1Info = {
-            id: player1Ino.id,
-            name: player1Ino.name,
-            score: player1Ino.score,
-            avatar: player1Ino.avatar,
-            checker: startPlayerId === player1Ino.id ? 0 : 1,
-            rank: player1Ino.rank,
+            id: player1Info.id,
+            name: player1Info.name,
+            matchScore: player1Info.matchScore,
+            seasonScore: player1Info.seasonScore,
+            avatar: player1Info.avatar,
+            checker: startPlayerId === player1Info.id ? 0 : 1,
+            rank: player1Info.rank,
             isTurn: false,
             timeInfo: {
-                remainTime: player1Ino.remainTime,
-                remainMoveDuration: player1Ino.remainMoveDuration,
-                playedTime: player1Ino.playedTime
+                remainTime: player1Info.remainTime,
+                remainMoveDuration: player1Info.remainMoveDuration,
+                playedTime: player1Info.playedTime
             }
         };
         this.player2Info = {
             id: player2Info.id,
             name: player2Info.name,
-            score: player2Info.score,
+            matchScore: player2Info.matchScore,
+            seasonScore: player2Info.seasonScore,
             avatar: player2Info.avatar,
             checker: startPlayerId === player2Info.id ? 0 : 1,
             rank: player2Info.rank,
@@ -67,6 +70,7 @@ class GameState {
             roomCode: this.roomCode,
             startPlayerId: this.startPlayerId,
             nthMove: this.nthMove,
+            winnerId: this.winnerId,
             lastMove: this.lastMove,
             boardState: this.boardState,
             isGameStated: this.isGameStated,

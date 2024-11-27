@@ -1,26 +1,21 @@
 import axios from "axios";
-
+import apiClient from "./apiClient";
 const API_URL = `${process.env.REACT_APP_CARO_BE_API_URL}/api/room/`;
 
-const apiClient = axios.create({
-    baseURL: API_URL,
-    withCredentials: true,
-});
-
 const createRoom = async (configGameDTO) => {
-    return await apiClient.post('/create', configGameDTO);
+    return await apiClient(API_URL).post('/create', configGameDTO);
 }
 
 const joinRoom = async (roomCode) => {
-    return await apiClient.post('/join', { }, { params: { roomCode } });
+    return await apiClient(API_URL).post('/join', { }, { params: { roomCode } });
 }
 
 const getRoom = async (roomCode)     => {
-    return await apiClient.get(`/${roomCode}`);
+    return await apiClient(API_URL).get(`/${roomCode}`);
 }
 
 const leaveRoom = async () => {
-    return await apiClient.post('/leave');
+    return await apiClient(API_URL).post('/leave');
 }
 
 const RoomService = {

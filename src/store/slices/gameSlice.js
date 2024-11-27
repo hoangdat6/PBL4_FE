@@ -35,9 +35,10 @@ const gameSlice = createSlice({
     initialState,
     reducers: {
         setGameState: (state, action) => {
-            const {startPlayerId, nthMove, boardState, lastMove, isGameStated} = action.payload;
+            const {startPlayerId, nthMove, boardState, winnerId, lastMove, isGameStated} = action.payload;
             state.startPlayerId = startPlayerId;
             state.nthMove = nthMove;
+            state.winnerId = winnerId;
             state.boardState.board = boardState.board;
             state.boardState.size = boardState.size;
             state.boardState.winLength = boardState.winLength;

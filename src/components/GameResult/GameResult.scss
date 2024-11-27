@@ -1,11 +1,84 @@
+//.game-result {
+//    text-align: center;
+//    margin: 20px;
+//
+//    &__message {
+//        font-size: 1.5rem;
+//        font-weight: bold;
+//        margin-bottom: 15px;
+//    }
+//
+//    &__actions {
+//        display: flex;
+//        justify-content: center;
+//        gap: 10px;
+//
+//        .game-result__btn {
+//            padding: 10px 20px;
+//            font-size: 1rem;
+//            border: none;
+//            border-radius: 5px;
+//            cursor: pointer;
+//
+//            &.play-again {
+//                background-color: #4caf50;
+//                color: #fff;
+//            }
+//
+//            &.leave-room {
+//                background-color: #f44336;
+//                color: #fff;
+//            }
+//
+//            &:disabled {
+//                background-color: #ccc;
+//                cursor: not-allowed;
+//            }
+//        }
+//    }
+//}
+
 .game-result {
     text-align: center;
     margin: 20px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+
 
     &__message {
         font-size: 1.5rem;
         font-weight: bold;
         margin-bottom: 15px;
+        color: var(--color-text);
+    }
+
+    &__score {
+        margin: 20px 0;
+        width: 350px;
+
+        &-bar {
+            width: 100%;
+            height: 20px;
+            background-color: #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 5px;
+        }
+
+        &-progress {
+            height: 100%;
+            background-color: #4caf50;
+            width: 0;
+            transition: width 0.2s linear;
+        }
+
+        &-text {
+            font-size: 1rem;
+            color: #333;
+        }
     }
 
     &__actions {
@@ -37,3 +110,4 @@
         }
     }
 }
+

@@ -19,6 +19,8 @@ import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import SettingsPage from "./pages/SettingsPage/SettingsPage";
 import AccountSettingPage from "./pages/AccountSettingPage/AccountSettingPage";
 import PlayWithBot from "./pages/PlayWithBot/PlayWithBot";
+import GameResultComponent from "./components/GameResult/GameResult";
+import PlayWithFriendPageCP from "./pages/PlayWithFriendPage/PlayWithFriendPageCP";
 
 
 const routes = createBrowserRouter([
@@ -43,22 +45,20 @@ const routes = createBrowserRouter([
                 element: (
                     <PrivateRoute>
                         <LayoutWrapper layoutType={'default'}>
-                            <PlayWithFriendPage />
+                            <PlayWithFriendPageCP />
                         </LayoutWrapper>
                     </PrivateRoute>
                 )
             },
-            {
-                path: ":roomCode/result",
-                element: (
-                    <PrivateRoute>
-                        <LayoutWrapper layoutType={'default'}>
-                            <GameResult />
-                        </LayoutWrapper>
-                    </PrivateRoute>
-                )
-            }
         ]
+    },
+    {
+        path: "/result",
+        element: (
+            <LayoutWrapper layoutType={'default'}>
+                <PlayWithFriendPageCP />
+            </LayoutWrapper>
+        )
     },
     {
         path: "/b/room",
