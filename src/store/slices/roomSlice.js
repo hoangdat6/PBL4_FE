@@ -71,7 +71,6 @@ const roomSlice = createSlice({
             state.player2Info.rank = action.payload.rank;
         },
         setIsTurn: (state, action) => {
-            console.log("set is turn ", action.payload);
             state.player1Info.isTurn = action.payload;
             state.player2Info.isTurn = !action.payload;
         }

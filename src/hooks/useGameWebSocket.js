@@ -61,8 +61,6 @@ const useGameWebSocket = () => {
                         gameStart.gameConfig,
                     );
 
-                    console.log(gameState.getCurrentState());
-                    // setIsGameStarted(true);
                     dispatch(setGameState(gameState.getCurrentState()));
                     dispatch(setRoomState(gameState.getCurrentState()));
                     dispatch(setGameConfig(gameState.getCurrentState().gameConfig)); // phai set gameConfig truoc
@@ -95,8 +93,6 @@ const useGameWebSocket = () => {
                         gameStart.gameConfig,
                     );
 
-                    console.log(gameState.getCurrentState());
-                    // setIsGameStarted(true);
                     dispatch(setGameState(gameState.getCurrentState()));
                     dispatch(setRoomState(gameState.getCurrentState()));
                     dispatch(setGameConfig(gameState.getCurrentState().gameConfig)); // phai set gameConfig truoc
@@ -117,14 +113,14 @@ const useGameWebSocket = () => {
                 });
 
                 setIsConnected(true);
-                console.log('Connected to room: ' + roomCode);
+                // console.log('Connected to room: ' + roomCode);
                 stompClient.current = client;
             },
             onStompError: (frame) => {
-                console.error('Broker reported error: ' + frame.headers['message']);
+                // console.error('Broker reported error: ' + frame.headers['message']);
             },
             onWebSocketClose: () => {
-                console.log('Socket closed');
+                // console.log('Socket closed');
             }
         });
 

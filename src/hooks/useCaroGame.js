@@ -74,7 +74,6 @@ export const useCaroGame = (roomCode, sendMove) => {
     useEffect(() => {
         if (lastMove) {
             const { row, col, nthMove } = lastMove;
-            console.log(lastMove);
             const updatedBoard = boardState.board.map((r, rIndex) => {
                 if (rIndex === row) {
                     return r.map((c, cIndex) => (cIndex === col ? nthMove % 2 : c));
