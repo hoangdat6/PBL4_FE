@@ -4,6 +4,7 @@ import War from "../../assets/statics/imgs/war.svg";
 import React from "react";
 
 const RoomPlayLayout = ({ children, leftSide, rightSide, player1, player2, onLeaveRoom, isGameStarted}) => {
+
     return (
         <div className={styles.layout_wrapper}>
             <div className={styles.left_side}>

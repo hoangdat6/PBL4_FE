@@ -2,6 +2,7 @@ import React from 'react';
 import styles from "./MainLayout.module.scss";
 import Sidebar from '../components/Sidebar/Sidebar';
 import Header from "../components/Header/Header";
+import ChatBox from "../components/ChatBox/ChatBox";
 
 const MainLayout = ({ children }) => {
     return (
@@ -17,6 +18,7 @@ const MainLayout = ({ children }) => {
                     {children}
                 </div>
             </div>
+
         </div>
     );
 }

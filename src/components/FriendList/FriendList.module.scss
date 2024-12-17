@@ -15,6 +15,13 @@
     font-family: Arial, sans-serif;
     width: 90%;
 
+    .requestsHeader {
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin-bottom: 10px;
+        color: #6eb5ff;
+    }
+
     @include respond-to($breakpoint-xl) {
         width: 80%;
     }
@@ -22,9 +29,9 @@
 
 .friendRequests {
     border-radius: 8px;
-    padding: 10px;
+    //padding: 10px;
     margin-bottom: 20px;
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: var(--bg-color);
 
     .requestsHeader {
         font-size: 1.2rem;
@@ -44,7 +51,7 @@
         justify-content: space-between;
         align-items: center;
         padding: 10px;
-        background-color: rgba(255, 255, 255, 0.05);
+        background-color: var(--nav-color);
         border-radius: 6px;
 
         &:hover {
@@ -128,7 +135,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 10px;
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: var(--nav-color);
     border-radius: 8px;
     transition: background-color 0.2s ease;
 

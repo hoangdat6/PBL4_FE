@@ -4,6 +4,10 @@ import styles from "./HistoryCell.module.scss";
 const HistoryCell = ({ match }) => {
     const { roomId, player1, player2, createdAt } = match;
 
+    const classPlayer1 = player1.score > player2.score ? styles.winner : player1.score === player2.score ? styles.draw : styles.loser;
+    const classPlayer2 = player2.score > player1.score ? styles.winner : player1.score === player2.score ? styles.draw : styles.loser;
+
+
     return (
         <div className={styles.history_cell}>
             {/* Hiển thị thông tin người chơi */}
@@ -18,10 +22,10 @@ const HistoryCell = ({ match }) => {
 
             {/* Hiển thị tỉ số */}
             <div className={styles.scores}>
-                <div className={styles.score}>
+                <div className={`${styles.score} ${classPlayer1}`}>
                     <span>{player1.score}</span>
                 </div>
-                <div className={styles.score}>
+                <div className={`${styles.score} ${classPlayer2}`}>
                     <span>{player2.score}</span>
                 </div>
             </div>

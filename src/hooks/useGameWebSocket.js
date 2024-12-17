@@ -8,32 +8,69 @@ import {
     setGameState,
     setPlayerTimeInfo1,
     setPlayerTimeInfo2,
-    setWinner
+    setWinner,
+    setIsGameStarted
 } from "../store/slices/gameSlice";
-import { GAME_PROGRESS_TOPIC, GAME_STATE_TOPIC, GAME_END_TOPIC, PLAY_AGAIN_TOPIC } from '../constants/socketEndpoint';
+import {
+    GAME_PROGRESS_TOPIC,
+    GAME_STATE_TOPIC,
+    GAME_END_TOPIC,
+    PLAY_AGAIN_TOPIC,
+    GAME_START_TOPIC
+} from '../constants/socketEndpoint';
 import GameState from "../models/GameState";
 import {setPlayer1Info, setPlayer2Info, setRoomState} from "../store/slices/roomSlice";
+import Cookies from "js-cookie";
 
 const SOCKET_URL = process.env.REACT_APP_SOCKET_URL;
 
 const useGameWebSocket = () => {
     const stompClient = useRef(null);
+    const userId =  useSelector((state) => state.auth.userId);
     const dispatch = useDispatch();
     const [isConnected, setIsConnected] = useState(false);
     const [playAgain, setPlayAgain] = useState({});
     const winner = useSelector((state) => state.game.winnerId);
-    const [isGameStarted, setIsGameStarted] = useState(false);
+    // const [isGameStarted, setIsGameStarted] = useState(false);
 
     const connect = (roomCode) => {
         if (!roomCode) return;
 
         const socket = new SockJS(SOCKET_URL, null, { withCredentials: true });
         const client = new Client({
-            // debug: (str) => {
-            //     console.log(str);
-            // },
+            connectHeaders: {
+                userId: userId.toString()
+            },
             webSocketFactory: () => socket,
             onConnect: () => {
+                client.subscribe(GAME_START_TOPIC(roomCode), (message) => {
+                    const gameStart = JSON.parse(message.body);
+
+                    const gameState = new GameState(
+                        gameStart.roomCode,
+                        gameStart.startPlayerId,
+                        gameStart.nthMove,
+                        gameStart.boardState.board,
+                        gameStart.boardState.size,
+                        gameStart.boardState.winLength,
+                        gameStart.lastMove,
+                        true,
+                        gameStart.winnerId,
+                        gameStart.player1Info,
+                        gameStart.player2Info,
+                        gameStart.gameConfig,
+                    );
+
+                    console.log(gameState.getCurrentState());
+                    // setIsGameStarted(true);
+                    dispatch(setGameState(gameState.getCurrentState()));
+                    dispatch(setRoomState(gameState.getCurrentState()));
+                    dispatch(setGameConfig(gameState.getCurrentState().gameConfig)); // phai set gameConfig truoc
+                    dispatch(setPlayer1Info(gameState.getCurrentState().player1Info))
+                    dispatch(setPlayer2Info(gameState.getCurrentState().player2Info))
+                    dispatch(setPlayerTimeInfo1(gameState.getCurrentState().player1Info.timeInfo));
+                    dispatch(setPlayerTimeInfo2(gameState.getCurrentState().player2Info.timeInfo));
+                });
 
                 client.subscribe(GAME_PROGRESS_TOPIC(roomCode), (message) => {
                     const move = JSON.parse(message.body);
@@ -59,7 +96,7 @@ const useGameWebSocket = () => {
                     );
 
                     console.log(gameState.getCurrentState());
-                    setIsGameStarted(true);
+                    // setIsGameStarted(true);
                     dispatch(setGameState(gameState.getCurrentState()));
                     dispatch(setRoomState(gameState.getCurrentState()));
                     dispatch(setGameConfig(gameState.getCurrentState().gameConfig)); // phai set gameConfig truoc
@@ -120,7 +157,9 @@ const useGameWebSocket = () => {
         };
     }, []);
 
-    return { sendMove, connect, sendPlayAgain, sendWinner, isConnected, stompClient, winner, playAgain, isGameStarted };
+    return { sendMove, connect, sendPlayAgain, sendWinner, isConnected, stompClient, winner, playAgain,
+        // isGameStarted
+    };
 };
 
 export default useGameWebSocket;

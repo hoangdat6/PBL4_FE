@@ -8,7 +8,7 @@ import AppleIcon from '../../../assets/statics/imgs/SignIn/icons8-apple.svg';
 import AuthService from "../../../services/auth.service";
 
 
-const SignUp = ({toggleOverlay, onSignUp}) => {
+const SignUp = ({toggleOverlay, onSignUp, handleSignUp}) => {
     const formik = useFormik({
         initialValues: {
             display_name: "",
@@ -33,11 +33,7 @@ const SignUp = ({toggleOverlay, onSignUp}) => {
                 .oneOf([true], "Bạn phải đồng ý với các điều khoản và điều kiện"),
         }),
         onSubmit: (values) => {
-
-            AuthService.register(values.display_name, values.email, values.password).then((response) => {
-                console.log(((response)));
-            })
-            toggleOverlay();
+            handleSignUp(values.display_name, values.email, values.password);
         },
     });
 

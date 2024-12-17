@@ -13,18 +13,51 @@
     @include respond-to(null, $breakpoint-xl) {
         display: none;
     }
+
+    .chatContent {
+        flex: 1;
+        padding: 10px;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        &::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background-color: #a9dfd8; /* Màu chủ đạo */
+            border-radius: 5px;
+        }
+
+        &::-webkit-scrollbar-track {
+            background-color: #f1f1f1;
+        }
+
+        .message {
+            max-width: 70%;
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 14px;
+            animation: slideInRight 0.3s ease-out;
+            color: #0D0A11;
+
+            &.user {
+                align-self: flex-end;
+                background-color: #e0f7fa;
+            }
+
+            &.bot {
+                align-self: flex-start;
+                background-color: #f1f1f1;
+                animation: slideInLeft 0.3s ease-out;
+            }
+        }
+    }
 }
 
-.chatArea {
-    flex: 1;
-    overflow-y: auto;
-    background: url("../../assets/statics/imgs/img.png") no-repeat center;
-    background-size: cover;
-    border-radius: 8px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+
 
 .emptyState {
     text-align: center;

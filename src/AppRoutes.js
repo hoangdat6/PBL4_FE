@@ -21,6 +21,8 @@ import AccountSettingPage from "./pages/AccountSettingPage/AccountSettingPage";
 import PlayWithBot from "./pages/PlayWithBot/PlayWithBot";
 import GameResultComponent from "./components/GameResult/GameResult";
 import PlayWithFriendPageCP from "./pages/PlayWithFriendPage/PlayWithFriendPageCP";
+import PlayWithBotCP from "./pages/PlayWithBot/PlayWithBotCP";
+import ChatTest from "./ChatTest";
 
 
 const routes = createBrowserRouter([
@@ -61,11 +63,27 @@ const routes = createBrowserRouter([
         )
     },
     {
+        path: "/chat-test",
+        element: (
+            <LayoutWrapper layoutType={'default'}>
+                <ChatTest/>
+            </LayoutWrapper>
+        )
+    },
+    {
+        path:"/test",
+        element: (
+            <LayoutWrapper layoutType={'default'}>
+                <GameResultComponent />
+            </LayoutWrapper>
+        )
+    },
+    {
         path: "/b/room",
         element: (
             <PrivateRoute>
                 <LayoutWrapper layoutType={'default'}>
-                    <PlayWithBot />
+                    <PlayWithBotCP />
                 </LayoutWrapper>
             </PrivateRoute>
         ),
@@ -96,9 +114,11 @@ const routes = createBrowserRouter([
     {
         path: "/history",
         element: (
-            <LayoutWrapper layoutType={'mainPage'}>
-                <MatchHistory />
-            </LayoutWrapper>
+            <PrivateRoute isWithText={true}>
+                <LayoutWrapper layoutType={'mainPage'}>
+                    <MatchHistory />
+                </LayoutWrapper>
+            </PrivateRoute>
         )
     },
     {

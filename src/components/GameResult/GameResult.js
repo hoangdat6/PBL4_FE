@@ -51,14 +51,23 @@
 // export default GameResultComponent;
 
 
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import './GameResult.scss';
 import ParticipantType from "../../enums/participantType";
-import { PLAY_AGAIN } from "../../enums/PlayAgainCode";
-import { useSelector } from "react-redux";
+import {PLAY_AGAIN} from "../../enums/PlayAgainCode";
+import {useSelector} from "react-redux";
 
-const GameResultComponent = ({ winnerId, winnerName, playerId, handlePlayAgain, handleLeaveRoom, opponentPlayAgain, timer, seasonScore = 60 }) => {
+const GameResultComponent = ({
+                                 winnerId,
+                                 winnerName,
+                                 playerId,
+                                 handlePlayAgain,
+                                 handleLeaveRoom,
+                                 opponentPlayAgain,
+                                 timer,
+                                 seasonScore = 60
+                             }) => {
     const participantType = useSelector((state) => state.room.participantType);
     const message = winnerId === null
         ? 'Trận đấu hòa!'
@@ -105,21 +114,30 @@ const GameResultComponent = ({ winnerId, winnerName, playerId, handlePlayAgain, 
             <div className="game-result__message">
                 {message}
             </div>
-            <div className="game-result__score">
-                <div className="game-result__score-bar">
-                    <div
-                        className="game-result__score-progress"
-                        style={{ width: `${(displayedScore / seasonScore) * 100}%` }}
-                    ></div>
-                </div>
-                <div className="game-result__score-text">
-                    Điểm mùa: {displayedScore}/{seasonScore}
-                </div>
-            </div>
+            {
+                participantType === ParticipantType.PLAYER && (
+                    <div className="game-result__score">
+                        <div className="game-result__score-bar">
+                            <div
+                                className="game-result__score-progress"
+                                style={{width: `${(displayedScore / seasonScore) * 100}%`}}
+                            ></div>
+                        </div>
+                        <div className="game-result__score-text">
+                            Điểm mùa: {displayedScore}/{seasonScore}
+                        </div>
+                    </div>
+                )
+            }
+
             <div className="game-result__actions">
-                <button className="game-result__btn play-again" onClick={handlePlayAgain}>
-                    {playAgainMessage()}
-                </button>
+                {
+                    participantType === ParticipantType.PLAYER && (
+                        <button className="game-result__btn play-again" onClick={handlePlayAgain}>
+                            {playAgainMessage()}
+                        </button>
+                    )
+                }
                 <button className="game-result__btn leave-room" onClick={handleLeaveRoom}>
                     Rời phòng {timer ? `(${timer}s)` : ''}
                 </button>

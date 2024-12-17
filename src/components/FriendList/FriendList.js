@@ -5,12 +5,12 @@ const FriendList = ({ friends, friendRequests }) => {
     return (
         <div className={styles.friendListWrapper}>
             <div className={styles.friendList}>
-                <div className={styles.header}>Friends</div>
+                <div className={styles.header}>Bạn bè</div>
 
                 {/* Friend Requests Box */}
                 {friendRequests.length > 0 && (
                     <div className={styles.friendRequests}>
-                        <div className={styles.requestsHeader}>Friend Requests</div>
+                        <div className={styles.requestsHeader}>Yêu cầu kết bạn</div>
                         <div className={styles.requestsList}>
                             {friendRequests.map((request, index) => (
                                 <div key={index} className={styles.requestItem}>
@@ -34,6 +34,7 @@ const FriendList = ({ friends, friendRequests }) => {
 
                 {/* Friend List */}
                 <div className={styles.list}>
+                    <div className={styles.requestsHeader}>Bạn bè</div>
                     {friends.length > 0 ? (
                         friends.map((friend, index) => (
                             <div key={index} className={styles.friendItem}>

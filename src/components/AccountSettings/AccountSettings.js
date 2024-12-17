@@ -11,17 +11,18 @@ const AccountSettings = ({ accountInfo, isSaving, onChange, onUpdate, onDelete }
                     <input
                         type="text"
                         name="displayName"
-                        value={accountInfo.displayName}
+                        value={accountInfo.name}
                         onChange={onChange}
                     />
                 </div>
-                <div className={styles.field}>
+                <div className={styles.field} >
                     <label>Địa chỉ email</label>
                     <input
                         type="email"
                         name="email"
                         value={accountInfo.email}
                         onChange={onChange}
+                        disabled
                     />
                 </div>
                 <button

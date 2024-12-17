@@ -1,0 +1,27 @@
+@import "../../styles/scss/mixin";
+
+.matchHistoryWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.matchHistory {
+    padding: 20px;
+    border-radius: 10px;
+    color: #ffffff;
+    width: 90%;
+
+    @include respond-to($breakpoint-xl) {
+        width: 80%;
+    }
+
+}
+
+.title {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+    color: var(--color-main);
+}

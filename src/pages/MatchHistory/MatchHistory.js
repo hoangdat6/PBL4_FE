@@ -1,7 +1,8 @@
 import MatchHistoryComponent from "../../components/MatchHistory/MatchHistoryComponent";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import UserService from "../../services/user.service";
 import {useSelector} from "react-redux";
+import styles from "./MatchHistory.module.scss";
 
 
 const MatchHistory = () => {
@@ -26,11 +27,15 @@ const MatchHistory = () => {
     }, []); // Chỉ chạy một lần khi component được mount
 
     return (
-        <MatchHistoryComponent matchHistory={matchHistory}
-                               loading={loading}
-                               error={error}
-        />
-    )
+        <div className={styles.matchHistoryWrapper}>
+            <div className={styles.matchHistory}>
+                <h2 className={styles.title}>Lịch sử đấu</h2>
+                <MatchHistoryComponent matchHistory={matchHistory}
+                                       loading={loading}
+                                       error={error}
+                />
+            </div>
+        </div>
+    );
 }
-
 export default MatchHistory;

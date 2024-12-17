@@ -3,6 +3,7 @@ import styles from "./MainLayout.module.scss";
 import Sidebar from '../components/Sidebar/Sidebar';
 import Header from "../components/Header/Header";
 import Footer from "../components/HomePageComponent/Footer/Footer";
+import ChatBox from "../components/ChatBox/ChatBox";
 
 const MainLayoutWithFooter = ({ children }) => {
     return (

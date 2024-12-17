@@ -13,7 +13,7 @@ const PlayerInfo = ({
                         remainMoveDuration,
                         moveDuration,
                         isInfiniteTime,
-                        score,
+                        matchScore,
                         avatar,
                         rankIcon,
                         checkers,
@@ -27,7 +27,7 @@ const PlayerInfo = ({
         <div className={`${styles.player} ${reverse ? "flex-row-reverse" : ""}`}>
             <div className={`${styles.player_info_container} ${reverse ? "flex-row-reverse" : ""}`}>
                 <div className={`${styles.player_score}`}>
-                    <span>{score}</span>
+                    <span>{matchScore}</span>
                 </div>
                 <div className={`${styles.avatar}`} style={{width: '50px', height: '50px'}}>
                     <img src={avatar} alt={`${playerName}'s avatar`} className="img-fluid"/>

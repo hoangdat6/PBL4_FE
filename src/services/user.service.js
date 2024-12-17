@@ -10,6 +10,16 @@ const getInfo = () => {
     return apiClient(API_URL).get(API_URL + "info");
 }
 
+const getAccountInfo = () => {
+    /**
+     * Return: {
+     * "id": 0,
+     * "displayName": "string",
+     * "email": "string",
+     */
+    return apiClient(API_URL).get(API_URL + "account-info");
+}
+
 const getMatchHistory = () => {
     return apiClient(API_URL).get(API_URL + "history");
 }
@@ -41,6 +51,7 @@ const changePassword = (data) => {
 const UserService = {
     getProfile,
     getInfo,
+    getAccountInfo,
     getMatchHistory,
     updateUser,
     deleteUser,

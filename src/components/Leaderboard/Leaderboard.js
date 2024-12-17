@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import styles from "./Leaderboard.module.scss";
+import Loading from "../Loading/Loading";
 
-const Leaderboard = ({ data, onGetLeaderboard }) => {
+const Leaderboard = ({ data, onGetLeaderboard, loading }) => {
     const [currentPage, setCurrentPage] = useState(1);
     const playersPerPage = 10;
 
@@ -26,9 +27,12 @@ const Leaderboard = ({ data, onGetLeaderboard }) => {
         }
     };
 
+    if (loading) {
+        return <Loading/>;
+    }
+
     return (
-        <div className={styles.rankingTableContainer}>
-            <h2 className={styles.title}>Bảng xếp hạng</h2>
+        <>
             <table className={styles.rankingTable}>
                 <thead>
                 <tr>
@@ -45,12 +49,16 @@ const Leaderboard = ({ data, onGetLeaderboard }) => {
                     <tr key={index}>
                         <td>{player.rank}</td>
                         <td className={styles.playerInfo}>
-                            <img
-                                src={player.avatar}
-                                alt="avatar"
-                                className={styles.avatar}
-                            />
-                            {player.name}
+                            <div className={styles.img_wrapper}>
+                                <img
+                                    src={player.avatar}
+                                    alt="avatar"
+                                    className={styles.avatar}
+                                />
+                            </div>
+                            <a className={styles.name}>
+                                {player.name}
+                            </a>
                         </td>
                         <td>
                             <span className={styles.win}>{player.wins}</span> /{" "}
@@ -91,7 +99,7 @@ const Leaderboard = ({ data, onGetLeaderboard }) => {
                     </div>
                 )
             }
-        </div>
+        </>
     );
 };
 

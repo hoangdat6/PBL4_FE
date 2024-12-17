@@ -1,6 +1,7 @@
 // SpectatorList.jsx
 import React from "react";
 import styles from "./SpectatorList.module.scss";
+import DefaultImage from "../../assets/statics/icon_avatar/Ghosty.png";
 
 const SpectatorList = ({ spectators }) => {
     return (
@@ -11,7 +12,7 @@ const SpectatorList = ({ spectators }) => {
                     spectators.map((spectator, index) => (
                         <div key={index} className={styles.spectatorItem}>
                             <img
-                                src={spectator.avatar || "/default-avatar.png"} // Đường dẫn avatar
+                                src={spectator.avatar || DefaultImage} // Đường dẫn avatar
                                 alt={spectator.name}
                                 className={styles.avatar}
                             />

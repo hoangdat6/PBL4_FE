@@ -1,12 +1,9 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import AccountSettings from "../../components/AccountSettings/AccountSettings";
+import UserService from "../../services/user.service";
 
 const AccountSettingPage = () => {
-    const [accountInfo, setAccountInfo] = useState({
-        displayName: "Văn Đạt Hoàng",
-        email: "dathv2004@gmail.com",
-        userId: "66ddcc3279e36b6cecc85998",
-    });
+    const [accountInfo, setAccountInfo] = useState({});
 
     const [isSaving, setIsSaving] = useState(false);
 
@@ -14,6 +11,14 @@ const AccountSettingPage = () => {
         const { name, value } = e.target;
         setAccountInfo((prev) => ({ ...prev, [name]: value }));
     };
+
+    useEffect(() => {
+        UserService.getAccountInfo().then((response) => {
+            setAccountInfo(response.data);
+        }).catch((error) => {
+            console.error(error);
+        })
+    }, []);
 
     const handleUpdate = () => {
         setIsSaving(true);

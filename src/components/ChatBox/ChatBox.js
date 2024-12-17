@@ -1,24 +1,65 @@
-// ChatBox.jsx
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styles from "./ChatBox.module.scss";
+import {useSelector} from "react-redux";
 
-const ChatBox = () => {
+const ChatBox = ({stompClient, isConnected, roomCode}) => {
     const [message, setMessage] = useState("");
+    const userId = useSelector(state => state.auth.userId);
+    const [messages, setMessages] = useState([]);
+
+    const chatContentRef = useRef(null);
 
     const handleSendMessage = () => {
         if (message.trim()) {
-            console.log("Message sent:", message); // Thay bằng logic WebSocket
-            setMessage(""); // Reset input
+            const newMessage = { id: Date.now(), message: message, senderId: userId };
+
+            setMessages((prev) => [...prev, newMessage]);
+            sendMessage(`/app/message/${roomCode}`, newMessage);
         }
+        setMessage("");
     };
+
+    const sendMessage = (destination, msg) => {
+        if (!msg || !destination) return;
+        console.log('Sending message:', msg);
+        stompClient.current.publish({ destination: destination, body: JSON.stringify(msg)});
+    }
+
+    // Giả lập nhận tin nhắn từ WebSocket
+    useEffect(() => {
+        if(!isConnected) return;
+
+        // Lắng nghe WebSocket event (thay thế bằng cách subscribe topic nếu có)
+        const chatSubscription = stompClient.current.subscribe(`/user/queue/message/${roomCode}`, (message) => {
+            const receivedMessage = JSON.parse(message.body);
+            console.log(message.body);
+            setMessages((prev) => [...prev, receivedMessage]);
+        });
+
+        return () => {
+            chatSubscription?.unsubscribe();
+        };
+    }, [isConnected]);
+
+    useEffect(() => {
+        // Scroll to the bottom when a new message is added
+        if (chatContentRef.current) {
+            chatContentRef.current.scrollTop = chatContentRef.current.scrollHeight;
+        }
+    }, [messages]);
+
 
     return (
         <div className={styles.chatBox}>
-            <div className={styles.chatArea}>
-                {/* Hiển thị các tin nhắn trong chat */}
-                <div className={styles.emptyState}>
-                    <i className={styles.icon}></i>
-                </div>
+            <div className={styles.chatContent} ref={chatContentRef}>
+                {messages.map((msg) => (
+                    <div
+                        key={msg.id}
+                        className={`${styles.message} ${msg.senderId === userId ? styles.user : styles.bot}`}
+                    >
+                        {msg.message}
+                    </div>
+                ))}
             </div>
             <div className={styles.inputArea}>
                 <input
@@ -27,6 +68,7 @@ const ChatBox = () => {
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
                     className={styles.input}
+                    onKeyDown={(e) => e.key === "Enter" && handleSendMessage()}
                 />
                 <button onClick={handleSendMessage} className={styles.sendButton}>
                     <i className={styles.sendIcon}></i>
