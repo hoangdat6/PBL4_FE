@@ -20,7 +20,6 @@ import {
 } from '../constants/socketEndpoint';
 import GameState from "../models/GameState";
 import {setPlayer1Info, setPlayer2Info, setRoomState} from "../store/slices/roomSlice";
-import Cookies from "js-cookie";
 
 const SOCKET_URL = process.env.REACT_APP_SOCKET_URL;
 
