@@ -40,19 +40,26 @@ const routes = createBrowserRouter([
         )
     },
     {
-        path: "/room",
-        children: [
-            {
-                path: ":roomCode",
-                element: (
-                    <PrivateRoute>
-                        <LayoutWrapper layoutType={'default'}>
-                            <PlayWithFriendPageCP />
-                        </LayoutWrapper>
-                    </PrivateRoute>
-                )
-            },
-        ]
+        path: "/room/:roomCode",
+        element: (
+            <PrivateRoute>
+                <LayoutWrapper layoutType={'default'}>
+                    <PlayWithFriendPageCP />
+                </LayoutWrapper>
+            </PrivateRoute>
+        ),
+        // children: [
+        //     {
+        //         path: ":roomCode",
+        //         element: (
+        //             <PrivateRoute>
+        //                 <LayoutWrapper layoutType={'default'}>
+        //                     <PlayWithFriendPageCP />
+        //                 </LayoutWrapper>
+        //             </PrivateRoute>
+        //         )
+        //     },
+        // ]
     },
     {
         path: "/result",
