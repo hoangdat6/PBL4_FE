@@ -1,7 +1,3 @@
-[build]
-  command = "npm run build" # Lệnh build ứng dụng React
-  publish = "build" # Thư mục chứa file build (sau khi chạy npm run build)
-
 [[redirects]]
   from = "/*"
   to = "/index.html"
