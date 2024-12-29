@@ -10,7 +10,7 @@ const AccountSettings = ({ accountInfo, isSaving, onChange, onUpdate, onDelete }
                     <label>Tên hiển thị</label>
                     <input
                         type="text"
-                        name="displayName"
+                        name="name"
                         value={accountInfo.name}
                         onChange={onChange}
                     />

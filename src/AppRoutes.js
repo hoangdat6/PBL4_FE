@@ -23,6 +23,8 @@ import GameResultComponent from "./components/GameResult/GameResult";
 import PlayWithFriendPageCP from "./pages/PlayWithFriendPage/PlayWithFriendPageCP";
 import PlayWithBotCP from "./pages/PlayWithBot/PlayWithBotCP";
 import ChatTest from "./ChatTest";
+import PlayerProfile from "./components/PlayerProfile/PlayerProfile";
+import NotFoundPage from "./components/NotFoundPage/NotFoundPage";
 
 
 const routes = createBrowserRouter([
@@ -35,7 +37,7 @@ const routes = createBrowserRouter([
         ),
         errorElement: (
             <LayoutWrapper layoutType={'default'}>
-                <div>404</div>
+                <NotFoundPage />
             </LayoutWrapper>
         )
     },
@@ -48,18 +50,6 @@ const routes = createBrowserRouter([
                 </LayoutWrapper>
             </PrivateRoute>
         ),
-        // children: [
-        //     {
-        //         path: ":roomCode",
-        //         element: (
-        //             <PrivateRoute>
-        //                 <LayoutWrapper layoutType={'default'}>
-        //                     <PlayWithFriendPageCP />
-        //                 </LayoutWrapper>
-        //             </PrivateRoute>
-        //         )
-        //     },
-        // ]
     },
     {
         path: "/result",
@@ -129,11 +119,14 @@ const routes = createBrowserRouter([
         )
     },
     {
+
         path: "/friends",
         element: (
-            <LayoutWrapper layoutType={'mainPage'}>
-                <FriendPage />
-            </LayoutWrapper>
+            <PrivateRoute isWithText={true}>
+                <LayoutWrapper layoutType={'mainPage'}>
+                    <FriendPage />
+                </LayoutWrapper>
+            </PrivateRoute>
         )
     },
     {
@@ -147,9 +140,11 @@ const routes = createBrowserRouter([
     {
         path: "/messages",
         element: (
-            <LayoutWrapper layoutType={'mainPage'}>
-                <MessagesPage />
-            </LayoutWrapper>
+            <PrivateRoute isWithText={true}>
+                <LayoutWrapper layoutType={'mainPage'}>
+                    <MessagesPage />
+                </LayoutWrapper>
+            </PrivateRoute>
         )
     },
     {
@@ -187,17 +182,11 @@ const routes = createBrowserRouter([
     {
         path: "/account",
         element: (
-            <LayoutWrapper layoutType={'mainPage'}>
-                <AccountSettingPage />
-            </LayoutWrapper>
-        )
-    },
-    {
-        path: "/profile",
-        element: (
-            <LayoutWrapper layoutType={'mainPage'}>
-                <ProfilePage />
-            </LayoutWrapper>
+            <PrivateRoute isWithText={true}>
+                <LayoutWrapper layoutType={'mainPage'}>
+                    <AccountSettingPage />
+                </LayoutWrapper>
+            </PrivateRoute>
         )
     },
     {

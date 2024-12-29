@@ -22,10 +22,14 @@ const AccountSettingPage = () => {
 
     const handleUpdate = () => {
         setIsSaving(true);
-        setTimeout(() => {
+        console.log(accountInfo);
+        UserService.updateAccountInfo(accountInfo).then(() => {
             setIsSaving(false);
-            alert("Thông tin đã được cập nhật!");
-        }, 1000);
+            alert("Cập nhật thông tin tài khoản thành công.");
+        }).catch((error) => {
+            setIsSaving(false);
+            alert("Cập nhật thông tin tài khoản thất bại.");
+        });
     };
 
     const handleDeleteAccount = () => {

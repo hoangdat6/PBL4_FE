@@ -15,7 +15,6 @@ const SignIn = ({ toggleOverlay, onSignUp, handleSignIn }) => {
         password: Yup.string().min(6, 'Mật khẩu phải có ít nhất 6 ký tự').required('Vui lòng nhập mật khẩu'),
     });
 
-
     const formik = useFormik({
         initialValues: {
             email: '',

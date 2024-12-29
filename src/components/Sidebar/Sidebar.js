@@ -4,16 +4,22 @@ import useSidebar from "../../hooks/useSidebar";
 import useOverlay from "../../hooks/useOverlay/useOverlay";
 import SignInSignUp from "../../pages/AuthPage/SignInSignUp";
 import CreateRoomPage from "../../pages/CreateRoomPage/ConfigGamePage";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import UserMenu from "../LoginSignUp/UserMenu";
 import {useNavigate} from "react-router-dom";
 import UserService from "../../services/user.service";
+import {logout} from "../../store/slices/authSlice";
+import useProfile from "../../pages/Profile/UseProfile";
+import PlayerProfile from "../PlayerProfile/PlayerProfile";
 
 const Sidebar = () => {
     const { toggleOverlay, Overlay } = useOverlay();
     const [isOpen, setIsOpen] = useState(false);
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
     const [user, setUser] = useState({});
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const { playerProfile, isLoading, isShowProfile, showProfile, hideProfile } = useProfile();
 
     const {
         handleShowSidebar,
@@ -29,16 +35,18 @@ const Sidebar = () => {
     useEffect(() => {
         if(isAuthenticated) {
             UserService.getInfo().then((res) => {
-                console.log(res.data);
                 setUser(res.data);
             }).catch((err) => {
-                console.log(err);
+                dispatch(logout());
             });
         }
     },[isAuthenticated]);
 
 
-    const navigate = useNavigate();
+    const handleShowProfile = () => {
+        showProfile(user.id);
+    };
+
     const navigateTo = (path) => {
         navigate(path);
     }
@@ -53,6 +61,12 @@ const Sidebar = () => {
                 className={`${styles.sidebar__overlay} `}
                 onClick={handleShowSidebar}
             ></div>
+            <PlayerProfile
+                playerProfile={playerProfile}
+                isLoading={isLoading}
+                isShowProfile={isShowProfile}
+                toggleShowProfile={hideProfile}
+            />
             <div className={`${styles.sidebar__container} d-md-flex flex-column`}>
                 <div className={`${styles.sidebar__header}`}>
                     {isAuthenticated ? (
@@ -235,26 +249,33 @@ const Sidebar = () => {
                                 <span className={`${styles.sidebar__nav_text}`}> Cửa hàng </span>
                             </button>
                         </div>
-                        <div className={`${styles.sidebar__nav_item}`} title="Tài khoản của tôi">
-                            <button className={`${styles.sidebar__nav_link} d-flex align-items-center`}
-                                    onClick={() => navigateTo('/account')}
-                            >
-                                <div className={`${styles.sidebar__nav_icon}`}>
-                                    <i className="fa-thin fa-user"></i>
+
+                        {isAuthenticated && (
+                            <>
+                                <div className={`${styles.sidebar__nav_item}`} title="Tài khoản của tôi">
+                                    <button className={`${styles.sidebar__nav_link} d-flex align-items-center`}
+                                            onClick={() => navigateTo('/account')}
+                                    >
+                                        <div className={`${styles.sidebar__nav_icon}`}>
+                                            <i className="fa-thin fa-user"></i>
+                                        </div>
+                                        <span className={`${styles.sidebar__nav_text}`}> Tài khoản của tôi </span>
+                                    </button>
                                 </div>
-                                <span className={`${styles.sidebar__nav_text}`}> Tài khoản của tôi </span>
-                            </button>
-                        </div>
-                        <div className={`${styles.sidebar__nav_item}`} title="Hồ sơ của tôi">
-                            <button className={`${styles.sidebar__nav_link} d-flex align-items-center`}
-                                    onClick={() => navigateTo('/profile')}
-                            >
-                                <div className={`${styles.sidebar__nav_icon}`}>
-                                    <i className="fa-solid fa-link"></i>
+                                <div className={`${styles.sidebar__nav_item}`} title="Hồ sơ của tôi">
+                                    <button className={`${styles.sidebar__nav_link} d-flex align-items-center`}
+                                            onClick={handleShowProfile}
+                                    >
+                                        <div className={`${styles.sidebar__nav_icon}`}>
+                                            <i className="fa-solid fa-link"></i>
+                                        </div>
+                                        <span className={`${styles.sidebar__nav_text}`}> Hồ sơ của tôi </span>
+                                    </button>
                                 </div>
-                                <span className={`${styles.sidebar__nav_text}`}> Hồ sơ của tôi </span>
-                            </button>
-                        </div>
+                            </>
+                        )
+                        }
+
                         <div className={`${styles.sidebar__nav_item}`} title="Cài đặt">
                             <button className={`${styles.sidebar__nav_link} d-flex align-items-center`}
                                     onClick={() => navigateTo('/settings')}
