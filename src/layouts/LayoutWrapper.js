@@ -13,7 +13,9 @@ const LayoutWrapper = ({ layoutType = "default", children }) => {
     // Lấy layout dựa vào layoutType
     const Layout = layouts[layoutType] || DefaultLayout;
 
-    return <Layout>{children}</Layout>;
+    return <Layout>
+        {children}
+    </Layout>;
 };
 
 export default LayoutWrapper;

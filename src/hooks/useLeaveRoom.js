@@ -9,8 +9,7 @@ const useLeaveRoom = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const leaveRoomNotPopup = async (redirectURL) => {
-
+    const leaveRoomNotPopup = async ({redirectURL}) => {
         redirectURL = redirectURL || "/";
         return RoomService.leaveRoom().then(() => {
             navigate(redirectURL || "/");

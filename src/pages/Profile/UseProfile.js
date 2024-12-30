@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import UserService from "../../services/user.service";
+import PlayerService from "../../services/player.service";
 
 const useProfile = () => {
     const [playerProfile, setPlayerProfile] = useState(null);
@@ -8,7 +8,7 @@ const useProfile = () => {
 
     const fetchProfile = (playerId) => {
         setIsLoading(true);
-        UserService.getPlayerProfile(playerId)
+        PlayerService.getPlayerProfile(playerId)
             .then((response) => {
                 /**
                  * response.data = {
@@ -24,6 +24,7 @@ const useProfile = () => {
                  *  streak: 2,
                  *  playTime: "10h 30m"
                  */
+                console.log("Player profile:", response.data);
                 setPlayerProfile(response.data);
                 setIsLoading(false);
             })
@@ -34,6 +35,7 @@ const useProfile = () => {
     };
 
     const showProfile = (playerId) => {
+        setIsShowProfile(false);
         fetchProfile(playerId);
         setIsShowProfile(true);
     };

@@ -1,6 +1,10 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import RoomService from "../services/gameBot.service";
+import {resetGame} from "../store/slices/gameSlice";
+import {resetRoom} from "../store/slices/roomSlice";
+import showLeaveRoomPopup from "../components/showLeaveRoomPopup/showLeaveRoomPopup";
+import GameBot from "../services/gameBot.service";
 
 const useGameBot = () => {
     const { roomCode: roomCodeURL } = useParams();
@@ -29,7 +33,7 @@ const useGameBot = () => {
             .then((response) => {
                 if (response.data) {
                     navigate(`/b/room/${response.data}`, { replace: true });
-                    joinRoom(response.data);
+                    // joinRoom(response.data);
                 }
             })
             .catch((error) => {
@@ -42,7 +46,9 @@ const useGameBot = () => {
             .then((response) => {
                 if (response.data) {
                     setRoomCode(response.data);
-                    setIsPlaying(true);
+                    setTimeout(() => {
+                        setIsPlaying(true);
+                    }, 1000);
                 }
             })
             .catch((error) => {
@@ -58,7 +64,7 @@ const useGameBot = () => {
             setIsPlayerTurn(false);
             setLastMove(move)
 
-            RoomService.sendMove(move)
+            RoomService.sendMove(roomCode, move)
                 .then((res) => {
                     addMoveToBoard(res.data, (nthMoveState + 1) % 2);
                     setLastMove(res.data)
@@ -82,6 +88,17 @@ const useGameBot = () => {
         );
     };
 
+    const leaveRoomNotPopup = async () => {
+        return GameBot.leaveRoom(roomCode).then(() => {
+            navigate("/");
+        }).catch((error) => {
+            console.log(error);
+        });
+    };
+
+    const leaveRoomWithPopup = () => {
+        showLeaveRoomPopup(leaveRoomNotPopup);
+    }
 
     return {
         isPlayerTurn,
@@ -95,7 +112,7 @@ const useGameBot = () => {
         handleClick,
         createRoom,
         joinRoom,
-
+        leaveRoomWithPopup,
     };
 };
 

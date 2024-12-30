@@ -7,11 +7,6 @@ import DefaultAvatar from "../../assets/statics/default_avatar/Glowface.png";
 
 
 const PlayerProfile = ({ playerProfile, isLoading, isShowProfile, toggleShowProfile }) => {
-    const [profileData, setProfileData] = useState(playerProfile);
-
-    useEffect(() => {
-        setProfileData(playerProfile);
-    }, [playerProfile]);
 
     const handleClose = () => {
         toggleShowProfile();
@@ -26,15 +21,15 @@ const PlayerProfile = ({ playerProfile, isLoading, isShowProfile, toggleShowProf
                 {isLoading ? <div className={styles.avatarPlaceholder}></div> :
                     <Avatar
                         src={
-                        profileData?.avatar ? profileData.avatar : DefaultAvatar}
-                        alt={profileData?.name} className={styles.avatar} />
+                        playerProfile?.avatar ? playerProfile.avatar : DefaultAvatar}
+                        alt={playerProfile?.name} className={styles.avatar} />
                 }
             </Box>
             <Typography variant="h5" className={`${styles.name} ${isLoading ? styles.loadingWave : ''}`}>
-                {isLoading ? <span className={styles.textPlaceholder}></span> : profileData?.name}
+                {isLoading ? <span className={styles.textPlaceholder}></span> : playerProfile?.name}
             </Typography>
             <Typography variant="body2" className={`${styles.registeredText} ${isLoading ? styles.loadingWave : ''}`}>
-                {isLoading ? <span className={styles.textPlaceholder}></span> : 'Tham gia từ ' + profileData?.dateJoined}
+                {isLoading ? <span className={styles.textPlaceholder}></span> : 'Tham gia từ ' + playerProfile?.dateJoined}
             </Typography>
             <Divider className={styles.divider} />
             <Box className={styles.statsBox}>
@@ -44,32 +39,32 @@ const PlayerProfile = ({ playerProfile, isLoading, isShowProfile, toggleShowProf
                 <Box className={`${styles.statRow} ${isLoading ? styles.loadingWave : ''}`}>
                     <Typography variant="body2">Điểm:</Typography>
                     <Typography variant="body1">
-                        {isLoading ? <span className={styles.textPlaceholder}></span> : profileData?.points}
+                        {isLoading ? <span className={styles.textPlaceholder}></span> : playerProfile?.points}
                     </Typography>
                 </Box>
                 <Box className={`${styles.statRow} ${isLoading ? styles.loadingWave : ''}`}>
                     <Typography variant="body2">Xếp hạng:</Typography>
                     <Typography variant="body1">
                         {isLoading ? <span className={styles.textPlaceholder}></span> :
-                            <Chip icon={<EmojiEventsIcon />} label={`Rank ${profileData?.rank}`} size="small" color="primary" className={styles.chip} />
+                            <Chip icon={<EmojiEventsIcon />} label={playerProfile?.rank && playerProfile?.rank !== -1 ? `Rank ${playerProfile?.rank}` : `Chưa có`} size="small" color="primary" className={styles.chip} />
                         }
                     </Typography>
                 </Box>
                 <Box className={`${styles.statRow} ${isLoading ? styles.loadingWave : ''} ${styles.wins}`}>
                     <Typography variant="body2">Wins:</Typography>
-                    <Typography variant="body1">{isLoading ? <span className={styles.textPlaceholder}></span> : profileData?.wins}</Typography>
+                    <Typography variant="body1">{isLoading ? <span className={styles.textPlaceholder}></span> : playerProfile?.wins}</Typography>
                 </Box>
                 <Box className={`${styles.statRow} ${isLoading ? styles.loadingWave : ''} ${styles.draws}`}>
                     <Typography variant="body2">Hòa:</Typography>
-                    <Typography variant="body1">{isLoading ? <span className={styles.textPlaceholder}></span> : profileData?.draws}</Typography>
+                    <Typography variant="body1">{isLoading ? <span className={styles.textPlaceholder}></span> : playerProfile?.draws}</Typography>
                 </Box>
                 <Box className={`${styles.statRow} ${isLoading ? styles.loadingWave : ''} ${styles.losses}`}>
                     <Typography variant="body2">Thua:</Typography>
-                    <Typography variant="body1">{isLoading ? <span className={styles.textPlaceholder}></span> : profileData?.losses}</Typography>
+                    <Typography variant="body1">{isLoading ? <span className={styles.textPlaceholder}></span> : playerProfile?.losses}</Typography>
                 </Box>
                 <Box className={`${styles.statRow} ${isLoading ? styles.loadingWave : ''}`}>
                     <Typography variant="body2">Thời gian chơi:</Typography>
-                    <Typography variant="body1">{isLoading ? <span className={styles.textPlaceholder}></span> : profileData?.playTimes}</Typography>
+                    <Typography variant="body1">{isLoading ? <span className={styles.textPlaceholder}></span> : playerProfile?.playTimes}</Typography>
                 </Box>
             </Box>
         </Box>

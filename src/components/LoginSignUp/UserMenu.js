@@ -41,6 +41,7 @@ const UserMenu = ({ user, onActiveSidebar }) => {
 
     return (
         <div className={styles.user_menu_wrapper}>
+
             <PlayerProfile
                 playerProfile={playerProfile}
                 isLoading={isLoading}

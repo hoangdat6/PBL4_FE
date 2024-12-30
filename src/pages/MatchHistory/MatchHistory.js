@@ -15,6 +15,22 @@ const MatchHistory = () => {
         // Call API để lấy dữ liệu
         const fetchMatchHistory = () => {
             UserService.getMatchHistory().then((response) => {
+                /**
+                 * response.data: [
+                 * {
+                 *    roomId: "roomId",
+                 *    player1: {
+                 *        id: 1,
+                 *        name: "John Doe",
+                 *        score: 1000,
+                 *    },
+                 *    player2: {
+                 *      id: 2,
+                 *      name: "Jane Doe",
+                 *      score: 900,
+                 *      },
+                 *    createdAt: "2021-12-31T12:00:00Z",
+                 */
                 setMatchHistory(response.data);
                 setLoading(false);
             }).catch((err) => {
@@ -30,9 +46,10 @@ const MatchHistory = () => {
         <div className={styles.matchHistoryWrapper}>
             <div className={styles.matchHistory}>
                 <h2 className={styles.title}>Lịch sử đấu</h2>
-                <MatchHistoryComponent matchHistory={matchHistory}
-                                       loading={loading}
-                                       error={error}
+                <MatchHistoryComponent
+                    matchHistory={matchHistory}
+                    loading={loading}
+                    error={error}
                 />
             </div>
         </div>

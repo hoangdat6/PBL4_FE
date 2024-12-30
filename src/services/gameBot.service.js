@@ -19,13 +19,14 @@ const getRoom = async (roomCode) => {
     return await apiClient.get(`/${roomCode}`);
 }
 
-const leaveRoom = async () => {
-    return await apiClient.post('/leave');
+const leaveRoom = async (roomCode) => {
+    return await apiClient.post('/leave', { }, { params: { roomCode } });
 }
 
-const sendMove = async (moveDTO) => {
-    return await apiClient.post('/move', moveDTO);
+const sendMove = async (roomCode, moveDTO) => {
+    return await apiClient.post('/move', moveDTO, { params: { roomCode: roomCode } });
 }
+
 
 const GameBot = {
     createRoom,

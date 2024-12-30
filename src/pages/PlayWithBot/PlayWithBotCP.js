@@ -24,10 +24,10 @@ const PlayWithBot = () => {
         lastMove,
         handleClick,
         createRoom,
-        joinRoom
+        joinRoom,
+        leaveRoomWithPopup
     } = useGameBot();
 
-    const { leaveRoomWithPopup } = useLeaveRoom();
 
     useEffect(() => {
         if(roomCode) {
@@ -89,17 +89,7 @@ const PlayWithBot = () => {
 
     const navigate = useNavigate();
 
-    const leaveRoom = () => {
-        GameBot.leaveRoom().then(() => {
-            navigate("/");
-        }).catch((error) => {
-            console.log(error);
-        });
-    }
 
-    const leaveRoomHandler = () => {
-        showLeaveRoomPopup(leaveRoom);
-    }
 
     return (
 
@@ -107,7 +97,7 @@ const PlayWithBot = () => {
         <RoomPlayLayout
             player1={player1}
             player2={player2}   
-            onLeaveRoom={leaveRoomHandler}
+            onLeaveRoom={leaveRoomWithPopup}
             leftSide={leftSide}
             rightSide={rightSide}
             isGameStarted={isPlaying}

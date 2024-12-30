@@ -145,7 +145,7 @@ const PlayWithFriendPageCP = () => {
         roomCode,
         sendMove,
         isGameStarted,
-        isPlayer
+        isPlayer,
     }
 
     const {
@@ -208,17 +208,20 @@ const PlayWithFriendPageCP = () => {
         }
 
         if (winner !== null) {
-            return (
-                <GameResult
-                    winnerId={winner}
-                    playerId={playerId}
-                    handlePlayAgain={handleSendPlayAgain}
-                    handleLeaveRoom={leaveRoomNotPopupHandler}
-                    opponentPlayAgain={playAgain}
-                    timer={timer}
-                    playerInfo={playerInfo}
-                />
-            );
+            setTimeout(() => {
+                return (
+                    <GameResult
+                        winnerId={winner}
+                        playerId={playerId}
+                        handlePlayAgain={handleSendPlayAgain}
+                        handleLeaveRoom={leaveRoomNotPopupHandler}
+                        opponentPlayAgain={playAgain}
+                        timer={timer}
+                        playerInfo={playerInfo}
+                    />
+                );
+
+            }, 3000);
         }
 
         if (isGameStarted) {
@@ -249,6 +252,7 @@ const PlayWithFriendPageCP = () => {
                     leftSide={leftSide}
                     rightSide={rightSide}
                     isGameStarted={isGameStarted}
+                    winner={winner}
                 >
                     {renderContent()}
                 </RoomPlayLayout>
