@@ -20,20 +20,21 @@ const useGameBot = () => {
 
     const navigate = useNavigate();
 
+
     useEffect(() => {
-        if (roomCodeURL) {
-            joinRoom(roomCodeURL);
-        } else {
-            createRoom();
+        console.log("roomCode", roomCode);
+        if (roomCode) {
+            joinRoom(roomCode);
         }
-    }, [roomCodeURL]);
+    }, [roomCode]);
 
     const createRoom = () => {
+        console.log("createRoom");
         RoomService.createRoom()
             .then((response) => {
                 if (response.data) {
                     navigate(`/b/room/${response.data}`, { replace: true });
-                    // joinRoom(response.data);
+                    setRoomCode(response.data);
                 }
             })
             .catch((error) => {
@@ -45,7 +46,6 @@ const useGameBot = () => {
         RoomService.joinRoom(roomCode)
             .then((response) => {
                 if (response.data) {
-                    setRoomCode(response.data);
                     setTimeout(() => {
                         setIsPlaying(true);
                     }, 1000);

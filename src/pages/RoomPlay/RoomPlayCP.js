@@ -12,8 +12,8 @@ const RoomPlayCP = ({
                         isPlayer,
                         winner,
                   }) => {
-    const [winningCells, setWinningCells] = React.useState([]);
-    const { handleClick, board, isPlayerStart, isPlayerTurn, getWinningCells } = useCaroGame(roomCode, sendMove);
+    // const [winningCells, setWinningCells] = React.useState([]);
+    const { handleClick, board, isPlayerStart, isPlayerTurn } = useCaroGame(roomCode, sendMove);
     const {startTimer: startTimerGame} = useGameTimer();
 
     useEffect(() => {
@@ -26,11 +26,11 @@ const RoomPlayCP = ({
 
     const { lastMove } = useSelector((state) => state.game);
 
-    useEffect(() => {
-        if(winner) {
-            setWinningCells(getWinningCells());
-        }
-    }, [winner]);
+    // useEffect(() => {
+    //     if(winner) {
+    //         setWinningCells(getWinningCells());
+    //     }
+    // }, [winner]);
 
     return (
         <div className={styles.game_room__wrapper}>
@@ -41,7 +41,7 @@ const RoomPlayCP = ({
                 isPlayer={isPlayer}
                 isPlayerTurn={isPlayerTurn}
                 lastMove={lastMove}
-                winningCells={winningCells}
+                // winningCells={winningCells}
             />
         </div>
     );

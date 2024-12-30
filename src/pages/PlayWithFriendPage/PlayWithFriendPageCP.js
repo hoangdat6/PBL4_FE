@@ -18,16 +18,12 @@ import useTimer from "../../hooks/useTimer";
 import GameResult from "../GameResult/GameResult";
 import {setPlayingRoom} from "../../store/slices/userPlaySlice";
 import RoomNotFound from "../../components/RoomNotFound/RoomNotFound";
-import useGameTimer from "../../hooks/useGameTimer";
-import LayoutWrapper from "../../layouts/LayoutWrapper";
 import PrivateRoute from "../../components/PrivateRoute";
 import RoomPlayLayout from "./RoomPlayLayout";
 import Avatar from "../../assets/statics/imgs/Avatar.png";
 import Rank from "../../assets/statics/imgs/Rank.svg";
 import checker1 from "../../assets/statics/imgs/checker1.svg";
 import checker2 from "../../assets/statics/imgs/checker2.svg";
-import ParticipantType from "../../enums/participantType";
-import SpectatorList from "../../components/SpectatorList/SpectatorList";
 import ChatBox from "../../components/ChatBox/ChatBox";
 import RoomPlayCP from "../RoomPlay/RoomPlayCP";
 import SpectatorBar from "../SpectatorBar/SpectatorBar";
@@ -146,6 +142,7 @@ const PlayWithFriendPageCP = () => {
         sendMove,
         isGameStarted,
         isPlayer,
+        winner,
     }
 
     const {
@@ -208,7 +205,7 @@ const PlayWithFriendPageCP = () => {
         }
 
         if (winner !== null) {
-            setTimeout(() => {
+            // setTimeout(() => {
                 return (
                     <GameResult
                         winnerId={winner}
@@ -221,7 +218,7 @@ const PlayWithFriendPageCP = () => {
                     />
                 );
 
-            }, 3000);
+            // }, 3000);
         }
 
         if (isGameStarted) {
