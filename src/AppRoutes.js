@@ -3,8 +3,6 @@ import React from "react";
 import LayoutWrapper from "./layouts/LayoutWrapper";
 import PrivateRoute from "./components/PrivateRoute";
 import GameResult from "./pages/GameResult/GameResult";
-import PlayWithFriendPage from "./pages/PlayWithFriendPage/PlayWithFriendPage";
-import MatchHistoryComponent from "./components/MatchHistory/MatchHistoryComponent";
 import HomePage from "./pages/HomePage/HomePage";
 import MatchHistory from "./pages/MatchHistory/MatchHistory";
 import FriendPage from "./pages/FriendPage/FriendPage";
@@ -20,7 +18,7 @@ import SettingsPage from "./pages/SettingsPage/SettingsPage";
 import AccountSettingPage from "./pages/AccountSettingPage/AccountSettingPage";
 import PlayWithBot from "./pages/PlayWithBot/PlayWithBot";
 import GameResultComponent from "./components/GameResult/GameResult";
-import PlayWithFriendPageCP from "./pages/PlayWithFriendPage/PlayWithFriendPageCP";
+import PlayWithFriendPage from "./pages/PlayWithFriendPage/PlayWithFriendPage";
 import PlayWithBotCP from "./pages/PlayWithBot/PlayWithBotCP";
 import ChatTest from "./ChatTest";
 import PlayerProfile from "./components/PlayerProfile/PlayerProfile";
@@ -46,7 +44,7 @@ const routes = createBrowserRouter([
         element: (
             <PrivateRoute>
                 <LayoutWrapper layoutType={'default'}>
-                    <PlayWithFriendPageCP />
+                    <PlayWithFriendPage />
                 </LayoutWrapper>
             </PrivateRoute>
         ),
@@ -55,7 +53,7 @@ const routes = createBrowserRouter([
         path: "/result",
         element: (
             <LayoutWrapper layoutType={'default'}>
-                <PlayWithFriendPageCP />
+                <PlayWithFriendPage />
             </LayoutWrapper>
         )
     },

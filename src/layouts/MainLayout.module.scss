@@ -3,11 +3,14 @@
   height: 100dvh; /* Chiều cao của toàn bộ HomePageComponent */
   display: flex;
   flex-direction: column;
+  width: auto;
 
   .test {
     flex-grow: 1; /* Để phần này chiếm không gian còn lại sau Header */
     overflow-y: auto; /* Cho phép cuộn chỉ trong phần test */
     height: 100%; /* Chiều cao 100% trong không gian còn lại */
+    display: block;
+    width: 100%;
 
     /* Tùy chỉnh thanh cuộn cho WebKit browsers */
     &::-webkit-scrollbar {

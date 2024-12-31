@@ -45,11 +45,15 @@ const Sidebar = () => {
 
     const handleShowProfile = () => {
         showProfile(user.id);
+        handleShowSidebar();
     };
 
     const navigateTo = (path) => {
         navigate(path);
+        handleShowSidebar();
     }
+
+
 
     return (
         <nav className={`${styles.sidebar} ${isSidebarActive ? "" : styles.un_active} ${isShowSidebar ? styles.is_open : styles.is_close}` }>
@@ -71,7 +75,7 @@ const Sidebar = () => {
                 <div className={`${styles.sidebar__header}`}>
                     {isAuthenticated ? (
                         <div className={`${styles.sidebar__login} ${styles.info} ${isSidebarActive ? "" : styles.un_active}`}>
-                            <UserMenu user={user} onActiveSidebar={isSidebarActive} />
+                            <UserMenu user={user} onActiveSidebar={isSidebarActive} handleShowSidebar={handleShowSidebar} />
 
                             <div className={`${styles.sidebar__menu_cta}`}>
                                 <div className={`${styles.sidebar__menu_cta_item}`}>

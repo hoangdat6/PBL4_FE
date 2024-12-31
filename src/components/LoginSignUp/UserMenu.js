@@ -9,7 +9,7 @@ import DefaultAvatar from "../../assets/statics/default_avatar/Glowface.png";
 import useProfile from "../../pages/Profile/UseProfile";
 import PlayerProfile from "../../components/PlayerProfile/PlayerProfile";
 
-const UserMenu = ({ user, onActiveSidebar }) => {
+const UserMenu = ({ user, onActiveSidebar, handleShowSidebar }) => {
     const [anchorEl, setAnchorEl] = useState(null);
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -27,16 +27,19 @@ const UserMenu = ({ user, onActiveSidebar }) => {
         dispatch(logout());
         AuthService.logout();
         handleClose();
+        handleShowSidebar();
     };
 
     const handleAccount = () => {
         navigate('/account');
         handleClose();
+        handleShowSidebar();
     };
 
     const handleShowProfile = () => {
         showProfile(user.id);
         handleClose();
+        handleShowSidebar();
     };
 
     return (

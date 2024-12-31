@@ -3,7 +3,7 @@ import RoomBot from "./RoomBot";
 import useGameBot from "../../hooks/useGameBot";
 import useLeaveRoom from "../../hooks/useLeaveRoom";
 import Loading from "../../components/Loading/Loading";
-import RoomPlayLayout from "../PlayWithFriendPage/RoomPlayLayout";
+import RoomPlayLayout from "../../layouts/RoomPlayLayout";
 import PrivateRoute from "../../components/PrivateRoute";
 import Avatar from "../../assets/statics/imgs/Avatar.png";
 import Rank from "../../assets/statics/imgs/Rank.svg";

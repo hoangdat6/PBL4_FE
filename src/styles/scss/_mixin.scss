@@ -33,3 +33,32 @@ $color-border: #E3E3E3;
     @content;
   }
 }
+
+@mixin scrollBar {
+  /* Tùy chỉnh thanh cuộn cho WebKit browsers */
+  &::-webkit-scrollbar {
+    width: 3px !important;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--nav-color);
+    border-radius: 2px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: var(--bg-color);
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+  }
+
+  &::-webkit-scrollbar {
+    display: none; /* Ẩn thanh cuộn mặc định */
+  }
+
+  &:hover::-webkit-scrollbar {
+    display: block; /* Hiện thanh cuộn khi hover */
+  }
+}

@@ -1,6 +1,6 @@
 import styles from './RoomPlayLayout.module.scss';
-import PlayerInfo from "../../components/CaroBoard/PlayerInfo/PlayerInfo";
-import War from "../../assets/statics/imgs/war.svg";
+import PlayerInfo from "../components/CaroBoard/PlayerInfo/PlayerInfo";
+import War from "../assets/statics/imgs/war.svg";
 import React from "react";
 
 const RoomPlayLayout = ({ children, leftSide, rightSide, player1, player2, onLeaveRoom, isGameStarted, winner}) => {

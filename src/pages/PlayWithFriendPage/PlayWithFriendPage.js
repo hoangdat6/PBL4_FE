@@ -18,13 +18,26 @@ import useTimer from "../../hooks/useTimer";
 import GameResult from "../GameResult/GameResult";
 import {setPlayingRoom} from "../../store/slices/userPlaySlice";
 import RoomNotFound from "../../components/RoomNotFound/RoomNotFound";
-import useGameTimer from "../../hooks/useGameTimer";
-import LayoutWrapper from "../../layouts/LayoutWrapper";
 import PrivateRoute from "../../components/PrivateRoute";
+import RoomPlayLayout from "../../layouts/RoomPlayLayout";
+import Avatar from "../../assets/statics/imgs/Avatar.png";
+import Rank from "../../assets/statics/imgs/Rank.svg";
+import checker1 from "../../assets/statics/imgs/checker1.svg";
+import checker2 from "../../assets/statics/imgs/checker2.svg";
+import ChatBox from "../../components/ChatBox/ChatBox";
+import RoomPlayCP from "../RoomPlay/RoomPlayCP";
+import SpectatorBar from "../SpectatorBar/SpectatorBar";
 
 const PlayWithFriendPage = () => {
     // states
-    const { roomCode } = useParams();
+    // Waiting :  phòng chờ
+    // loading : Tham gia phòng
+    // isJoined : Đã tham gia phòng
+    // connected : đã kết nối socket
+    // playing : đang chơi
+    // pending : đang chờ đối thủ
+
+    const {roomCode} = useParams();
     const [isJoined, setIsJoined] = useState(false);
     const [isRoomNotFound, setIsRoomNotFound] = useState(false);
     const isGameStarted = useSelector((state) => state.game.isGameStarted);
@@ -33,21 +46,29 @@ const PlayWithFriendPage = () => {
 
     const dispatch = useDispatch();
 
-    const { timer, startTimer } = useTimer(30); // Custom hook
+    const {timer, startTimer} = useTimer(30); // Custom hook
     const {leaveRoomNotPopup, leaveRoomWithPopup} = useLeaveRoom();
     const {conflictRoomCode, continuePlay, continuePlayCurrentRoom} = useConflictRoom();
-    const { sendMove, connect, sendPlayAgain, sendWinner, isConnected, winner, playAgain, sendMessage} = useGameWebSocket();
+    const {
+        sendMove,
+        connect,
+        sendPlayAgain,
+        sendWinner,
+        isConnected,
+        winner,
+        playAgain,
+        stompClient,
+        sendMessage
+    } = useGameWebSocket();
     const [playerInfo, setPlayerInfo] = useState(null);
     const {player1Info, player2Info} = useSelector((state) => state.room);
 
-
-
     useEffect(() => {
         connect(roomCode);
-    },[roomCode]);
+    }, [roomCode]);
 
     useEffect(() => {
-        if(player1Info && player2Info) {
+        if (player1Info && player2Info) {
             setPlayerInfo(player1Info.id === playerId ? player1Info : player2Info);
         }
     }, [player1Info, player2Info]);
@@ -66,10 +87,9 @@ const PlayWithFriendPage = () => {
 
                     setIsJoined(true);
                 }).catch((error) => {
-                // console.log(error.response.data);
-                if(error.response.status === 409) {
+                if (error.response.status === 409) {
                     dispatch(setPlayingRoom(error.response.data.roomCode));
-                }else if(error.response.status === 400) {
+                } else if (error.response.status === 400) {
                     setIsRoomNotFound(true);
                 }
             });
@@ -99,12 +119,6 @@ const PlayWithFriendPage = () => {
         }
     }, [timer]);
 
-    const propsRoomPlay = {
-        roomCode,
-        sendMove,
-        timer,
-        leaveRoomWithPopup,
-    }
 
     const continuePlayCurrentRoomHandler = () => {
         continuePlayCurrentRoom();
@@ -115,11 +129,66 @@ const PlayWithFriendPage = () => {
         leaveRoomNotPopup();
     }
 
+    const [isPlayer, setIsPlayer] = React.useState(false);
+
+    useEffect(() => {
+        if (isGameStarted) {
+            setIsPlayer(playerId === player1Info.id || playerId === player2Info.id);
+        }
+    }, [isGameStarted])
+
+    const propsRoomPlay = {
+        roomCode,
+        sendMove,
+        isGameStarted,
+        isPlayer,
+        winner,
+    }
+
+    const {
+        remainTime: remainTime1, remainMoveDuration: remainMoveDuration1, playedTime: playedTime1
+    } = useSelector((state) => state.game.playerTimeInfo1);
+
+    const {
+        remainTime: remainTime2, remainMoveDuration: remainMoveDuration2, playedTime: playedTime2,
+    } = useSelector((state) => state.game.playerTimeInfo2);
+
+    const {totalTime, moveDuration} = useSelector((state) => state.game.gameConfig);
+    const isInfiniteTime = totalTime < 0;
+
+    const player1 = {
+        playerId: player1Info.id,
+        playerName: player1Info.name,
+        time: isInfiniteTime ? playedTime1 : remainTime1,
+        remainMoveDuration: isInfiniteTime ? -1 : remainMoveDuration1,
+        moveDuration,
+        isInfiniteTime,
+        matchScore: player1Info.matchScore,
+        avatar: player1Info.avatar || Avatar,
+        rankIcon: Rank,
+        checkers: player1Info.checker === 1 ? checker1 : checker2,
+        isTurn: player1Info.isTurn,
+        reverse: true,
+    }
+
+    const player2 = {
+        playerId: player2Info.id,
+        playerName: player2Info.name,
+        time: isInfiniteTime ? playedTime2 : remainTime2,
+        remainMoveDuration: isInfiniteTime ? -1 : remainMoveDuration2,
+        moveDuration,
+        isInfiniteTime,
+        matchScore: player2Info.matchScore,
+        avatar: player2Info.avatar || Avatar,
+        rankIcon: Rank,
+        isTurn: player2Info.isTurn,
+        checkers: player2Info.checker === 1 ? checker1 : checker2,
+    }
 
 
     const renderContent = () => {
         if (isRoomNotFound) {
-            return <RoomNotFound />;
+            return <RoomNotFound/>;
         }
 
         if (conflictRoomCode) {
@@ -132,37 +201,58 @@ const PlayWithFriendPage = () => {
         }
 
         if (!isJoined) {
-            return <Loading />;
+            return <Loading/>;
         }
 
         if (winner !== null) {
-            return (
-                <GameResult
-                    winnerId={winner}
-                    playerId={playerId}
-                    handlePlayAgain={handleSendPlayAgain}
-                    handleLeaveRoom={leaveRoomNotPopupHandler}
-                    opponentPlayAgain={playAgain}
-                    timer={timer}
-                    playerInfo={playerInfo}
-                />
-            );
+            // setTimeout(() => {
+                return (
+                    <GameResult
+                        winnerId={winner}
+                        playerId={playerId}
+                        handlePlayAgain={handleSendPlayAgain}
+                        handleLeaveRoom={leaveRoomNotPopupHandler}
+                        opponentPlayAgain={playAgain}
+                        timer={timer}
+                        playerInfo={playerInfo}
+                    />
+                );
+
+            // }, 3000);
         }
 
         if (isGameStarted) {
-            return <RoomPlay {...propsRoomPlay} />;
+            return <RoomPlayCP {...propsRoomPlay} />;
         }
 
-        return <WaitingRoom roomCode={roomCode} handleLeaveRoom={leaveRoomWithPopup} />;
+        return <WaitingRoom roomCode={roomCode} handleLeaveRoom={leaveRoomWithPopup}/>;
     };
+
+    const leftSide = isPlayer && <SpectatorBar
+        stompClient={stompClient}
+        roomCode={roomCode}
+        isConnected={isConnected}
+    />;
+    const rightSide = isPlayer && <ChatBox
+        stompClient={stompClient}
+        roomCode={roomCode}
+        isConnected={isConnected}
+    />;
 
     return (
         <>
             <PrivateRoute>
-                <LayoutWrapper layoutType={'default'}>
-                    {/*<PlayWithFriendPage />*/}
+                <RoomPlayLayout
+                    player1={player1}
+                    player2={player2}
+                    onLeaveRoom={leaveRoomWithPopup}
+                    leftSide={leftSide}
+                    rightSide={rightSide}
+                    isGameStarted={isGameStarted}
+                    winner={winner}
+                >
                     {renderContent()}
-                </LayoutWrapper>
+                </RoomPlayLayout>
             </PrivateRoute>
         </>
     );

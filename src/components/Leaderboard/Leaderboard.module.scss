@@ -1,17 +1,31 @@
 @import "../../styles/scss/mixin";
 
+
+.container {
+    width: 100%;
+}
+
+.rankingTableWrapper {
+    overflow-x: auto; /* Thay đổi ở đây */
+    overflow-y: hidden;
+    width: 100%;
+
+    @include scrollBar; /* Thêm mixin scrollBar */
+}
+
 .rankingTable {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     width: 100%;
     border-collapse: collapse;
-    overflow: hidden;
     border-radius: 10px;
+
 
     th,
     td {
         padding: 12px;
         text-align: center;
         font-size: 0.8rem;
+        min-width: 100px; /* Giữ nguyên */
     }
 
     th {
@@ -31,10 +45,13 @@
         }
 
         &:hover {
-            .avatar {
-                transition: all 2s cubic-bezier(0.075, 0.82, 0.165, 1);
-                transform: scale(2);
-                box-shadow: 0 4px 8px rgba(255, 255, 255, 0.2);
+            .playerInfo {
+                .img_wrapper {
+                    .avatar {
+                        transform: scale(1.2); /* Làm cho avatar to hơn một chút */
+                        box-shadow: 0 2px 5px rgba(255, 255, 255, 0.2);
+                    }
+                }
             }
         }
     }
@@ -43,22 +60,36 @@
         display: flex;
         align-items: center;
         gap: 12px;
+
         .img_wrapper {
-            width: 40px;
-            height: 40px;
+            display: none;
             overflow: hidden;
             border-radius: 50%;
             transition: transform 0.3s, box-shadow 0.3s;
+            flex-shrink: 0; /* Để không co lại khi tên dài */
+
+
+            @include respond-to($breakpoint-md) {
+                display: block;
+                width: 40px;
+                height: 40px;
+            }
+
             .avatar {
                 width: 100%;
-                height: 100%;
+                height: auto;
+                transition: all 0.3s;
             }
         }
 
+
         .name {
             color: var(--color-text);
-            font-size: 12px;
-
+            font-size: 0.8rem;
+            min-width: 100px;
+            white-space: nowrap; /* Không cho tên xuống dòng */
+            overflow: hidden; /* Ẩn phần chữ bị tràn */
+            text-overflow: ellipsis;/* hiện 3 chấm */
             &:hover {
                 text-decoration: underline;
             }
@@ -118,5 +149,3 @@
         color: var(--color-text);
     }
 }
-
-
