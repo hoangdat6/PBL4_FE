@@ -180,7 +180,9 @@ const Sidebar = () => {
                     </nav>
                     <nav className={`${styles.sidebar__nav}`}>
                         <div className={`${styles.sidebar__nav_item}`} title="Chơi trực tuyến">
-                            <button className={`${styles.sidebar__nav_link} d-flex align-items-center`}>
+                            <button className={`${styles.sidebar__nav_link} d-flex align-items-center`}
+                                    onClick={() => navigateTo('/find-opponent')}
+                            >
                                 <div className={`${styles.sidebar__nav_icon}`}>
                                     <i className="fa-solid fa-earth-americas"></i>
                                 </div>

@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import styles from "./CaroBoardUI.module.scss";
 import Checker3 from "../../../assets/statics/imgs/checker3.svg";
 import Checker4 from "../../../assets/statics/imgs/checker4.svg";
-import {useSelector} from "react-redux";
 
 const CaroBoardUI = ({ board, handleClick, isStartPlayer, isPlayer, isPlayerTurn, lastMove }) => {
     const [hoveredCell, setHoveredCell] = useState(null);

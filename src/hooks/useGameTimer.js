@@ -26,6 +26,11 @@ const useGameTimer = () => {
         }
     }
 
+    const stopTimer = () => {
+        resetTimer1(0);
+        resetTimer2(0);
+    }
+
     useEffect(() => {
         if (player1Info.isTurn) {
             setTimeout(() => {
@@ -76,7 +81,7 @@ const useGameTimer = () => {
         }
     }, [playerTimeInfo1.remainTime, playerTimeInfo2.remainTime]);
 
-    return { timer1, timer2, startTimer};
+    return { timer1, timer2, startTimer, stopTimer};
 };
 
 export default useGameTimer;

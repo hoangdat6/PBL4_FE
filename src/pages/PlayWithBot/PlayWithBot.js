@@ -1,24 +1,37 @@
 import React, {useEffect} from 'react';
 import RoomBot from "./RoomBot";
 import useGameBot from "../../hooks/useGameBot";
-import useLeaveRoom from "../../hooks/useLeaveRoom";
 import Loading from "../../components/Loading/Loading";
+import RoomPlayLayout from "../../layouts/RoomPlayLayout";
+import PrivateRoute from "../../components/PrivateRoute";
+import Avatar from "../../assets/statics/imgs/Avatar.png";
+import Rank from "../../assets/statics/imgs/Rank.svg";
+import checker2 from "../../assets/statics/imgs/checker2.svg";
+import checker1 from "../../assets/statics/imgs/checker1.svg";
+import DefaultAvatar from "../../assets/statics/default_avatar/Glowface.png";
+import GameResult from "../GameResult/GameResult";
+import RoomNotFound from "../../components/RoomNotFound/RoomNotFound";
+
 
 const PlayWithBot = () => {
+
     const {
         board,
-        isPlayerStart,
-        isPlayer,
+        isFirstPlayer,
         isPlayerTurn,
         isPlaying,
+        isEndGame,
         roomCode,
         lastMove,
+        player,
+        winnerId,
+        showResult,
+        isRoomNotFound,
         handleClick,
         createRoom,
-        joinRoom
+        joinRoom,
+        leaveRoomWithPopup,
     } = useGameBot();
-
-    const { leaveRoomWithPopup } = useLeaveRoom();
 
     useEffect(() => {
         if(roomCode) {
@@ -28,18 +41,90 @@ const PlayWithBot = () => {
         }
     }, []);
 
+    const player1 = {
+        playerId: player?.id,
+        playerName: player?.name || "Player",
+        time: 0,
+        remainMoveDuration: 0,
+        moveDuration: 0,
+        score: 0,
+        avatar: player?.avatar || DefaultAvatar,
+        rankIcon: player?.rankIcon || Rank,
+        checkers: checker2,
+        isTurn: isPlayerTurn,
+        reverse: true,
+    }
+
+    const player2 = {
+        playerId: -1,
+        playerName: "Bot",
+        time: 0,
+        remainMoveDuration: 0,
+        moveDuration: 0,
+        score: 0,
+        avatar: Avatar,
+        rankIcon: Rank,
+        checkers: checker1,
+        isTurn: !isPlayerTurn,
+        reverse: false,
+    }
+
+    const handleSendPlayAgain = () => {
+
+    }
+
+    const renderContent = () => {
+        if (isRoomNotFound) {
+            return <RoomNotFound />;
+        }
+
+        if(!isPlaying ) {
+            return <Loading />
+        }
+
+        if (isEndGame && showResult) {
+            return <GameResult
+                winnerId={winnerId}
+                playerId={player?.id}
+                handlePlayAgain={handleSendPlayAgain}
+                handleLeaveRoom={leaveRoomWithPopup}
+                opponentPlayAgain={true}
+                timer={30}
+                playerInfo={{seasonScore: 0}}
+            />
+        }
+
+        return <RoomBot
+            board={board}
+            isFirstPlayer={isFirstPlayer}
+            isPlayer={true}
+            isPlayerTurn={isPlayerTurn}
+            handleClick={handleClick}
+            leaveRoomWithPopup={leaveRoomWithPopup}
+            lastMove={lastMove}/>
+    };
+
+    const leftSide = <></>;
+    const rightSide = <></>;
 
     return (
-        isPlaying ?
-            <RoomBot
-                board={board}
-                isPlayerStart={isPlayerStart}
-                isPlayer={isPlayer}
-                isPlayerTurn={isPlayerTurn}
-                handleClick={handleClick}
-                leaveRoomWithPopup={leaveRoomWithPopup}
-                lastMove={lastMove}
-            />  : <Loading/>
+
+    <PrivateRoute>
+        <RoomPlayLayout
+            player1={player1}
+            player2={player2}   
+            onLeaveRoom={leaveRoomWithPopup}
+            leftSide={leftSide}
+            rightSide={rightSide}
+            isGameStarted={isPlaying}
+            winnerId={winnerId}
+            playerId={player?.id}
+            isPlayer={true}
+            showResult={showResult}
+        >
+            {renderContent()}
+        </RoomPlayLayout>
+    </PrivateRoute>
     );
 }
 

@@ -39,6 +39,39 @@
     border-bottom: 1px solid #444;
     max-height: 80px;
     min-height: 80px;
+    position: relative;
+
+    .result {
+        position: absolute;
+        color: #E50048;
+        display: block;
+        visibility: hidden;
+        opacity: 0;
+        top: 50%;
+        transition: all 0.5s ease;
+        user-select: none;
+        z-index: 1000;
+
+        &.show {
+            visibility: visible;
+            opacity: 1;
+            top: 100%;
+        }
+
+        &.hide {
+            visibility: hidden;
+            opacity: 0;
+            top: 50%;
+        }
+
+
+        .winner {
+            font-size: 80px;
+            font-family: "BubblegunSans", sans-serif;
+
+        }
+
+    }
 
     .vs_icon {
         img {

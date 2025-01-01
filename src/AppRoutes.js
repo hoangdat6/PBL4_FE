@@ -13,16 +13,14 @@ import CreateTournamentPage from "./pages/CreateTournamentPage/CreateTournamentP
 import RoomListPage from "./pages/RoomListPage/RoomListPage";
 import RulesPage from "./pages/RulesPage/RulesPage";
 import ShopPage from "./pages/ShopPage/ShopPage";
-import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import SettingsPage from "./pages/SettingsPage/SettingsPage";
 import AccountSettingPage from "./pages/AccountSettingPage/AccountSettingPage";
-import PlayWithBot from "./pages/PlayWithBot/PlayWithBot";
 import GameResultComponent from "./components/GameResult/GameResult";
 import PlayWithFriendPage from "./pages/PlayWithFriendPage/PlayWithFriendPage";
-import PlayWithBotCP from "./pages/PlayWithBot/PlayWithBotCP";
-import ChatTest from "./ChatTest";
-import PlayerProfile from "./components/PlayerProfile/PlayerProfile";
+import PlayWithBotCP from "./pages/PlayWithBot/PlayWithBot";
 import NotFoundPage from "./components/NotFoundPage/NotFoundPage";
+import PlayWithSomeone from "./pages/PlayWithSomeone/PlayWithSomeone";
+import RoomPlayLayout from "./layouts/RoomPlayLayout";
 
 
 const routes = createBrowserRouter([
@@ -58,14 +56,6 @@ const routes = createBrowserRouter([
         )
     },
     {
-        path: "/chat-test",
-        element: (
-            <LayoutWrapper layoutType={'default'}>
-                <ChatTest/>
-            </LayoutWrapper>
-        )
-    },
-    {
         path:"/test",
         element: (
             <LayoutWrapper layoutType={'default'}>
@@ -88,7 +78,7 @@ const routes = createBrowserRouter([
                 element: (
                     <PrivateRoute>
                         <LayoutWrapper layoutType={'default'}>
-                            <PlayWithBot />
+                            <PlayWithBotCP />
                         </LayoutWrapper>
                     </PrivateRoute>
                 )
@@ -104,6 +94,17 @@ const routes = createBrowserRouter([
                 )
             }
         ]
+    },
+
+    {
+        path: "/find-opponent",
+        element: (
+            <PrivateRoute>
+                <LayoutWrapper layoutType={'default'}>
+                    <PlayWithSomeone />
+                </LayoutWrapper>
+            </PrivateRoute>
+        )
     },
 
     {
@@ -191,7 +192,15 @@ const routes = createBrowserRouter([
         path: "/settings",
         element: (
             <LayoutWrapper layoutType={'mainPage'}>
-                <SettingsPage />
+                <RoomPlayLayout
+                    player1={{}}
+                    player2={{}}
+                    onLeaveRoom={() => {}}
+                    leftSide={<></>}
+                    rightSide={<></>}
+                    isGameStarted={true}
+                    winner={null}
+                />
             </LayoutWrapper>
         )
     }

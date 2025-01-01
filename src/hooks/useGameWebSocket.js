@@ -9,7 +9,6 @@ import {
     setPlayerTimeInfo1,
     setPlayerTimeInfo2,
     setWinner,
-    setIsGameStarted
 } from "../store/slices/gameSlice";
 import {
     GAME_PROGRESS_TOPIC,

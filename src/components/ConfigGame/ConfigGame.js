@@ -64,7 +64,7 @@ const ConfigGame = ({
                                 <MenuItem value="20">20 giây</MenuItem>
                                 <MenuItem value="30">30 giây</MenuItem>
                                 <MenuItem value="40">40 giây</MenuItem>
-                                <MenuItem value="-1">Không giới hạn</MenuItem>
+                                {/*<MenuItem value="-1">Không giới hạn</MenuItem>*/}
                             </Select>
                         )
                     }
@@ -87,7 +87,7 @@ const ConfigGame = ({
                                 <MenuItem value="3">3 phút</MenuItem>
                                 <MenuItem value="4">4 phút</MenuItem>
                                 <MenuItem value="5">5 phút</MenuItem>
-                                <MenuItem value="-1">Không giới hạn</MenuItem>
+                                {/*<MenuItem value="-1">Không giới hạn</MenuItem>*/}
                             </Select>
                         )
                     }

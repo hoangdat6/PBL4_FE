@@ -12,7 +12,6 @@ const PlayerInfo = ({
                         time,
                         remainMoveDuration,
                         moveDuration,
-                        isInfiniteTime,
                         matchScore,
                         avatar,
                         rankIcon,
@@ -21,7 +20,7 @@ const PlayerInfo = ({
                         reverse
 }) => {
 
-    const progressPercentage = isInfiniteTime ? 100 : (remainMoveDuration / moveDuration) * 100;
+    const progressPercentage = (remainMoveDuration / moveDuration) * 100;
 
     return (
         <div className={`${styles.player} ${reverse ? "flex-row-reverse" : ""}`}>
@@ -29,13 +28,16 @@ const PlayerInfo = ({
                 <div className={`${styles.player_score}`}>
                     <span>{matchScore}</span>
                 </div>
-                <div className={`${styles.avatar}`} style={{width: '50px', height: '50px'}}>
+                <div className={`
+                    ${styles.avatar} 
+                    ${isTurn ? styles.active : ""}
+                `} style={{width: '50px', height: '50px'}}>
                     <img src={avatar} alt={`${playerName}'s avatar`} className="img-fluid"/>
                 </div>
                 <div className={`${styles.player_info} d-flex flex-column `}>
                     <span className={`fw-bold text-light ${reverse ? "text-end" : ""}`}>{playerName}</span>
                     <span className={`text-light ${reverse ? "text-end" : ""}`}>{formatTime(time)}</span>
-                    {!isInfiniteTime && isTurn && (
+                    {(time !== 0 && isTurn) && (
                         <div className={styles.progressBarContainer}>
                             <div
                                 className={styles.progressBar}

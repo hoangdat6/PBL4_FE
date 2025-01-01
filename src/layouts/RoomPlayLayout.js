@@ -1,9 +1,32 @@
 import styles from './RoomPlayLayout.module.scss';
 import PlayerInfo from "../components/CaroBoard/PlayerInfo/PlayerInfo";
 import War from "../assets/statics/imgs/war.svg";
-import React from "react";
+import React, {useEffect} from "react";
+import useGameBot from "../hooks/useGameBot";
+import {useLocation} from "react-router-dom";
 
-const RoomPlayLayout = ({ children, leftSide, rightSide, player1, player2, onLeaveRoom, isGameStarted, winner}) => {
+const RoomPlayLayout = ({ children, leftSide, rightSide, player1, player2, onLeaveRoom, isGameStarted, winnerId, playerId, isPlayer, showResult}) => {
+
+    console.log(winnerId, showResult)
+    const result = () => {
+        if (isPlayer) {
+            return (
+                <div className={styles.winner}>
+                    {
+                        winnerId === playerId ? "Bạn đã thắng" : "Bạn đã thua"
+                    }
+                </div>
+            )
+        }else {
+            return (
+                <div className={styles.winner}>
+                    {
+                        playerId === player1.id ? `${player1.name} đã thắng` : `${player2.name} đã thắng`
+                    }
+                </div>
+            )
+        }
+    }
 
     return (
         <div className={styles.layout_wrapper}>
@@ -21,6 +44,12 @@ const RoomPlayLayout = ({ children, leftSide, rightSide, player1, player2, onLea
                             <PlayerInfo {...player2} />
                         </>
                     )}
+                    <div className={`${styles.result} ${winnerId !== null ? styles.show : isGameStarted ? styles.hide : styles.show}`}>
+                        {(!showResult && winnerId) && (
+                            result()
+                        )}
+                    </div>
+
                 </div>
                 <div className={styles.center_side}>
                     {children}

@@ -3,7 +3,7 @@ import React from "react";
 
 const RoomBot = ({
                         board,
-                        isPlayerStart,
+                        isFirstPlayer,
                         isPlayer,
                         isPlayerTurn,
                         handleClick,
@@ -15,7 +15,7 @@ const RoomBot = ({
         <CaroBoardUI
             board={board}
             handleClick={handleClick}
-            isStartPlayer={isPlayerStart}
+            isStartPlayer={isFirstPlayer}
             isPlayer={isPlayer}
             isPlayerTurn={isPlayerTurn}
             lastMove={lastMove}

@@ -24,7 +24,7 @@ const GameResultPage = ({
                 handleLeaveRoom={handleLeaveRoom}
                 opponentPlayAgain={opponentPlayAgain}
                 timer={timer}
-                seasonScore={playerInfo.seasonScore}
+                seasonScore={playerInfo?.seasonScore}
             />
         </>
     );

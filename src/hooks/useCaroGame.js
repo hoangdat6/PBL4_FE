@@ -86,39 +86,6 @@ export const useCaroGame = (roomCode, sendMove) => {
         }
     }, [lastMove]);
 
-    const getWinningCells = (board) => {
-        const directions = [
-            { x: 1, y: 0 },  // Horizontal
-            { x: 0, y: 1 },  // Vertical
-            { x: 1, y: 1 },  // Diagonal down-right
-            { x: 1, y: -1 }  // Diagonal up-right
-        ];
 
-        const isValidCell = (x, y) => x >= 0 && y >= 0 && x < board.length && y < board[0].length;
-
-        for (let row = 0; row < board.length; row++) {
-            for (let col = 0; col < board[row].length; col++) {
-                if (board[row][col] !== -1) {
-                    for (let { x, y } of directions) {
-                        const cells = [];
-                        for (let i = 0; i < 5; i++) {
-                            const newRow = row + i * y;
-                            const newCol = col + i * x;
-                            if (isValidCell(newRow, newCol) && board[newRow][newCol] === board[row][col]) {
-                                cells.push({ row: newRow, col: newCol });
-                            } else {
-                                break;
-                            }
-                        }
-                        if (cells.length === 5) {
-                            return cells;
-                        }
-                    }
-                }
-            }
-        }
-        return [];
-    };
-
-    return { board: boardState.board, handleClick, isPlayerTurn, isPlayerStart, roomConfig, participantType, lastMove, getWinningCells };
+    return { board: boardState.board, handleClick, isPlayerTurn, isPlayerStart, roomConfig, participantType, lastMove };
 };

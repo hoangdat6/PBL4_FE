@@ -21,3 +21,9 @@
     src: url('../../assets/fonts/DMSans-SemiBold.ttf');
     font-weight: 600;
 }
+
+@font-face {
+    font-family: 'BubblegunSans';
+    src: url('../../assets/fonts/BubblegumSans-Regular.ttf');
+    font-weight: 600;
+}
