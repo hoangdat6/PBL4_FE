@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import RoomService from "../services/gameBot.service";
-import {resetGame} from "../store/slices/gameSlice";
-import {resetRoom} from "../store/slices/roomSlice";
 import showLeaveRoomPopup from "../components/showLeaveRoomPopup/showLeaveRoomPopup";
 import GameBot from "../services/gameBot.service";
 import BoardUtils from "../utils/BoardUtils";
@@ -21,6 +19,7 @@ const useGameBot = () => {
     const [showResult, setShowResult] = useState(false); // Trạng thái để kiểm soát hiển thị trang kết quả
     const [isEndGame, setIsEndGame] = useState(false);
     const [isRoomNotFound, setIsRoomNotFound] = useState(false);
+    const [winningCells, setWinningCells] = useState([]);
 
     const navigate = useNavigate();
 
@@ -55,14 +54,10 @@ const useGameBot = () => {
                         avatar: playerAvatar,
                     });
 
-                    console.log(response.data);
-
                     setLastMove(lastMove);
                     setBoard(BoardUtils.parseBoard(board));
                     setNthMoveState(nthMove);
                     setIsPlayerTurn(playerTurn);
-
-                    console.log(BoardUtils.parseBoard(board));
 
                     setTimeout(() => {
                         setIsPlaying(true);
@@ -88,7 +83,6 @@ const useGameBot = () => {
                 .then((res) => {
                     const { win, row, col } = res.data;
 
-                    console.log(res.data);
                     if (win) {
                         setWinnerId(-1);
                         setIsEndGame(true);
@@ -110,6 +104,12 @@ const useGameBot = () => {
                 });
         }
     };
+
+    useEffect(() => {
+        if(isEndGame) {
+            setWinningCells(BoardUtils.getWinningCells(board).flat());
+        }
+    }, [isEndGame]);
 
 
     const addMoveToBoard = (move, playerTurn) => {
@@ -154,6 +154,7 @@ const useGameBot = () => {
         player,
         showResult,
         isRoomNotFound,
+        winningCells,
         handleClick,
         createRoom,
         joinRoom,

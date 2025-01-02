@@ -2,11 +2,20 @@ import React, { useState } from "react";
 import styles from "./CaroBoardUI.module.scss";
 import Checker3 from "../../../assets/statics/imgs/checker3.svg";
 import Checker4 from "../../../assets/statics/imgs/checker4.svg";
+import Star from "../../../assets/statics/imgs/star.svg";
 
-const CaroBoardUI = ({ board, handleClick, isStartPlayer, isPlayer, isPlayerTurn, lastMove }) => {
+const CaroBoardUI = ({ board, handleClick, isStartPlayer, isPlayer, isPlayerTurn, lastMove, winningCells }) => {
     const [hoveredCell, setHoveredCell] = useState(null);
 
     board = board || Array(16).fill().map(() => Array(16).fill(-1));
+
+    const checkWinningCell = (row, col) => {
+        if (!winningCells) {
+            return false;
+        }
+
+        return winningCells.some((cell) => cell.row === row && cell.col === col);
+    }
 
     return (
         <div className={styles.table_wrapper}>
@@ -45,14 +54,27 @@ const CaroBoardUI = ({ board, handleClick, isStartPlayer, isPlayer, isPlayerTurn
                                 className={`${styles.boardCell} `}
                             >
                                 <button
-                                    className={`${styles.boardButton} ${lastMove?.row === rowIndex && lastMove?.col === colIndex ? styles.lastClicked : ''}`}
-                                    onClick={() => handleClick(rowIndex, colIndex)}
-                                    {...((!isPlayer || !isPlayerTurn) && {disabled: true})}
+                                    className={`
+                                        ${styles.boardButton} 
+                                        ${lastMove?.row === rowIndex && lastMove?.col === colIndex ? styles.lastClicked : ''}
+                                        ${checkWinningCell(rowIndex, colIndex) ? styles.winningCell : ''}
+                                        `
+                                }
+
+                                    onClick={
+                                        () => handleClick(rowIndex, colIndex)
+                                    }
+
+                                    {
+                                        ...((!isPlayer || !isPlayerTurn) && {disabled: true})
+                                    }
+
                                     onMouseEnter={() => {
                                         if (isPlayer) {
                                             setHoveredCell({rowIndex, colIndex});
                                         }
                                     }}
+
                                     onMouseLeave={() => {
                                         if(isPlayer) {
                                             setHoveredCell(null);
@@ -60,16 +82,24 @@ const CaroBoardUI = ({ board, handleClick, isStartPlayer, isPlayer, isPlayerTurn
                                     }}
                                 >
                                     {/* Hiển thị icon nếu ô đã được đánh */}
-                                    {cell !== -1 ? (cell === 0 ? <img src={Checker4} alt="checker"/> :
-                                        <img src={Checker3} alt="checker"/>) : ""}
+                                    {
+                                        cell !== -1 ?
+                                            (cell === 0 ?
+                                                <img src={Checker4} alt="checker"/> :
+                                                <img src={Checker3} alt="checker"/>) :
+                                            ""}
 
                                     {/* Hiển thị icon nếu đang hover */}
                                     {isPlayer && hoveredCell?.rowIndex === rowIndex && hoveredCell?.colIndex === colIndex && cell === -1 ? (
-                                        isStartPlayer ? <img src={Checker4} alt="checker"/> :
+                                        isStartPlayer ?
+                                            <img src={Checker4} alt="checker"/> :
                                             <img src={Checker3} alt="checker"/>
                                     ) : (
                                         ""
                                     )}
+
+                                    {checkWinningCell(rowIndex, colIndex) && <img src={Star} alt="Star" className={styles.star} />}
+
                                 </button>
                             </td>
                         ))}

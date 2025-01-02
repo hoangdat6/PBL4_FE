@@ -52,11 +52,11 @@
 
 
 import React, {useEffect, useState} from 'react';
-import PropTypes from 'prop-types';
 import './GameResult.scss';
 import ParticipantType from "../../enums/participantType";
 import {PLAY_AGAIN} from "../../enums/PlayAgainCode";
 import {useSelector} from "react-redux";
+import PropTypes from "prop-types";
 
 const GameResultComponent = ({
                                  winnerId,
@@ -114,21 +114,21 @@ const GameResultComponent = ({
             <div className="game-result__message">
                 {message}
             </div>
-            {
-                participantType === ParticipantType.PLAYER && (
-                    <div className="game-result__score">
-                        <div className="game-result__score-bar">
-                            <div
-                                className="game-result__score-progress"
-                                style={{width: `${(displayedScore / seasonScore) * 100}%`}}
-                            ></div>
-                        </div>
-                        <div className="game-result__score-text">
-                            Điểm mùa: {displayedScore}/{seasonScore}
-                        </div>
-                    </div>
-                )
-            }
+            {/*{*/}
+            {/*    participantType === ParticipantType.PLAYER && (*/}
+            {/*        <div className="game-result__score">*/}
+            {/*            <div className="game-result__score-bar">*/}
+            {/*                <div*/}
+            {/*                    className="game-result__score-progress"*/}
+            {/*                    style={{width: `${(displayedScore / seasonScore) * 100}%`}}*/}
+            {/*                ></div>*/}
+            {/*            </div>*/}
+            {/*            <div className="game-result__score-text">*/}
+            {/*                Điểm mùa: {displayedScore}/{seasonScore}*/}
+            {/*            </div>*/}
+            {/*        </div>*/}
+            {/*    )*/}
+            {/*}*/}
 
             <div className="game-result__actions">
                 {
@@ -146,14 +146,14 @@ const GameResultComponent = ({
     );
 };
 
-// GameResultComponent.propTypes = {
-//     winnerId: PropTypes.number,
-//     playerId: PropTypes.number.isRequired,
-//     handlePlayAgain: PropTypes.func.isRequired,
-//     handleLeaveRoom: PropTypes.func.isRequired,
-//     opponentPlayAgain: PropTypes.object.isRequired,
-//     timer: PropTypes.number,
-//     seasonScore: PropTypes.number.isRequired,
-// };
+GameResultComponent.propTypes = {
+    winnerId: PropTypes.number,
+    playerId: PropTypes.number,
+    handlePlayAgain: PropTypes.func,
+    handleLeaveRoom: PropTypes.func,
+    opponentPlayAgain: PropTypes.object,
+    timer: PropTypes.number,
+    seasonScore: PropTypes.number,
+};
 
 export default GameResultComponent;

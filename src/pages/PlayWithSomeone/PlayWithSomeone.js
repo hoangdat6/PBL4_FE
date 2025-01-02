@@ -8,12 +8,12 @@ import useWebSocket from "./useWebSocket";
 const PlayWithSomeone = () => {
     const navigate = useNavigate();
     const [roomCode, setRoomCode] = useState(null);
-    const [isFinding, setIsFinding] = useState(false);
+    const [isFinding, setIsFinding] = useState(true);
 
     const {
         connect,
         isConnected,
-        stompClient,
+        stompClient
     } = useWebSocket(setRoomCode);
 
     const { timer, startTimer, resetTimer } = useTimer(30);
@@ -22,22 +22,23 @@ const PlayWithSomeone = () => {
     const findOpponent = async () => {
         try {
             setIsFinding(true);
-            const response = await MatchMakingService.findOpponent();
-            const { roomCode } = response.data;
-            if (roomCode) {
-                setRoomCode(roomCode);
-            }
+            MatchMakingService.findOpponent().then((response) => {
+                const { roomCode } = response.data;
+                if (roomCode) {
+                    setRoomCode(roomCode);
+                }
+            }).catch((error) => {
+                console.error("Error finding opponent:", error);
+            });
         } catch (error) {
             console.error("Error finding opponent:", error);
-        } finally {
-            setIsFinding(false);
         }
     };
 
     useEffect(() => {
         // Connect to WebSocket and start finding opponent
         connect();
-    }, [connect]);
+    }, []);
 
     useEffect(() => {
         if (isConnected) {
@@ -57,23 +58,37 @@ const PlayWithSomeone = () => {
     useEffect(() => {
         // Handle timeout
         if (timer === 0) {
-            MatchMakingService.cancelFindingOpponent().then(() => {
-                resetTimer();
-                setIsFinding(false);
-            }).catch((error) => {
-                console.error("Error canceling finding opponent:", error);
-            });
-
-            if (stompClient.current) {
-                stompClient.current.deactivate();
-            }
+            handleCancelMatchmaking();
             navigate("/");
         }
     }, [timer, navigate, stompClient]);
 
+
+    const handleCancelMatchmaking = async () => {
+        if (isFinding) {
+            try {
+                await MatchMakingService.cancelFindingOpponent();
+                setIsFinding(false);
+                if (stompClient.current) {
+                    stompClient.current.deactivate();
+                }
+            } catch (error) {
+                console.error("Error canceling matchmaking:", error);
+            }
+        }
+    };
+
+    useEffect(() => {
+        // Cleanup function to handle component unmount (back button, redirect)
+        return () => {
+            handleCancelMatchmaking();
+        };
+    }, [isFinding, stompClient]);
+
+
     return (
         <div>
-            {!roomCode && <FindingOpponent timer={timer} isFinding={isFinding} />}
+            {isFinding && <FindingOpponent timer={timer} />}
         </div>
     );
 };

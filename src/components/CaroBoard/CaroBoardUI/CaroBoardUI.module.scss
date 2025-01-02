@@ -1,3 +1,4 @@
+
 .table_wrapper {
     position: relative;
 
@@ -31,6 +32,23 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
+
+    &.winningCell {
+        animation: pulse 1s infinite;
+        z-index: 100;
+
+        img.star {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            fill: #f1c40f;
+        }
+    }
+
+    &.lastClicked {
+        animation: pulse 1s infinite;
+    }
 
     img {
         width: 24px;
@@ -38,9 +56,7 @@
     }
 }
 
-.lastClicked {
-    animation: pulse 1s infinite;
-}
+
 
 @keyframes pulse {
     0% {

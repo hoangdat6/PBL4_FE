@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './PlayerInfo.module.scss';
+
 const formatTime = (time) => {
     const minutes = String(Math.floor(time / 60)).padStart(2, '0');
     const seconds = String(time % 60).padStart(2, '0');
@@ -18,7 +19,8 @@ const PlayerInfo = ({
                         checkers,
                         isTurn,
                         reverse
-}) => {
+
+                    }) => {
 
     const progressPercentage = (remainMoveDuration / moveDuration) * 100;
 
@@ -41,7 +43,7 @@ const PlayerInfo = ({
                         <div className={styles.progressBarContainer}>
                             <div
                                 className={styles.progressBar}
-                                style={{ width: `${progressPercentage}%` }}
+                                style={{width: `${progressPercentage}%`}}
                             ></div>
                         </div>
                     )}

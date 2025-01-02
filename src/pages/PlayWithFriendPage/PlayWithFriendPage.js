@@ -55,7 +55,7 @@ const PlayWithFriendPage = () => {
         sendPlayAgain,
         sendWinner,
         isConnected,
-        winner,
+        winnerId,
         playAgain,
         stompClient,
     } = useGameWebSocket();
@@ -101,8 +101,8 @@ const PlayWithFriendPage = () => {
     }
 
     useEffect(() => {
-        if (winner) {
-            sendWinner(SEND_WINNER(roomCode), winner);
+        if (winnerId) {
+            sendWinner(SEND_WINNER(roomCode), winnerId);
 
             const timeout = setTimeout(() => {
                 setShowResult(true);
@@ -113,7 +113,7 @@ const PlayWithFriendPage = () => {
                 clearTimeout(timeout);
             }
         }
-    }, [winner]);
+    }, [winnerId]);
 
     useEffect(() => {
         if (playAgain.code === PLAY_AGAIN_ACCEPT) {
@@ -143,7 +143,7 @@ const PlayWithFriendPage = () => {
         sendMove,
         isGameStarted,
         isPlayer,
-        winner,
+        winnerId,
     }
 
     const {
@@ -202,11 +202,11 @@ const PlayWithFriendPage = () => {
             return <Loading />;
         }
 
-        if (winner !== null && showResult) {
+        if (winnerId !== null && showResult) {
 
             return (
                 <GameResult
-                    winnerId={winner}
+                    winnerId={winnerId}
                     playerId={playerId}
                     handlePlayAgain={handleSendPlayAgain}
                     handleLeaveRoom={leaveRoomWithPopup}
@@ -245,7 +245,7 @@ const PlayWithFriendPage = () => {
                     leftSide={leftSide}
                     rightSide={rightSide}
                     isGameStarted={isGameStarted}
-                    winnerId={winner}
+                    winnerId={winnerId}
                     isPlayer={isPlayer}
                     playerId={playerId}
                     showResult={showResult}

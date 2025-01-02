@@ -21,7 +21,6 @@ const ChatBox = ({stompClient, isConnected, roomCode}) => {
 
     const sendMessage = (destination, msg) => {
         if (!msg || !destination) return;
-        console.log('Sending message:', msg);
         stompClient.current.publish({ destination: destination, body: JSON.stringify(msg)});
     }
 
@@ -32,7 +31,6 @@ const ChatBox = ({stompClient, isConnected, roomCode}) => {
         // Lắng nghe WebSocket event (thay thế bằng cách subscribe topic nếu có)
         const chatSubscription = stompClient.current.subscribe(`/user/queue/message/${roomCode}`, (message) => {
             const receivedMessage = JSON.parse(message.body);
-            console.log(message.body);
             setMessages((prev) => [...prev, receivedMessage]);
         });
 

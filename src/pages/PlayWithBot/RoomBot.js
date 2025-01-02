@@ -2,13 +2,13 @@ import CaroBoardUI from "../../components/CaroBoard/CaroBoardUI/CaroBoardUI";
 import React from "react";
 
 const RoomBot = ({
-                        board,
-                        isFirstPlayer,
-                        isPlayer,
-                        isPlayerTurn,
-                        handleClick,
-                     lastMove
-
+                     board,
+                     isFirstPlayer,
+                     isPlayer,
+                     isPlayerTurn,
+                     handleClick,
+                     lastMove,
+                     winningCells
                  }) => {
 
     return (
@@ -19,6 +19,7 @@ const RoomBot = ({
             isPlayer={isPlayer}
             isPlayerTurn={isPlayerTurn}
             lastMove={lastMove}
+            winningCells={winningCells}
         />
     );
 };

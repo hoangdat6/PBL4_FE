@@ -27,6 +27,7 @@ const PlayWithBot = () => {
         winnerId,
         showResult,
         isRoomNotFound,
+        winningCells,
         handleClick,
         createRoom,
         joinRoom,
@@ -89,7 +90,7 @@ const PlayWithBot = () => {
                 handlePlayAgain={handleSendPlayAgain}
                 handleLeaveRoom={leaveRoomWithPopup}
                 opponentPlayAgain={true}
-                timer={30}
+                timer={null}
                 playerInfo={{seasonScore: 0}}
             />
         }
@@ -101,7 +102,9 @@ const PlayWithBot = () => {
             isPlayerTurn={isPlayerTurn}
             handleClick={handleClick}
             leaveRoomWithPopup={leaveRoomWithPopup}
-            lastMove={lastMove}/>
+            lastMove={lastMove}
+            winningCells={winningCells}
+        />
     };
 
     const leftSide = <></>;

@@ -8,12 +8,8 @@ import MatchHistory from "./pages/MatchHistory/MatchHistory";
 import FriendPage from "./pages/FriendPage/FriendPage";
 
 import LeaderboardPage from "./pages/LeaderboardPage/LeaderboardPage";
-import MessagesPage from "./pages/MessagesPage/MessagesPage";
-import CreateTournamentPage from "./pages/CreateTournamentPage/CreateTournamentPage";
-import RoomListPage from "./pages/RoomListPage/RoomListPage";
 import RulesPage from "./pages/RulesPage/RulesPage";
 import ShopPage from "./pages/ShopPage/ShopPage";
-import SettingsPage from "./pages/SettingsPage/SettingsPage";
 import AccountSettingPage from "./pages/AccountSettingPage/AccountSettingPage";
 import GameResultComponent from "./components/GameResult/GameResult";
 import PlayWithFriendPage from "./pages/PlayWithFriendPage/PlayWithFriendPage";
@@ -133,32 +129,6 @@ const routes = createBrowserRouter([
         element: (
             <LayoutWrapper layoutType={'mainPage'}>
                 <LeaderboardPage />
-            </LayoutWrapper>
-        )
-    },
-    {
-        path: "/messages",
-        element: (
-            <PrivateRoute isWithText={true}>
-                <LayoutWrapper layoutType={'mainPage'}>
-                    <MessagesPage />
-                </LayoutWrapper>
-            </PrivateRoute>
-        )
-    },
-    {
-        path: "/create-tournament",
-        element: (
-            <LayoutWrapper layoutType={'mainPage'}>
-                <CreateTournamentPage />
-            </LayoutWrapper>
-        )
-    },
-    {
-        path: "/room-list",
-        element: (
-            <LayoutWrapper layoutType={'mainPage'}>
-                <RoomListPage />
             </LayoutWrapper>
         )
     },

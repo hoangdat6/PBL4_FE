@@ -33,6 +33,8 @@ const getWinningCells = (board) => {
 
     const isValidCell = (x, y) => x >= 0 && y >= 0 && x < board.length && y < board[0].length;
 
+    const winningCells = [];
+
     for (let row = 0; row < board.length; row++) {
         for (let col = 0; col < board[row].length; col++) {
             if (board[row][col] !== -1) {
@@ -48,14 +50,16 @@ const getWinningCells = (board) => {
                         }
                     }
                     if (cells.length === 5) {
-                        return cells;
+                        winningCells.push(cells); // Thêm dãy chiến thắng vào danh sách
                     }
                 }
             }
         }
     }
-    return [];
+
+    return winningCells;
 };
+
 
 const BoardUtils = {
     parseBoard,

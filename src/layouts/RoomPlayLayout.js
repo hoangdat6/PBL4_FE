@@ -1,13 +1,22 @@
 import styles from './RoomPlayLayout.module.scss';
 import PlayerInfo from "../components/CaroBoard/PlayerInfo/PlayerInfo";
 import War from "../assets/statics/imgs/war.svg";
-import React, {useEffect} from "react";
-import useGameBot from "../hooks/useGameBot";
-import {useLocation} from "react-router-dom";
+import React from "react";
 
-const RoomPlayLayout = ({ children, leftSide, rightSide, player1, player2, onLeaveRoom, isGameStarted, winnerId, playerId, isPlayer, showResult}) => {
+const RoomPlayLayout = ({
+                            children,
+                            leftSide,
+                            rightSide,
+                            player1,
+                            player2,
+                            onLeaveRoom,
+                            isGameStarted,
+                            winnerId,
+                            playerId,
+                            isPlayer,
+                            showResult
+                        }) => {
 
-    console.log(winnerId, showResult)
     const result = () => {
         if (isPlayer) {
             return (
@@ -17,7 +26,7 @@ const RoomPlayLayout = ({ children, leftSide, rightSide, player1, player2, onLea
                     }
                 </div>
             )
-        }else {
+        } else {
             return (
                 <div className={styles.winner}>
                     {
@@ -44,13 +53,15 @@ const RoomPlayLayout = ({ children, leftSide, rightSide, player1, player2, onLea
                             <PlayerInfo {...player2} />
                         </>
                     )}
-                    <div className={`${styles.result} ${winnerId !== null ? styles.show : isGameStarted ? styles.hide : styles.show}`}>
+                    <div
+                        className={`${styles.result} ${winnerId !== null ? styles.show : isGameStarted ? styles.hide : styles.show}`}>
                         {(!showResult && winnerId) && (
                             result()
                         )}
                     </div>
 
                 </div>
+
                 <div className={styles.center_side}>
                     {children}
                 </div>

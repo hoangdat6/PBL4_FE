@@ -1,4 +1,3 @@
-
 import React from 'react';
 import GameResultComponent from "../../components/GameResult/GameResult";
 import {useSelector} from "react-redux";

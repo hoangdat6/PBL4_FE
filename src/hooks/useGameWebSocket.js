@@ -28,7 +28,7 @@ const useGameWebSocket = () => {
     const dispatch = useDispatch();
     const [isConnected, setIsConnected] = useState(false);
     const [playAgain, setPlayAgain] = useState({});
-    const winner = useSelector((state) => state.game.winnerId);
+    const winnerId = useSelector((state) => state.game.winnerId);
     // const [isGameStarted, setIsGameStarted] = useState(false);
 
     const connect = (roomCode) => {
@@ -151,7 +151,7 @@ const useGameWebSocket = () => {
         };
     }, []);
 
-    return { sendMove, connect, sendPlayAgain, sendWinner, isConnected, stompClient, winner, playAgain,
+    return { sendMove, connect, sendPlayAgain, sendWinner, isConnected, stompClient, winnerId, playAgain,
         // isGameStarted
     };
 };
