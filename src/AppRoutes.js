@@ -18,6 +18,9 @@ import NotFoundPage from "./components/NotFoundPage/NotFoundPage";
 import PlayWithSomeone from "./pages/PlayWithSomeone/PlayWithSomeone";
 import RoomPlayLayout from "./layouts/RoomPlayLayout";
 import PlayerListPage from "./pages/PlayListPage/PlayerListPage";
+import MatchListPage from "./pages/MatchListPage/MatchListPage";
+import SeasonStats from "./components/SeasonStats/SeasonStats";
+import SeasonStatsPage from "./pages/SeasonStatsPage/SeasonStatsPage";
 
 
 const routes = createBrowserRouter([
@@ -105,15 +108,50 @@ const routes = createBrowserRouter([
     },
 
     {
-        path: "/player-list",
+        path: "/admin/player-list",
         element: (
             <PrivateRoute isWithText={true}>
-                <LayoutWrapper layoutType={'mainPage'}>
+                <LayoutWrapper layoutType={'admin_layout'}>
                     <PlayerListPage />
                 </LayoutWrapper>
             </PrivateRoute>
         )
     },
+
+    {
+        path: "/admin/match-list",
+        element: (
+            <PrivateRoute isWithText={true}>
+                <LayoutWrapper layoutType={'admin_layout'}>
+                    <MatchListPage />
+                </LayoutWrapper>
+            </PrivateRoute>
+        )
+    },
+
+    {
+        path: "/admin",
+        element: (
+            <PrivateRoute isWithText={true}>
+                <LayoutWrapper layoutType={'admin_layout'}>
+                    <SeasonStatsPage />
+                </LayoutWrapper>
+            </PrivateRoute>
+        )
+    },
+
+    {
+        path: "/admin/season-stats",
+        element: (
+            <PrivateRoute isWithText={true}>
+                <LayoutWrapper layoutType={'admin_layout'}>
+                    <SeasonStatsPage />
+                </LayoutWrapper>
+            </PrivateRoute>
+        )
+    },
+
+
 
     {
         path: "/history",

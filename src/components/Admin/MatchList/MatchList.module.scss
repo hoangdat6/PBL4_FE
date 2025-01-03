@@ -1,0 +1,116 @@
+.container {
+    width: 100%;
+    padding: 20px;
+    background-color: #21222d;
+    border-radius: 10px;
+    color: #d3d3d3;
+    height: 100%;
+    max-height: 100%;
+
+    overflow-y: auto;
+}
+
+.matchList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.matchCardWrapper {
+    display: flex;
+    justify-content: center;
+    background-color: #171821;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s;
+    border-radius: 10px;
+    overflow: hidden;
+
+    &:hover {
+        transform: scale(1.05);
+        background-color: #2a2c37;
+    }
+}
+
+.matchCard {
+    width: 320px;
+    padding: 20px;
+    display: flex;
+    flex-direction: row; /* Thay đổi thành hàng ngang */
+    align-items: center;
+    gap: 15px;
+
+    .player {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 5px;
+
+        .avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+
+            img {
+                width: 100%;
+                height: auto;
+                object-fit: cover;
+                transition: transform 0.3s, box-shadow 0.3s;
+
+                &:hover {
+                    transform: scale(1.2);
+                    box-shadow: 0 2px 5px rgba(255, 255, 255, 0.2);
+                }
+            }
+        }
+
+        .playerName {
+            font-size: 0.9rem;
+            color: #d3d3d3;
+            text-align: center;
+            white-space: nowrap;
+        }
+    }
+
+    .score {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: var(--color-main);
+        text-align: center;
+        flex: 1;
+    }
+
+
+}
+
+.btn_wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+}
+
+.viewButton {
+    padding: 10px 15px;
+    background-color: var(--color-main);
+    color: #171821;
+    border: none;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    height: 40px;
+    &:hover {
+        background-color: #5a9cd9;
+    }
+}
+
+.noData {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #ff4d4d;
+    padding: 20px;
+}

@@ -44,6 +44,8 @@ const useGameWebSocket = () => {
                 client.subscribe(GAME_START_TOPIC(roomCode), (message) => {
                     const gameStart = JSON.parse(message.body);
 
+                    console.log(gameStart);
+
                     const gameState = new GameState(
                         gameStart.roomCode,
                         gameStart.startPlayerId,

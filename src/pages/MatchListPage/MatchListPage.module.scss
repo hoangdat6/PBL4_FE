@@ -1,0 +1,14 @@
+@import "../../styles/scss/mixin";
+
+
+.title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 16px;
+    text-align: center;
+    color: var(--color-main);
+
+    @include respond-to($breakpoint-md) {
+        font-size: 2rem;
+    }
+}

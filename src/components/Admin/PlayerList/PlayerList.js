@@ -4,6 +4,7 @@ import Loading from "../../Loading/Loading";
 import DefaultAvatar from "../../../assets/statics/default_avatar/Glowface.png";
 import PlayerProfile from "../../PlayerProfile/PlayerProfile";
 import useProfile from "../../../pages/Profile/UseProfile";
+import { format, parseISO, isValid } from 'date-fns';
 
 const PlayerList = ({
                         currentPlayers,
@@ -20,7 +21,6 @@ const PlayerList = ({
     }
 
     return (
-
         <div className={styles.container}>
             <PlayerProfile
                 playerProfile={playerProfile}
@@ -36,6 +36,8 @@ const PlayerList = ({
                         <th>Người chơi</th>
                         <th>Email</th>
                         <th>Số trận đã chơi</th>
+                        <th>Thắng / Thua / Hòa</th>
+                        <th>Gia nhập</th>
                         <th>Profile</th>
                         <th>Cảnh báo</th>
                     </tr>
@@ -45,7 +47,7 @@ const PlayerList = ({
                         currentPlayers.map((player, index) => (
                             <tr key={index}>
                                 <td>
-                                    {(index + 1) + (currentPage - 1) * playersPerPage}
+                                    {(index + 1) + (currentPage) * playersPerPage}
                                 </td>
                                 <td className={styles.playerInfo}>
                                     <div className={styles.img_wrapper}>
@@ -58,7 +60,20 @@ const PlayerList = ({
                                     <span className={styles.name}>{player.name}</span>
                                 </td>
                                 <td>{player.email}</td>
-                                <td>{player.match} trận</td>
+                                <td>{player.totalGame} trận</td>
+                                <td>
+                                    <span className={styles.win}>{player.winGame}</span> /{" "}
+                                    <span className={styles.lose}>{player.loseGame}</span> /{" "}
+                                    <span className={styles.draw}>{player.drawGame}</span>
+                                </td>
+                                <td>
+                                    {player.createdAt ? (
+                                        isValid(parseISO(player.createdAt)) ?
+                                            format(parseISO(player.createdAt), 'dd/MM/yyyy') : 'N/A'
+                                    ) : (
+                                        "N/A"
+                                    )}
+                                </td>
                                 <td>
                                     <button className={styles.profile_button}
                                             onClick={() => {
@@ -96,8 +111,8 @@ const PlayerList = ({
                     Previous
                 </button>
                 <span className={styles.pageInfo}>
-          Trang {currentPage} / {totalPages}
-        </span>
+           Trang {currentPage + 1} / {totalPages}
+         </span>
                 <button
                     onClick={handleNext}
                     disabled={currentPage === totalPages}

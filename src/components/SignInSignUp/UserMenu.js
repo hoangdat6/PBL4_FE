@@ -5,9 +5,9 @@ import { useDispatch } from "react-redux";
 import styles from "../Sidebar/Sidebar.module.scss";
 import { logout } from "../../store/slices/authSlice";
 import AuthService from "../../services/auth.service";
-import DefaultAvatar from "../../assets/statics/default_avatar/Glowface.png";
 import useProfile from "../../pages/Profile/UseProfile";
 import PlayerProfile from "../../components/PlayerProfile/PlayerProfile";
+import {getAvatarByName} from "../../utils/AvatarUtils";
 
 const UserMenu = ({ user, onActiveSidebar, handleShowSidebar }) => {
     const [anchorEl, setAnchorEl] = useState(null);
@@ -52,7 +52,7 @@ const UserMenu = ({ user, onActiveSidebar, handleShowSidebar }) => {
                 toggleShowProfile={hideProfile}
             />
             <IconButton style={{ display: "block" }} className={styles.info__avatar} onClick={handleClick}>
-                <Avatar src={user.avatar ? user.avatar : DefaultAvatar} alt="avatar" />
+                <Avatar src={getAvatarByName(user?.avatar)} alt="avatar" />
             </IconButton>
             <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
                 <MenuItem onClick={handleAccount}>Tài khoản của tôi</MenuItem>

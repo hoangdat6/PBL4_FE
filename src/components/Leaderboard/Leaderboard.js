@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import styles from "./Leaderboard.module.scss";
 import Loading from "../Loading/Loading";
-import DefaultAvatar from "../../assets/statics/default_avatar/Glowface.png";
+import {getAvatarByName} from "../../utils/AvatarUtils";
 
 const Leaderboard = ({
                          currentPlayers,
@@ -38,7 +38,7 @@ const Leaderboard = ({
                             <td className={styles.playerInfo}>
                                 <div className={styles.img_wrapper}>
                                     <img
-                                        src={player.avatar || DefaultAvatar}
+                                        src={getAvatarByName(player?.avatar)}
                                         alt="avatar"
                                         className={styles.avatar}
                                     />

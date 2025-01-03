@@ -1,5 +1,5 @@
-import SignIn from "../../components/LoginSignUp/SignIn/SignIn";
-import SignUp from "../../components/LoginSignUp/SignUp/SignUp";
+import SignIn from "../../components/SignInSignUp/SignIn/SignIn";
+import SignUp from "../../components/SignInSignUp/SignUp/SignUp";
 import {useCallback, useState} from "react";
 import AuthService from "../../services/auth.service";
 import Cookies from "js-cookie";
@@ -8,6 +8,7 @@ import {useLocation, useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {useSnackbar} from "../../hooks/useSnackbar";
 import {Snackbar} from "@mui/material";
+import {getRandomAvatar} from "../../utils/AvatarUtils";
 
 const SignInSignUp = ({ Overlay, toggleOverlay, handleLoginSuccess }) => {
     const [isSignInMode, setIsSignInMode] = useState(true);
@@ -31,6 +32,13 @@ const SignInSignUp = ({ Overlay, toggleOverlay, handleLoginSuccess }) => {
             (response) => {
                 Cookies.set('userId', JSON.stringify(response.data.id), { expires: 7 });
                 dispatch(setUserId(response.data.id));
+
+                // nếu là admin thì chuyển hướng đến trang admin
+                if (response.data.role === 'ROLE_ADMIN') {
+                    navigate('/admin');
+                    return;
+                }
+
                 navigate(location.pathname || '/');
                 toggleOverlay();
                 openSnackbar('Đăng nhập thành công', 3000);
@@ -43,7 +51,7 @@ const SignInSignUp = ({ Overlay, toggleOverlay, handleLoginSuccess }) => {
     }
 
     const handelSignUp = (displayName, email, password) => {
-        AuthService.register(displayName, email, password).then(
+        AuthService.register(displayName, email, password, getRandomAvatar()).then(
             (response) => {
                 openSnackbar('Đăng ký thành công', 3000);
                 toggleMode();

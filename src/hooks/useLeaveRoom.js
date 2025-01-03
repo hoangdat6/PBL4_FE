@@ -10,7 +10,7 @@ const useLeaveRoom = () => {
     const dispatch = useDispatch();
 
     const leaveRoomNotPopup = async (redirectURL) => {
-        redirectURL = redirectURL || "/";
+        navigate(redirectURL || "/");
         return RoomService.leaveRoom().then(() => {
             navigate(redirectURL || "/");
             dispatch(resetGame());

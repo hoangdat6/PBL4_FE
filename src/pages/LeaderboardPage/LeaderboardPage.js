@@ -193,7 +193,6 @@ const LeaderboardPage = () => {
         handleGetLeaderboard(currentPage, playersPerPage, rankings);
     }
 
-
     return (
         <div className={styles.rankingTableContainer}>
             <h2 className={styles.title}>Bảng xếp hạng</h2>

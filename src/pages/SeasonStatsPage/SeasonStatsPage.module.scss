@@ -1,0 +1,25 @@
+@import "../../styles/scss/mixin";
+
+
+.container {
+    margin: 0 auto;
+    color: var(--color-text);
+    padding: 20px;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 90%;
+}
+
+.title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 16px;
+    text-align: center;
+    color: var(--color-main);
+
+    @include respond-to($breakpoint-md) {
+        font-size: 2rem;
+    }
+}

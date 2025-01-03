@@ -11,6 +11,7 @@ import checker1 from "../../assets/statics/imgs/checker1.svg";
 import DefaultAvatar from "../../assets/statics/default_avatar/Glowface.png";
 import GameResult from "../GameResult/GameResult";
 import RoomNotFound from "../../components/RoomNotFound/RoomNotFound";
+import {getAvatarByName} from "../../utils/AvatarUtils";
 
 
 const PlayWithBot = () => {
@@ -49,7 +50,7 @@ const PlayWithBot = () => {
         remainMoveDuration: 0,
         moveDuration: 0,
         score: 0,
-        avatar: player?.avatar || DefaultAvatar,
+        avatar: player?.avatar,
         rankIcon: player?.rankIcon || Rank,
         checkers: checker2,
         isTurn: isPlayerTurn,

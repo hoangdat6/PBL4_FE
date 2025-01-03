@@ -1,0 +1,90 @@
+.container {
+    width: 100%;
+    background-color: var(--nav-color);
+    padding: 20px;
+    border-radius: 10px;
+    color: var(--color-text);
+}
+
+.heading {
+    text-align: center;
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    color: var(--home-text-color);
+}
+
+.statsCards {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+
+    .card {
+        flex: 1;
+        padding: 20px;
+        background-color: var(--main-color);
+        border-radius: 10px;
+        text-align: center;
+        color: #fff;
+        margin: 0 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        transition: transform 0.3s;
+
+        &:hover {
+            transform: translateY(-5px);
+        }
+
+        h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+    }
+
+    .onlineMatches {
+        background-color: #8bd8bd;
+    }
+
+    .machineMatches {
+        background-color: #6eb5ff;
+    }
+
+    .friendMatches {
+        background-color: #ffc478;
+    }
+
+    .monthMatches {
+        background-color: #ff4d4d;
+    }
+}
+
+.chartSection {
+    text-align: center;
+
+    h3 {
+        font-size: 1.2rem;
+        margin-bottom: 20px;
+        color: var(--home-text-color);
+    }
+
+    .chartDescription {
+        font-size: 0.9rem;
+        color: var(--color-text);
+        margin-top: 10px;
+    }
+
+    .detailsLink {
+        display: inline-block;
+        margin-top: 15px;
+        color: #6eb5ff;
+        font-weight: bold;
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}

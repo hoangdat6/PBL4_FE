@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './PlayerInfo.module.scss';
+import {getAvatarByName} from "../../../utils/AvatarUtils";
 
 const formatTime = (time) => {
     const minutes = String(Math.floor(time / 60)).padStart(2, '0');
@@ -34,7 +35,9 @@ const PlayerInfo = ({
                     ${styles.avatar} 
                     ${isTurn ? styles.active : ""}
                 `} style={{width: '50px', height: '50px'}}>
-                    <img src={avatar} alt={`${playerName}'s avatar`} className="img-fluid"/>
+                    <img src={
+                        getAvatarByName(avatar)
+                    } alt={`${playerName}'s avatar`} className="img-fluid"/>
                 </div>
                 <div className={`${styles.player_info} d-flex flex-column `}>
                     <span className={`fw-bold text-light ${reverse ? "text-end" : ""}`}>{playerName}</span>

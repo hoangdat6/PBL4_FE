@@ -6,8 +6,8 @@ import useOverlay from "../../hooks/useOverlay/useOverlay";
 import RoomCodePopup from "../RoomCodePopup/RoomCodePopup";
 import {toggleDarkMode} from "../../store/slices/darkModeSlice";
 
-const Header = () => {
-    const { toggleOverlay, Overlay} = useOverlay();
+const Header = ({layout = "user"}) => {
+    const {toggleOverlay, Overlay} = useOverlay();
     const isDarkMode = useSelector(state => state.darkMode.isDarkMode);
 
 
@@ -21,6 +21,29 @@ const Header = () => {
         dispatch(toggleDarkMode());
     }
 
+    if (layout === 'admin') {
+        return (
+            <header className={`${styles.c_header}`}>
+                <div className={`${styles.c_header__container}`}>
+                    <div
+                        className={`${styles.c_header__menu_icon}`}
+                        onClick={handleOpenSidebar}
+                    >
+                        <i className="fa-solid fa-bars"></i>
+                    </div>
+                    <div className={`d-flex`}>
+                        <div
+                            className={`${styles.c_header__dark_mode}`}
+                            onClick={handleChangeDarkMode}
+                        >
+                            <i className={`fas fa-${isDarkMode ? 'sun' : 'moon'}`}></i>
+                        </div>
+                    </div>
+                </div>
+            </header>
+        )
+
+    }
 
     return (
         <header className={`${styles.c_header}`}>

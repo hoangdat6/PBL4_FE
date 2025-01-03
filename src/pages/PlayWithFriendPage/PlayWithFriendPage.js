@@ -25,6 +25,7 @@ import checker2 from "../../assets/statics/imgs/checker2.svg";
 import ChatBox from "../../components/ChatBox/ChatBox";
 import RoomPlay from "../RoomPlay/RoomPlay";
 import SpectatorBar from "../SpectatorBar/SpectatorBar";
+import {getAvatarByName} from "../../utils/AvatarUtils";
 
 const PlayWithFriendPage = () => {
     // states
@@ -163,7 +164,7 @@ const PlayWithFriendPage = () => {
         remainMoveDuration: remainMoveDuration1,
         moveDuration,
         matchScore: player1Info.matchScore,
-        avatar: player1Info.avatar || Avatar,
+        avatar: player1Info.avatar,
         rankIcon: Rank,
         checkers: player1Info.checker === 1 ? checker1 : checker2,
         isTurn: player1Info.isTurn,
@@ -177,7 +178,7 @@ const PlayWithFriendPage = () => {
         remainMoveDuration: remainMoveDuration2,
         moveDuration,
         matchScore: player2Info.matchScore,
-        avatar: player2Info.avatar || Avatar,
+        avatar: player2Info.avatar,
         rankIcon: Rank,
         isTurn: player2Info.isTurn,
         checkers: player2Info.checker === 1 ? checker1 : checker2,

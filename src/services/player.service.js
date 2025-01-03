@@ -7,6 +7,8 @@ const getPlayerProfile = (id) => {
     return apiClient(API_URL).get(API_URL + "profile", {params: {id}});
 }
 
+
+
 const PlayerService = {
     getPlayerProfile,
 }

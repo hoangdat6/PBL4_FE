@@ -105,6 +105,22 @@
                 font-size: 14px;
             }
         }
+
+        .win {
+            color: #27ae60;
+            font-weight: bold;
+        }
+
+        .lose {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+
+        .draw {
+            color: #f1c40f;
+            font-weight: bold;
+        }
+
         .no_data {
             text-align: center;
             font-size: 1.2rem;
@@ -112,8 +128,6 @@
             padding: 20px;
         }
     }
-
-
 }
 
 .profile_button {

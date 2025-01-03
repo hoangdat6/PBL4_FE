@@ -3,7 +3,7 @@ import {Box, Avatar, Typography, Divider, Chip, IconButton} from "@mui/material"
 import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
 import CloseIcon from '@mui/icons-material/Close';
 import styles from "./PlayerProfile.module.scss";
-import DefaultAvatar from "../../assets/statics/default_avatar/Glowface.png";
+import {getAvatarByName} from "../../utils/AvatarUtils";
 
 
 const PlayerProfile = ({playerProfile, isLoading, isShowProfile, toggleShowProfile}) => {
@@ -20,8 +20,7 @@ const PlayerProfile = ({playerProfile, isLoading, isShowProfile, toggleShowProfi
             <Box className={`${styles.avatarContainer} ${isLoading ? styles.loadingWave : ''}`}>
                 {isLoading ? <div className={styles.avatarPlaceholder}></div> :
                     <Avatar
-                        src={
-                            playerProfile?.avatar ? playerProfile.avatar : DefaultAvatar}
+                        src={getAvatarByName(playerProfile?.avatar)}
                         alt={playerProfile?.name} className={styles.avatar}/>
                 }
             </Box>
