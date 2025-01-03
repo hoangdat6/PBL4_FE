@@ -17,6 +17,7 @@ import PlayWithBotCP from "./pages/PlayWithBot/PlayWithBot";
 import NotFoundPage from "./components/NotFoundPage/NotFoundPage";
 import PlayWithSomeone from "./pages/PlayWithSomeone/PlayWithSomeone";
 import RoomPlayLayout from "./layouts/RoomPlayLayout";
+import PlayerListPage from "./pages/PlayListPage/PlayerListPage";
 
 
 const routes = createBrowserRouter([
@@ -98,6 +99,17 @@ const routes = createBrowserRouter([
             <PrivateRoute>
                 <LayoutWrapper layoutType={'default'}>
                     <PlayWithSomeone />
+                </LayoutWrapper>
+            </PrivateRoute>
+        )
+    },
+
+    {
+        path: "/player-list",
+        element: (
+            <PrivateRoute isWithText={true}>
+                <LayoutWrapper layoutType={'mainPage'}>
+                    <PlayerListPage />
                 </LayoutWrapper>
             </PrivateRoute>
         )

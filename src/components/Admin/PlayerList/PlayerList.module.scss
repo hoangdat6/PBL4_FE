@@ -1,0 +1,200 @@
+@import "../../../styles/scss/mixin";
+
+
+.container {
+    width: 100%;
+}
+
+.rankingTableWrapper {
+    overflow-x: auto; /* Thay đổi ở đây */
+    overflow-y: hidden;
+    width: 100%;
+
+    @include scrollBar; /* Thêm mixin scrollBar */
+}
+
+.heading {
+    text-align: center;
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    color: #6eb5ff;
+}
+
+.rankingTable {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 10px;
+
+
+    th,
+    td {
+        padding: 12px;
+        text-align: center;
+        font-size: 0.8rem;
+        min-width: 100px; /* Giữ nguyên */
+    }
+
+    th {
+        background-color: var(--nav-color);
+        font-weight: bold;
+        text-transform: uppercase;
+        color: #ecf0f1;
+    }
+
+    tr {
+        transition: background-color 0.3s ease-in-out;
+        background-color: var(--nav-color);
+
+        &:hover {
+            background-color: #4a5568;
+            cursor: pointer;
+        }
+
+        &:hover {
+            .playerInfo {
+                .img_wrapper {
+                    .avatar {
+                        transform: scale(1.2); /* Làm cho avatar to hơn một chút */
+                        box-shadow: 0 2px 5px rgba(255, 255, 255, 0.2);
+                    }
+                }
+            }
+        }
+    }
+
+    .playerInfo {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+
+        .img_wrapper {
+            display: none;
+            overflow: hidden;
+            border-radius: 50%;
+            transition: transform 0.3s, box-shadow 0.3s;
+            flex-shrink: 0; /* Để không co lại khi tên dài */
+
+
+            @include respond-to($breakpoint-md) {
+                display: block;
+                width: 40px;
+                height: 40px;
+            }
+
+            .avatar {
+                width: 100%;
+                height: auto;
+                transition: all 0.3s;
+            }
+        }
+
+
+        .name {
+            color: var(--color-text);
+            font-size: 0.8rem;
+            min-width: 100px;
+            white-space: nowrap; /* Không cho tên xuống dòng */
+            overflow: hidden; /* Ẩn phần chữ bị tràn */
+            text-overflow: ellipsis;/* hiện 3 chấm */
+            &:hover {
+                text-decoration: underline;
+            }
+
+            @include respond-to($breakpoint-md) {
+                font-size: 14px;
+            }
+        }
+        .no_data {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #ff4d4d;
+            padding: 20px;
+        }
+    }
+
+
+}
+
+.profile_button {
+    background-color: #2c3e50;
+    color: #ecf0f1;
+    border: none;
+    padding: 8px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: background-color 0.3s;
+    margin-right: 10px;
+
+    @include respond-to($breakpoint-md) {
+        font-size: 1rem;
+    }
+
+    &:disabled {
+        background-color: #7f8c8d;
+        cursor: not-allowed;
+    }
+
+    &:hover:not(:disabled) {
+        background-color: #34495e;
+    }
+}
+
+.warning_button {
+    background-color: #ff4d4d;
+    color: #ecf0f1;
+    border: none;
+    padding: 8px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: background-color 0.3s;
+    margin-right: 10px;
+
+    @include respond-to($breakpoint-md) {
+        font-size: 1rem;
+    }
+
+    &:disabled {
+        background-color: #7f8c8d;
+        cursor: not-allowed;
+    }
+
+    &:hover:not(:disabled) {
+        background-color: #ff3333;
+    }
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+
+    .pageButton {
+        background-color: #2c3e50;
+        color: #ecf0f1;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: background-color 0.3s;
+
+        &:disabled {
+            background-color: #7f8c8d;
+            cursor: not-allowed;
+        }
+
+        &:hover:not(:disabled) {
+            background-color: #34495e;
+        }
+    }
+
+    .pageInfo {
+        font-size: 1rem;
+        color: var(--color-text);
+    }
+}

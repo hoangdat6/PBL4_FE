@@ -154,17 +154,6 @@ const Sidebar = () => {
                                 <span className={`${styles.sidebar__nav_text}`}> Bảng xếp hạng </span>
                             </button>
                         </div>
-                        {/*<div className={`${styles.sidebar__nav_item}`} title="Nhắn tin"*/}
-                        {/*>*/}
-                        {/*    <button className={`${styles.sidebar__nav_link} d-flex align-items-center`}*/}
-                        {/*        onClick={() => navigateTo('/messages')}*/}
-                        {/*    >*/}
-                        {/*        <div className={`${styles.sidebar__nav_icon}`}>*/}
-                        {/*            <i className="fa-solid fa-messages"></i>*/}
-                        {/*        </div>*/}
-                        {/*        <span className={`${styles.sidebar__nav_text}`}> Nhắn tin </span>*/}
-                        {/*    </button>*/}
-                        {/*</div>*/}
                     </nav>
                     <nav className={`${styles.sidebar__nav}`}>
                         <div className={`${styles.sidebar__nav_item}`} title="Trang chủ">
@@ -209,26 +198,6 @@ const Sidebar = () => {
                                 <span className={`${styles.sidebar__nav_text}`}> Chơi với bạn bè </span>
                             </button>
                         </div>
-                        {/*<div className={`${styles.sidebar__nav_item}`} title="Tạo giải đấu">*/}
-                        {/*    <button className={`${styles.sidebar__nav_link} d-flex align-items-center`}*/}
-                        {/*            onClick={() => navigateTo('/create-tournament')}*/}
-                        {/*    >*/}
-                        {/*        <div className={`${styles.sidebar__nav_icon}`}>*/}
-                        {/*            <i className="fa-solid fa-circle-plus"></i>*/}
-                        {/*        </div>*/}
-                        {/*        <span className={`${styles.sidebar__nav_text}`}> Tạo giải đấu </span>*/}
-                        {/*    </button>*/}
-                        {/*</div>*/}
-                        {/*<div className={`${styles.sidebar__nav_item}`} title="Tạo giải đấu">*/}
-                        {/*    <button className={`${styles.sidebar__nav_link} d-flex align-items-center`}*/}
-                        {/*            onClick={() => navigateTo('/room-list')}*/}
-                        {/*    >*/}
-                        {/*        <div className={`${styles.sidebar__nav_icon}`}>*/}
-                        {/*            <i className="fa-solid fa-circle-plus"></i>*/}
-                        {/*        </div>*/}
-                        {/*        <span className={`${styles.sidebar__nav_text}`}> Phòng hoạt động </span>*/}
-                        {/*    </button>*/}
-                        {/*</div>*/}
                     </nav>
 
                     <nav className={`${styles.sidebar__nav}`}>
@@ -245,14 +214,14 @@ const Sidebar = () => {
                     </nav>
 
                     <nav className={`${styles.sidebar__nav}`}>
-                        <div className={`${styles.sidebar__nav_item}`} title="Cửa hàng">
+                        <div className={`${styles.sidebar__nav_item}`} title="Danh sách người chơi">
                             <button className={`${styles.sidebar__nav_link} d-flex align-items-center`}
-                                    onClick={() => navigateTo('/shop')}
+                                    onClick={() => navigateTo('/player-list')}
                             >
                                 <div className={`${styles.sidebar__nav_icon}`}>
                                     <i className="fa-solid fa-cart-shopping"></i>
                                 </div>
-                                <span className={`${styles.sidebar__nav_text}`}> Cửa hàng </span>
+                                <span className={`${styles.sidebar__nav_text}`}> Danh sách người chơi </span>
                             </button>
                         </div>
 
@@ -282,16 +251,16 @@ const Sidebar = () => {
                         )
                         }
 
-                        <div className={`${styles.sidebar__nav_item}`} title="Cài đặt">
-                            <button className={`${styles.sidebar__nav_link} d-flex align-items-center`}
-                                    onClick={() => navigateTo('/settings')}
-                            >
-                                <div className={`${styles.sidebar__nav_icon}`}>
-                                    <i className="fa-solid fa-gear"></i>
-                                </div>
-                                <span className={`${styles.sidebar__nav_text}`}> Cài đặt </span>
-                            </button>
-                        </div>
+                        {/*<div className={`${styles.sidebar__nav_item}`} title="Cài đặt">*/}
+                        {/*    <button className={`${styles.sidebar__nav_link} d-flex align-items-center`}*/}
+                        {/*            onClick={() => navigateTo('/settings')}*/}
+                        {/*    >*/}
+                        {/*        <div className={`${styles.sidebar__nav_icon}`}>*/}
+                        {/*            <i className="fa-solid fa-gear"></i>*/}
+                        {/*        </div>*/}
+                        {/*        <span className={`${styles.sidebar__nav_text}`}> Cài đặt </span>*/}
+                        {/*    </button>*/}
+                        {/*</div>*/}
                     </nav>
                 </div>
             </div>
