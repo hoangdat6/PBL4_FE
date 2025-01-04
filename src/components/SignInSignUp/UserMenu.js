@@ -9,7 +9,7 @@ import useProfile from "../../pages/Profile/UseProfile";
 import PlayerProfile from "../../components/PlayerProfile/PlayerProfile";
 import {getAvatarByName} from "../../utils/AvatarUtils";
 
-const UserMenu = ({ user, onActiveSidebar, handleShowSidebar }) => {
+const UserMenu = ({ user, onActiveSidebar, handleShowSidebar, isAdmin }) => {
     const [anchorEl, setAnchorEl] = useState(null);
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -55,6 +55,9 @@ const UserMenu = ({ user, onActiveSidebar, handleShowSidebar }) => {
                 <Avatar src={getAvatarByName(user?.avatar)} alt="avatar" />
             </IconButton>
             <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
+                {
+                    isAdmin && <MenuItem onClick={() => navigate("/admin")}>Trang quản trị</MenuItem>
+                }
                 <MenuItem onClick={handleAccount}>Tài khoản của tôi</MenuItem>
                 <MenuItem onClick={handleShowProfile}>Hồ sơ của tôi</MenuItem>
                 <MenuItem onClick={handleLogout}>Logout</MenuItem>
@@ -64,7 +67,7 @@ const UserMenu = ({ user, onActiveSidebar, handleShowSidebar }) => {
                     <span>{user.name}</span>
                 </div>
                 <div className={styles.info__coin}>
-                    <i className="fa-solid fa-coins"></i>
+                    <i className="fa fa-star" aria-hidden="true"></i>
                     <span>{user.score}</span>
                 </div>
             </div>

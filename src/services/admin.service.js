@@ -7,12 +7,12 @@ const getMatchList = async () => {
     return await apiClient(API_URL).get('/match-list', {});
 }
 
-const getPlayerList = async (sort, page, size) => {
+const getPlayerList = async (sort, page, size = 10) => {
     return await apiClient(API_URL).get('/get-all-players', {params: {sort, page, size}});
 }
 
 const getSeasonStats = async () => {
-    return await apiClient(API_URL).get('/season-stats', {});
+    return await apiClient(API_URL).get('/season-statistic', {});
 }
 
 const AdminService = {

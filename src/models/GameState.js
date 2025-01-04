@@ -1,6 +1,6 @@
 
 class GameState {
-    constructor(roomCode, startPlayerId, nthMove, board, size, winLength, lastMove, isGameStated, winnerId, player1Info, player2Info, gameConfig) {
+    constructor(roomCode, startPlayerId, nthMove, board, size, winLength, lastMove, isGameStated, winnerId, player1Info, player2Info, gameConfig, messages) {
         this.roomCode = roomCode;
         this.startPlayerId = startPlayerId;
         this.nthMove = nthMove;
@@ -47,6 +47,8 @@ class GameState {
             size: size,
             winLength: winLength
         };
+
+        this.messages = messages;
     }
 
     // Phương thức để chuyển đổi chuỗi board thành mảng 2D với kích thước size
@@ -59,7 +61,7 @@ class GameState {
                 throw new Error("Invalid board size");
             }
         } catch (error) {
-            console.error("Error parsing board:", error);
+            console.error("Error parsing board");
             return Array(size).fill().map(() => Array(size).fill(-1)); // Trả về mảng rỗng mặc định nếu lỗi
         }
     }
@@ -77,6 +79,7 @@ class GameState {
             player1Info: this.player1Info,
             player2Info: this.player2Info,
             gameConfig: this.gameConfig,
+            messages: this.messages
         };
     }
 }

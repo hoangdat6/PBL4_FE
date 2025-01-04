@@ -63,8 +63,8 @@ const PlayerList = ({
                                 <td>{player.totalGame} trận</td>
                                 <td>
                                     <span className={styles.win}>{player.winGame}</span> /{" "}
-                                    <span className={styles.lose}>{player.loseGame}</span> /{" "}
-                                    <span className={styles.draw}>{player.drawGame}</span>
+                                    <span className={styles.draw}>{player.drawGame}</span> /{" "}
+                                    <span className={styles.lose}>{player.loseGame}</span>
                                 </td>
                                 <td>
                                     {player.createdAt ? (
@@ -105,7 +105,7 @@ const PlayerList = ({
             <div className={styles.pagination}>
                 <button
                     onClick={handlePrevious}
-                    disabled={currentPage === 1}
+                    disabled={currentPage === 0}
                     className={styles.pageButton}
                 >
                     Previous
@@ -115,7 +115,7 @@ const PlayerList = ({
          </span>
                 <button
                     onClick={handleNext}
-                    disabled={currentPage === totalPages}
+                    disabled={currentPage === totalPages - 1}
                     className={styles.pageButton}
                 >
                     Next

@@ -9,6 +9,7 @@
     overflow-x: auto; /* Thay đổi ở đây */
     overflow-y: hidden;
     width: 100%;
+    border-radius: 10px;
 
     @include scrollBar; /* Thêm mixin scrollBar */
 }

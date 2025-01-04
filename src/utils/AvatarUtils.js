@@ -22,7 +22,6 @@ import Vicious from '../assets/statics/icon_avatar/Vicious.png';
 
 import DefaultAvatar from "../assets/statics/default_avatar/Glowface.png";
 
-
 const avatars = [
     { name: 'A', path: A },
     { name: 'Barbbeast', path: Barbbeast },

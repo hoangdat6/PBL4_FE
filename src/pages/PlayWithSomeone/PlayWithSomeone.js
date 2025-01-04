@@ -28,10 +28,10 @@ const PlayWithSomeone = () => {
                     setRoomCode(roomCode);
                 }
             }).catch((error) => {
-                console.error("Error finding opponent:", error);
+                console.error("Error finding opponent");
             });
         } catch (error) {
-            console.error("Error finding opponent:", error);
+            console.error("Error finding opponent");
         }
     };
 
@@ -73,7 +73,7 @@ const PlayWithSomeone = () => {
                     stompClient.current.deactivate();
                 }
             } catch (error) {
-                console.error("Error canceling matchmaking:", error);
+                console.error("Error canceling matchmaking");
             }
         }
     };

@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./MatchList.module.scss";
 import DefaultAvatar from "../../../assets/statics/default_avatar/Glowface.png";
+import {getAvatarByName} from "../../../utils/AvatarUtils";
 
 const MatchList = ({ matches, onViewMatch }) => {
     if (!matches || matches.length === 0) {
@@ -16,7 +17,7 @@ const MatchList = ({ matches, onViewMatch }) => {
                             <div className={styles.player}>
                                 <div className={styles.avatar}>
                                     <img
-                                        src={match.player1.avatar || DefaultAvatar}
+                                        src={getAvatarByName(match.player1.avatar) || DefaultAvatar}
                                         alt="Player 1 Avatar"
 
                                     />
@@ -29,7 +30,7 @@ const MatchList = ({ matches, onViewMatch }) => {
                             <div className={styles.player}>
                                 <div className={styles.avatar}>
                                     <img
-                                        src={match.player1.avatar || DefaultAvatar}
+                                        src={getAvatarByName(match.player2.avatar) || DefaultAvatar}
                                         alt="Player 1 Avatar"
 
                                     />

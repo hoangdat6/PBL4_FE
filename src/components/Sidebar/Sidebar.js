@@ -63,7 +63,9 @@ const Sidebar = ({layout = "user"}) => {
                             <div
                                 className={`${styles.sidebar__login} ${styles.info} ${isSidebarActive ? "" : styles.un_active}`}>
                                 <UserMenu user={user} onActiveSidebar={isSidebarActive}
-                                          handleShowSidebar={handleShowSidebar}/>
+                                          handleShowSidebar={handleShowSidebar}
+                                          isAdmin={true}
+                                />
 
                                 <div className={`${styles.sidebar__menu_cta}`}>
                                     <div className={`${styles.sidebar__menu_cta_item}`}>
@@ -239,16 +241,16 @@ const Sidebar = ({layout = "user"}) => {
                 <div className={`${styles.sidebar__menu}`}>
                     <nav className={`${styles.sidebar__nav}`}>
 
-                        <div className={`${styles.sidebar__nav_item}`} title="Bạn bè">
-                            <button className={`${styles.sidebar__nav_link} d-flex align-items-center`}
-                                    onClick={() => navigateTo('/friends')}
-                            >
-                                <div className={`${styles.sidebar__nav_icon}`}>
-                                    <i className="fa-solid fa-user-group"></i>
-                                </div>
-                                <span className={`${styles.sidebar__nav_text}`}> Bạn bè </span>
-                            </button>
-                        </div>
+                        {/*<div className={`${styles.sidebar__nav_item}`} title="Bạn bè">*/}
+                        {/*    <button className={`${styles.sidebar__nav_link} d-flex align-items-center`}*/}
+                        {/*            onClick={() => navigateTo('/friends')}*/}
+                        {/*    >*/}
+                        {/*        <div className={`${styles.sidebar__nav_icon}`}>*/}
+                        {/*            <i className="fa-solid fa-user-group"></i>*/}
+                        {/*        </div>*/}
+                        {/*        <span className={`${styles.sidebar__nav_text}`}> Bạn bè </span>*/}
+                        {/*    </button>*/}
+                        {/*</div>*/}
                         <div className={`${styles.sidebar__nav_item}`} title="Lịch sử">
                             <button className={`${styles.sidebar__nav_link} d-flex align-items-center`}
                                     onClick={() => navigateTo('/history')}

@@ -91,6 +91,7 @@ const useGameWebSocket = () => {
                         gameStart.player1Info,
                         gameStart.player2Info,
                         gameStart.gameConfig,
+                        gameStart.messages
                     );
 
                     dispatch(setGameState(gameState.getCurrentState()));

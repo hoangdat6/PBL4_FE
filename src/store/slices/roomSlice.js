@@ -25,7 +25,7 @@ const initialState = {
         isTurn: false,
     },
     participantType: null,
-
+    messages: [],
 }
 
 const roomSlice = createSlice({
@@ -46,10 +46,11 @@ const roomSlice = createSlice({
             state.roomCode = action.payload;
         },
         setRoomState: (state, action) => {
-            const {roomCode, playerId1, playerId2} = action.payload;
+            const {roomCode, playerId1, playerId2, messages} = action.payload;
             state.roomCode = roomCode;
             state.player1Info.id = playerId1;
             state.player2Info.id = playerId2;
+            state.messages = messages;
         },
         setPlayer1Info: (state, action) => {
             state.player1Info.id = action.payload.id;
@@ -73,7 +74,10 @@ const roomSlice = createSlice({
         setIsTurn: (state, action) => {
             state.player1Info.isTurn = action.payload;
             state.player2Info.isTurn = !action.payload;
-        }
+        },
+        setMessages: (state, action) => {
+            state.messages = action.payload;
+        },
     },
 });
 
@@ -85,5 +89,6 @@ export const {
     setPlayer1Info,
     setPlayer2Info,
     setIsTurn,
+    setMessages,
 } = roomSlice.actions;
 export default roomSlice.reducer;

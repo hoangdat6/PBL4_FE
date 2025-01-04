@@ -44,13 +44,13 @@ const useGameTimer = () => {
         if (player1Info.isTurn) {
             setTimeout(() => {
                 startTimer1(playerTimeInfo1.remainMoveDuration);
-            }, 100);
+            }, 800);
             resetTimer2(moveDuration);
             dispatch(setRemainMoveDuration2(moveDuration));
         } else if (player2Info.isTurn) {
             setTimeout(() => {
                 startTimer2(playerTimeInfo2.remainMoveDuration);
-            }, 100);
+            }, 800);
             resetTimer1(moveDuration);
             dispatch(setRemainMoveDuration1(moveDuration));
         }

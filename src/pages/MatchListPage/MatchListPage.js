@@ -5,27 +5,12 @@ import {useNavigate} from "react-router-dom";
 import AdminService from "../../services/admin.service";
 
 const MatchListPage = () => {
-    // Mock data
-    const mockMatches = [
-        {
-            roomCode: "123456",
-            player1: { name: "Player 1", avatar: null, score: 3 },
-            player2: { name: "Player 2", avatar: null, score: 5 },
-        },
-
-    ];
 
     const [matches, setMatches] = useState([]);
     const [loading, setLoading] = useState(true);
 
     // Simulate loading and fetch matches
     useEffect(() => {
-        // const fetchMatches = () => {
-        //     setTimeout(() => {
-        //         setMatches(mockMatches); // Set mock data
-        //         setLoading(false); // Disable loading after data is fetched
-        //     }, 1000); // Simulate API delay
-        // };
 
         AdminService.getMatchList().then((response) => {
             setMatches(response.data);
