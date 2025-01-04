@@ -1,16 +1,29 @@
 import React from 'react';
 import { Box, Typography, Button } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import {keyframes, styled, ThemeProvider} from '@mui/material/styles';
+import darkTheme from '../../theme/darkTheme';
+
+const fadeIn = keyframes`
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    `;
 
 const Container = styled(Box)(({ theme }) => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     height: '100vh',
     textAlign: 'center',
     backgroundColor: theme.palette.background.default,
     padding: theme.spacing(4),
+    paddingTop: theme.spacing(10),
 }));
 
 const ErrorNumber = styled(Typography)(({ theme }) => ({
@@ -18,6 +31,7 @@ const ErrorNumber = styled(Typography)(({ theme }) => ({
     fontWeight: 'bold',
     color: theme.palette.primary.main,
     textShadow: `2px 2px 5px ${theme.palette.primary.light}`,
+    animation: `${fadeIn} 1s ease-out`,
 }));
 
 const ErrorMessage = styled(Typography)(({ theme }) => ({
@@ -39,23 +53,26 @@ const StyledButton = styled(Button)(({ theme }) => ({
     fontSize: '1rem',
 }));
 
+
 export default function NotFoundPage() {
     return (
-        <Container>
-            <ErrorNumber variant="h1">404</ErrorNumber>
-            <ErrorMessage variant="h2">
-                Trang không tồn tại
-            </ErrorMessage>
-            <Description>
-                Trang bạn đang tìm kiếm không tồn tại hoặc đã bị xóa.
-            </Description>
-            <StyledButton
-                variant="contained"
-                color="primary"
-                onClick={() => (window.location.href = '/')}
-            >
-                Quay lại trang chủ
-            </StyledButton>
-        </Container>
+        <ThemeProvider theme={darkTheme}>
+            <Container>
+                <ErrorNumber variant="h1">401</ErrorNumber>
+                <ErrorMessage variant="h2">
+                    Trang không tồn tại
+                </ErrorMessage>
+                <Description>
+                    Bạn không có quyền truy cập trang này.
+                </Description>
+                <StyledButton
+                    variant="contained"
+                    color="primary"
+                    onClick={() => (window.location.href = '/')}
+                >
+                    Quay lại trang chủ
+                </StyledButton>
+            </Container>
+        </ThemeProvider>
     );
 }

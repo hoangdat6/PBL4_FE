@@ -3,6 +3,8 @@ import SeasonStats from "../../components/SeasonStats/SeasonStats";
 import styles from "./SeasonStatsPage.module.scss";
 import AdminService from "../../services/admin.service";
 import Loading from "../../components/Loading/Loading";
+import useAdmin from "../../hooks/useAdmin";
+import { useNavigate } from 'react-router-dom';
 
 const data = {
     onlineMatches: 100,
@@ -27,8 +29,18 @@ const SeasonStatsPage = () => {
     const [seasonData, setSeasonData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-
+    const { isAdmin, loading: isAdminLoading } = useAdmin();
+    const navigate = useNavigate();
     useEffect(() => {
+
+        if(!isAdminLoading && !isAdmin){
+            return navigate("/401")
+        }
+
+        if (isAdminLoading) {
+            return;
+        }
+
         const fetchSeasonStats = async () => {
             setLoading(true);
             setError(null);
@@ -44,12 +56,7 @@ const SeasonStatsPage = () => {
         };
 
         fetchSeasonStats();
-        setTimeout(() => {
-            setSeasonData(data);
-            setLoading(false);
-        }, 1000);
-    }, []);
-
+    }, [isAdmin, navigate, isAdminLoading]);
 
     return (
         <div className={styles.container}>

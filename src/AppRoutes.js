@@ -14,13 +14,14 @@ import AccountSettingPage from "./pages/AccountSettingPage/AccountSettingPage";
 import GameResultComponent from "./components/GameResult/GameResult";
 import PlayWithFriendPage from "./pages/PlayWithFriendPage/PlayWithFriendPage";
 import PlayWithBotCP from "./pages/PlayWithBot/PlayWithBot";
-import NotFoundPage from "./components/NotFoundPage/NotFoundPage";
+import NotFoundPage from "./components/Error/NotFoundPage";
 import PlayWithSomeone from "./pages/PlayWithSomeone/PlayWithSomeone";
 import RoomPlayLayout from "./layouts/RoomPlayLayout";
 import PlayerListPage from "./pages/PlayListPage/PlayerListPage";
 import MatchListPage from "./pages/MatchListPage/MatchListPage";
 import SeasonStats from "./components/SeasonStats/SeasonStats";
 import SeasonStatsPage from "./pages/SeasonStatsPage/SeasonStatsPage";
+import Unauthorized from "./components/Error/Unauthorized";
 
 
 const routes = createBrowserRouter([
@@ -126,6 +127,11 @@ const routes = createBrowserRouter([
                     <MatchListPage />
                 </LayoutWrapper>
             </PrivateRoute>
+        ),
+        errorElement: (
+            <LayoutWrapper layoutType={'default'}>
+                <NotFoundPage />
+            </LayoutWrapper>
         )
     },
 
@@ -137,6 +143,11 @@ const routes = createBrowserRouter([
                     <SeasonStatsPage />
                 </LayoutWrapper>
             </PrivateRoute>
+        ),
+        errorElement: (
+            <LayoutWrapper layoutType={'default'}>
+                <NotFoundPage />
+            </LayoutWrapper>
         )
     },
 
@@ -150,8 +161,6 @@ const routes = createBrowserRouter([
             </PrivateRoute>
         )
     },
-
-
 
     {
         path: "/history",
@@ -223,7 +232,16 @@ const routes = createBrowserRouter([
                 />
             </LayoutWrapper>
         )
+    },
+    {
+        path: "/401",
+        element: (
+            <LayoutWrapper layoutType={'default'}>
+                <Unauthorized />
+            </LayoutWrapper>
+        )
     }
+
 ]);
 
 const AppRoutes = () => {

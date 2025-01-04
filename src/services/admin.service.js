@@ -12,7 +12,7 @@ const getPlayerList = async (sort, page, size) => {
 }
 
 const getSeasonStats = async () => {
-    return await apiClient(API_URL).get('/season-stats', {});
+    return await apiClient(API_URL).get('/season-statistic', {});
 }
 
 const AdminService = {

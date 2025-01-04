@@ -30,7 +30,7 @@ const logout = () => {
 };
 
 const getCurrentUser = () => {
-    return JSON.parse(localStorage.getItem("user"));
+    return axios.get(API_URL + "user", { withCredentials: true });
 };
 
 const AuthService = {

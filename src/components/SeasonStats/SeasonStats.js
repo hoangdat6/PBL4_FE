@@ -26,10 +26,10 @@ const SeasonStats = ({ data }) => {
                     <h3>Số trận online</h3>
                     <p>{onlineMatches}</p>
                 </div>
-                <div className={`${styles.card} ${styles.machineMatches}`}>
-                    <h3>Số trận đấu với máy</h3>
-                    <p>{machineMatches}</p>
-                </div>
+                {/*<div className={`${styles.card} ${styles.machineMatches}`}>*/}
+                {/*    <h3>Số trận đấu với máy</h3>*/}
+                {/*    <p>{machineMatches}</p>*/}
+                {/*</div>*/}
                 <div className={`${styles.card} ${styles.friendMatches}`}>
                     <h3>Số trận đấu với bạn bè</h3>
                     <p>{friendMatches}</p>
